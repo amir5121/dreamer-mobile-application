@@ -1,5 +1,5 @@
+import 'package:dreamer/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:dreamer/common/widgets.dart';
 
 class Login extends StatefulWidget {
   @override
