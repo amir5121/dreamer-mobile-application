@@ -30,6 +30,13 @@ class _LoginState extends State<Login> {
           auth.login.accessToken != null) {
         Navigator.pushReplacementNamed(context, '/catalog');
       }
+      if (auth.hasError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(auth.errorMessage),
+          ),
+        );
+      }
     });
     return DreamerScaffold(
       body: Container(

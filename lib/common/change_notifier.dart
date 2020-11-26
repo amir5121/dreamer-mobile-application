@@ -4,11 +4,16 @@ class ErrorNotifier extends ChangeNotifier {
   bool _hasError = false;
   String _errorMessage;
 
-  set hasError(bool hasError) {
+  void setError(bool hasError, String errorMessage) {
     _hasError = hasError;
+    _errorMessage = errorMessage;
+    notifyListeners();
   }
 
-  set errorMessage(String errorMessage) {
-    _errorMessage = errorMessage;
+  get hasError {
+    return _hasError;
+  }
+  get errorMessage {
+    return _errorMessage;
   }
 }

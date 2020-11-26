@@ -8,12 +8,13 @@ class DreamerScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Dreamer"),
-          elevation: 0,
-          centerTitle: true,
-        ),
-        body: body);
+      appBar: AppBar(
+        title: Text("Dreamer"),
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: body,
+    );
   }
 }
 
@@ -23,7 +24,10 @@ class DreamTextField extends StatelessWidget {
   final controller;
 
   const DreamTextField(
-      {Key key, @required this.label, this.obscureText, @required this.controller})
+      {Key key,
+      @required this.label,
+      this.obscureText,
+      @required this.controller})
       : super(key: key);
 
   @override
