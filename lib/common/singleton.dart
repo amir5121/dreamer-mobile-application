@@ -15,7 +15,7 @@ class Singleton {
       : this._dio = Dio()
           ..options.baseUrl = "http://10.0.2.2:8000/api/v1"
           ..options.followRedirects = false
-  // ..options.validateStatus = ((status) => status < 299)
+          // ..options.validateStatus = ((status) => status <= 300)
   {
     //   dio.interceptors
     //     .add(InterceptorsWrapper(onRequest: (Options options) async {

@@ -3,7 +3,6 @@ import 'package:dreamer/screens/cart.dart';
 import 'package:dreamer/screens/catalog.dart';
 import 'package:dreamer/screens/login.dart';
 import 'package:dreamer/screens/splash.dart';
-import 'package:dreamer/services/service_locator.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import 'models/cart.dart';
 import 'models/catalog.dart';
 
 void main() {
-  setupServiceLocator();
   runApp(MyApp());
 }
 
@@ -23,7 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ConfigurationsViewModel model = serviceLocator<ConfigurationsViewModel>();
+  ConfigurationsViewModel model = ConfigurationsViewModel();
 
   @override
   void initState() {
@@ -39,9 +37,7 @@ class _MyAppState extends State<MyApp> {
         // In this sample app, CatalogModel never changes, so a simple Provider
         // is sufficient.
         ChangeNotifierProvider(create: (context) => model),
-        ChangeNotifierProvider(
-            create: (context) => serviceLocator<AuthViewModel>()),
-
+        ChangeNotifierProvider(create: (context) => AuthViewModel()),
 
         Provider(create: (context) => CatalogModel()),
         ChangeNotifierProxyProvider<CatalogModel, CartModel>(

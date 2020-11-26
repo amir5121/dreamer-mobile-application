@@ -1,11 +1,9 @@
 import 'package:dreamer/models/configurations.dart';
-import 'package:dreamer/services/configurations/configurations_service.dart';
-import 'package:dreamer/services/service_locator.dart';
+import 'package:dreamer/services/configurations_service.dart';
 import 'package:flutter/foundation.dart';
 
 class ConfigurationsViewModel extends ChangeNotifier {
-  final ConfigurationService _configurationService =
-      serviceLocator<ConfigurationService>();
+  final ConfigurationService _configurationService = ConfigurationService();
   bool _isLoading = true;
   Configurations _configurations;
 

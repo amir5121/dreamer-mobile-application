@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     AuthViewModel auth = context.watch<AuthViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      print("${auth.isLoading} ${auth.login}");
       if (auth.isLoading == false &&
           auth.login != null &&
           auth.login.accessToken != null) {
@@ -85,10 +85,14 @@ class _LoginState extends State<Login> {
                             ? null
                             : () {
                                 if (_formKey.currentState.validate()) {
-                                  auth.loginWithPassword(
-                                    usernameController.text,
-                                    passwordController.text,
-                                  );
+                                  try {
+                                    auth.loginWithPassword(
+                                      usernameController.text,
+                                      passwordController.text,
+                                    );
+                                  } on DioError catch (e) {
+                                    print(e);
+                                  }
                                 }
                               },
                       ),

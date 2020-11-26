@@ -1,10 +1,8 @@
 import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/configurations.dart';
 import 'package:dreamer/models/user.dart';
-import 'package:dreamer/services/configurations/configurations_service.dart';
 
-class ConfigurationsServiceImpl implements ConfigurationService {
-  @override
+class ConfigurationService {
   Future<Configurations> getConfigurations() async {
     final configs = await Singleton().dio.get("/utils/configurations/");
     final self = configs.data["data"]["self"];
