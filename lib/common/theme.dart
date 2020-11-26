@@ -6,7 +6,7 @@ import 'package:flutter/painting.dart';
 final appTheme = ThemeData(
     primarySwatch: Constants.deepPurple,
     brightness: Brightness.dark,
-    accentColor: Colors.grey,
+    accentColor: Colors.purpleAccent,
     errorColor: Colors.deepOrangeAccent,
     scaffoldBackgroundColor: Constants.deepPurple[900],
     buttonTheme: ButtonThemeData(
@@ -16,6 +16,8 @@ final appTheme = ThemeData(
     textTheme: TextTheme(
       bodyText2: TextStyle(color: Colors.grey),
       subtitle1: TextStyle(color: Colors.grey),
+      headline4: TextStyle(color: Colors.white),
+      headline5: TextStyle(color: Colors.white),
     ),
     inputDecorationTheme: InputDecorationTheme(
         contentPadding: EdgeInsets.only(left: 16),

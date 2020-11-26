@@ -20,8 +20,10 @@ class DreamerScaffold extends StatelessWidget {
 class DreamTextField extends StatelessWidget {
   final String label;
   final bool obscureText;
+  final controller;
 
-  const DreamTextField({Key key, this.label, this.obscureText})
+  const DreamTextField(
+      {Key key, @required this.label, this.obscureText, @required this.controller})
       : super(key: key);
 
   @override
@@ -38,6 +40,7 @@ class DreamTextField extends StatelessWidget {
         ),
         TextFormField(
           obscureText: obscureText ?? false,
+          controller: controller,
           validator: (value) {
             if (value.isEmpty) {
               return 'Please enter ${label.toLowerCase()}';

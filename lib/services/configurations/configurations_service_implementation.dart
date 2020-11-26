@@ -7,13 +7,15 @@ class ConfigurationsServiceImpl implements ConfigurationService {
   @override
   Future<Configurations> getConfigurations() async {
     final configs = await Singleton().dio.get("/utils/configurations/");
+    final self = configs.data["data"]["self"];
+    if (self == null) return Configurations();
     return Configurations(
         self: User(
-            username: configs.data["data"]["username"],
-            firstName: configs.data["data"]["first_name"],
-            lastName: configs.data["data"]["last_name"],
-            dateJoined: configs.data["data"]["date_joined"],
-            email: configs.data["data"]["email"],
-            identifier: configs.data["data"]["identifier"]));
+            username: self["username"],
+            firstName: self["first_name"],
+            lastName: self["last_name"],
+            dateJoined: self["date_joined"],
+            email: self["email"],
+            identifier: self["identifier"]));
   }
 }

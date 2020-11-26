@@ -1,28 +1,42 @@
-import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
+import 'package:dreamer/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Singleton().dio.get("/utils/configurations/").then(
-    //   (value) {
-    //     print(value);
-    //     Navigator.pushReplacementNamed(context, '/login');
-    //   },
-    // );
-    // Future.delayed(const Duration(milliseconds: 1000), () {
-    //   Navigator.pushReplacementNamed(context, '/login');
-    // });
-    return Column(
-      children: [
-        Text("Hello there dreamer"),
-        Consumer<ConfigurationsViewModel>(
-            builder: (context, configurations, child) =>
-                configurations.configurations.self ??
-                Text('\$${configurations.configurations.self.username}'))
-      ],
+    ConfigurationsViewModel configurations =
+        context.watch<ConfigurationsViewModel>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (configurations.isLoading == false) {
+        if (configurations.configurations.self == null) {
+          Navigator.pushReplacementNamed(context, '/login');
+        } else {
+          Navigator.pushReplacementNamed(context, '/catalog');
+        }
+      }
+    });
+
+    return DreamerScaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Hello there dreamer",
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: LinearProgressIndicator(),
+          )
+
+          // Consumer<ConfigurationsViewModel>(
+          //     builder: (context, configurations, child) =>
+          //         _buildChild(configurations))
+        ],
+      ),
     );
   }
 }

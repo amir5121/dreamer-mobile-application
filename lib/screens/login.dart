@@ -1,5 +1,7 @@
+import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -8,9 +10,27 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    AuthViewModel auth = context.watch<AuthViewModel>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      print("${auth.isLoading} ${auth.login}");
+      if (auth.isLoading == false &&
+          auth.login != null &&
+          auth.login.accessToken != null) {
+        Navigator.pushReplacementNamed(context, '/catalog');
+      }
+    });
     return DreamerScaffold(
       body: Container(
         padding: EdgeInsets.all(32.0),
@@ -31,12 +51,14 @@ class _LoginState extends State<Login> {
                 children: [
                   DreamTextField(
                     label: "Username",
+                    controller: usernameController,
                   ),
                   SizedBox(
                     height: 16,
                   ),
                   DreamTextField(
                     label: "Password",
+                    controller: passwordController,
                     obscureText: true,
                   ),
                   Align(
@@ -56,21 +78,20 @@ class _LoginState extends State<Login> {
                   ),
                   Container(
                     width: double.infinity,
-                    child: RaisedButton(
-                      child: Text('Log in'),
-                      onPressed: () {
-                        // Validate returns true if the form is valid, or false
-                        // otherwise.
-                        if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a Snackbar.
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Buying not supported yet.'),
-                            ),
-                          );
-                          Navigator.pushReplacementNamed(context, '/catalog');
-                        }
-                      },
+                    child: Consumer<AuthViewModel>(
+                      builder: (context, auth, child) => RaisedButton(
+                        child: Text('Log in'),
+                        onPressed: auth.isLoading
+                            ? null
+                            : () {
+                                if (_formKey.currentState.validate()) {
+                                  auth.loginWithPassword(
+                                    usernameController.text,
+                                    passwordController.text,
+                                  );
+                                }
+                              },
+                      ),
                     ),
                   ),
                 ],
