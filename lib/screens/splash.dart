@@ -12,7 +12,6 @@ class Splash extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (configurations.isLoading == false &&
           configurations.hasError == false) {
-        print("sasdasdasd ${configurations.configurations.self}");
         if (configurations.configurations.self == null) {
           Navigator.pushReplacementNamed(context, '/login');
         } else {

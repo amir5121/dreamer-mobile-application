@@ -42,9 +42,8 @@ class Singleton {
           return options;
         },
         onError: (DioError e) async {
-          print(e.response.statusCode);
-          print(e.response.data['errors']['code']);
-          if (e.response.statusCode == 401 &&
+          if (e.response != null &&
+              e.response.statusCode == 401 &&
               e.response.data['errors']['code'] == 'token_not_valid') {
             _dio.interceptors.requestLock.lock();
 

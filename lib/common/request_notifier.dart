@@ -12,11 +12,13 @@ class RequestNotifier extends ChangeNotifier {
       setError(false, null);
       _isLoading = true;
       notifyListeners();
-      T result = await Singleton().retry.retry(() => f(),
-          retryIf: (e) =>
-              e is DioError &&
-              e.response.statusCode == 401 &&
-              e.response.data['errors']['code'] == 'token_not_valid');
+      T result = await Singleton().retry.retry(() => f(), retryIf: (e) {
+        print("asdasdasdasdasdasd asda $e");
+        return e is DioError &&
+            e.response != null &&
+            e.response.statusCode == 401 &&
+            e.response.data['errors']['code'] == 'token_not_valid';
+      });
       _isLoading = false;
       notifyListeners();
       return result;
@@ -25,12 +27,8 @@ class RequestNotifier extends ChangeNotifier {
         setError(true, e.response.data["errors"]["detail"]);
         _isLoading = false;
         notifyListeners();
-        print(e.response.data);
-        print(e.response.headers);
-        print(e.response.request);
       } else {
         setError(true, "Something went wrong! ${e.message}");
-        print(e.request);
         // print(e.message);
       }
       return null;
