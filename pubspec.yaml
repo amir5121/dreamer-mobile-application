@@ -27,6 +27,7 @@ dependencies:
   dio:
   flutter_secure_storage:
   json_annotation:
+  retry:
   retrofit:
 
 dev_dependencies:

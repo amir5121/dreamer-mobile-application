@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dreamer/common/singleton.dart';
 import 'package:flutter/foundation.dart';
 
 class RequestNotifier extends ChangeNotifier {
@@ -11,7 +12,11 @@ class RequestNotifier extends ChangeNotifier {
       setError(false, null);
       _isLoading = true;
       notifyListeners();
-      T result = await f();
+      T result = await Singleton().retry.retry(() => f(),
+          retryIf: (e) =>
+              e is DioError &&
+              e.response.statusCode == 401 &&
+              e.response.data['errors']['code'] == 'token_not_valid');
       _isLoading = false;
       notifyListeners();
       return result;

@@ -7,10 +7,12 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ConfigurationsViewModel configurations =
-        context.watch<ConfigurationsViewModel>();
+    context.watch<ConfigurationsViewModel>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (configurations.isLoading == false) {
+      if (configurations.isLoading == false &&
+          configurations.hasError == false) {
+        print("sasdasdasd ${configurations.configurations.self}");
         if (configurations.configurations.self == null) {
           Navigator.pushReplacementNamed(context, '/login');
         } else {
@@ -20,22 +22,46 @@ class Splash extends StatelessWidget {
     });
 
     return DreamerScaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Hello there dreamer",
-            style: Theme.of(context).textTheme.headline5,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: LinearProgressIndicator(),
-          )
-
-          // Consumer<ConfigurationsViewModel>(
-          //     builder: (context, configurations, child) =>
-          //         _buildChild(configurations))
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Consumer<ConfigurationsViewModel>(
+              builder: (context, configurations, child) =>
+              configurations.hasError
+                  ? Column(
+                children: [
+                  Text(
+                    "Something wen't wrong",
+                  ),
+                  Text(
+                    configurations.errorMessage,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .caption,
+                  ),
+                ],
+              )
+                  : Column(
+                children: [
+                  Text(
+                    "Hello there dreamer",
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: LinearProgressIndicator(),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Constants {
+  static const String accessToken = 'accessToken';
+  static const String refreshToken = 'refreshToken';
+  static const String baseUrl = "http://10.0.2.2:8000/api/v1";
+
   static const int _deepPurplePrimaryValue = 0xFF673AB7;
 
   static const MaterialColor deepPurple = MaterialColor(

@@ -17,7 +17,7 @@ final appTheme = ThemeData(
       bodyText2: TextStyle(color: Colors.grey),
       subtitle1: TextStyle(color: Colors.grey),
       headline4: TextStyle(color: Colors.white),
-      headline5: TextStyle(color: Colors.white),
+      caption: TextStyle(color: Colors.blueGrey),
     ),
     inputDecorationTheme: InputDecorationTheme(
         contentPadding: EdgeInsets.only(left: 16),

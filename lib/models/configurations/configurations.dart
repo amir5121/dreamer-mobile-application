@@ -10,8 +10,9 @@ class Configurations {
 
   Configurations(this.self);
 
-  factory Configurations.fromJson(Map<String, dynamic> json) =>
-      _$ConfigurationsFromJson(json);
+  factory Configurations.fromJson(Map<String, dynamic> json) {
+    return _$ConfigurationsFromJson(json['data']);
+  }
 
   Map<String, dynamic> toJson() => _$ConfigurationsToJson(this);
 }

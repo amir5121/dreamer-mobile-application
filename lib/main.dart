@@ -21,11 +21,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ConfigurationsViewModel model = ConfigurationsViewModel();
+  ConfigurationsViewModel configurationsViewModel = ConfigurationsViewModel();
 
   @override
   void initState() {
-    model.loadData();
+    configurationsViewModel.loadData();
     super.initState();
   }
 
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         // In this sample app, CatalogModel never changes, so a simple Provider
         // is sufficient.
-        ChangeNotifierProvider(create: (context) => model),
+        ChangeNotifierProvider(create: (context) => configurationsViewModel),
         ChangeNotifierProvider(create: (context) => AuthViewModel()),
 
         Provider(create: (context) => CatalogModel()),
