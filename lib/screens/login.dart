@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -92,14 +91,10 @@ class _LoginState extends State<Login> {
                             ? null
                             : () {
                                 if (_formKey.currentState.validate()) {
-                                  try {
-                                    auth.loginWithPassword(
-                                      usernameController.text,
-                                      passwordController.text,
-                                    );
-                                  } on DioError catch (e) {
-                                    print(e);
-                                  }
+                                  auth.loginWithPassword(
+                                    usernameController.text,
+                                    passwordController.text,
+                                  );
                                 }
                               },
                       ),

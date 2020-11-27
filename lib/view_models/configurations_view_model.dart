@@ -1,14 +1,15 @@
-import 'package:dreamer/models/configurations.dart';
-import 'package:dreamer/services/configurations_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:dreamer/common/request_notifier.dart';
+import 'package:dreamer/common/singleton.dart';
+import 'package:dreamer/models/configurations/configurations.dart';
 
-class ConfigurationsViewModel extends ChangeNotifier {
-  final ConfigurationService _configurationService = ConfigurationService();
+class ConfigurationsViewModel extends RequestNotifier {
   bool _isLoading = true;
   Configurations _configurations;
 
   void loadData() async {
-    _configurations = await _configurationService.getConfigurations();
+    _configurations = await makeRequest(
+      () => Singleton().client.getConfigurations(),
+    );
     _isLoading = false;
     notifyListeners();
   }

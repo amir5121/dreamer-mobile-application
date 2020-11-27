@@ -26,8 +26,13 @@ dependencies:
   provider:
   dio:
   flutter_secure_storage:
+  json_annotation:
+  retrofit:
 
 dev_dependencies:
+  json_serializable:
+  retrofit_generator:
+  build_runner:
   flutter_test:
     sdk: flutter
 
