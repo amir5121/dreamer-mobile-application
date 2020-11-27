@@ -16,7 +16,7 @@ class Splash extends StatelessWidget {
         if (configurations.configurations.self == null) {
           Navigator.pushReplacementNamed(context, '/login');
         } else {
-          Navigator.pushReplacementNamed(context, '/catalog');
+          Navigator.pushReplacementNamed(context, '/home');
         }
       }
     });

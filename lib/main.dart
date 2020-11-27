@@ -1,15 +1,11 @@
 import 'package:dreamer/common/theme.dart';
-import 'package:dreamer/screens/cart.dart';
-import 'package:dreamer/screens/catalog.dart';
+import 'package:dreamer/screens/home.dart';
 import 'package:dreamer/screens/login.dart';
 import 'package:dreamer/screens/splash.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'models/cart.dart';
-import 'models/catalog.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,15 +34,6 @@ class _MyAppState extends State<MyApp> {
         // is sufficient.
         ChangeNotifierProvider(create: (context) => configurationsViewModel),
         ChangeNotifierProvider(create: (context) => AuthViewModel()),
-
-        Provider(create: (context) => CatalogModel()),
-        ChangeNotifierProxyProvider<CatalogModel, CartModel>(
-          create: (context) => CartModel(),
-          update: (context, catalog, cart) {
-            cart.catalog = catalog;
-            return cart;
-          },
-        ),
       ],
       child: MaterialApp(
         title: 'Dreamer',
@@ -55,8 +42,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/': (context) => Splash(),
           '/login': (context) => Login(),
-          '/catalog': (context) => MyCatalog(),
-          '/cart': (context) => MyCart(),
+          '/home': (context) => Home(),
         },
       ),
     );

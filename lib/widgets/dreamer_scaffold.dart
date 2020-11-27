@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class DreamerScaffold extends StatelessWidget {
   final Widget body;
+  final Widget bottomNavigationBar;
+  final Widget floatingActionButton;
 
-  const DreamerScaffold({Key key, this.body}) : super(key: key);
+  const DreamerScaffold({Key key, this.body, this.bottomNavigationBar, this.floatingActionButton})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +17,8 @@ class DreamerScaffold extends StatelessWidget {
         centerTitle: true,
       ),
       body: body,
+      bottomNavigationBar: bottomNavigationBar,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

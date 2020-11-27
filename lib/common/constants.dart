@@ -7,6 +7,9 @@ class Constants {
 
   static const int _deepPurplePrimaryValue = 0xFF673AB7;
 
+  static const MaterialColor accentColor = Colors.grey;
+  static const Color tertiaryColor = Colors.white;
+
   static const MaterialColor deepPurple = MaterialColor(
     _deepPurplePrimaryValue,
     <int, Color>{
@@ -22,4 +25,5 @@ class Constants {
       900: Color(0xFF311B92),
     },
   );
+  static const Color secondaryColor = Color(_deepPurplePrimaryValue);
 }

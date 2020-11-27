@@ -27,7 +27,7 @@ class _LoginState extends State<Login> {
       if (auth.isLoading == false &&
           auth.login != null &&
           auth.login.accessToken != null) {
-        Navigator.pushReplacementNamed(context, '/catalog');
+        Navigator.pushReplacementNamed(context, '/home');
       }
       if (auth.hasError) {
         ScaffoldMessenger.of(context).showSnackBar(
