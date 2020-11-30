@@ -16,6 +16,27 @@ class _RestClient implements RestClient {
   String baseUrl;
 
   @override
+  Future<AuthTokens> loginWithPassword(loginCredentials) async {
+    ArgumentError.checkNotNull(loginCredentials, 'loginCredentials');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(loginCredentials?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/auth/jwt/create/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AuthTokens.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<ConfigurationsResponse> getConfigurations() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -34,23 +55,20 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<AuthTokens> loginWithPassword(loginCredentials) async {
-    ArgumentError.checkNotNull(loginCredentials, 'loginCredentials');
+  Future<PostResponse> getPosts(status) async {
+    ArgumentError.checkNotNull(status, 'status');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'status': status};
     final _data = <String, dynamic>{};
-    _data.addAll(loginCredentials?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '/auth/jwt/create/',
+    final _result = await _dio.request<Map<String, dynamic>>('/post/posts/',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'POST',
+            method: 'GET',
             headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = AuthTokens.fromJson(_result.data);
+    final value = PostResponse.fromJson(_result.data);
     return value;
   }
 }

@@ -7,9 +7,9 @@ part 'post_pagination.g.dart';
 class PostPagination {
   final String next;
   final String previous;
-  final List<Post> result;
+  final List<Post> results;
 
-  PostPagination(this.next, this.previous, this.result);
+  PostPagination(this.next, this.previous, this.results);
 
   factory PostPagination.fromJson(Map<String, dynamic> json) =>
       _$PostPaginationFromJson(json);
