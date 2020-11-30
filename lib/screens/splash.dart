@@ -6,13 +6,13 @@ import 'package:provider/provider.dart';
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ConfigurationsViewModel configurations =
+    ConfigurationsViewModel configurationsResponse =
     context.watch<ConfigurationsViewModel>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (configurations.isLoading == false &&
-          configurations.hasError == false) {
-        if (configurations.configurations.self == null) {
+      if (configurationsResponse.isLoading == false &&
+          configurationsResponse.hasError == false) {
+        if (configurationsResponse.configurations.data.self == null) {
           Navigator.pushReplacementNamed(context, '/login');
         } else {
           Navigator.pushReplacementNamed(context, '/home');

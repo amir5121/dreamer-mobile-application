@@ -1,5 +1,5 @@
 import 'package:dreamer/common/theme.dart';
-import 'package:dreamer/screens/home.dart';
+import 'package:dreamer/screens/landing.dart';
 import 'package:dreamer/screens/login.dart';
 import 'package:dreamer/screens/splash.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/': (context) => Splash(),
           '/login': (context) => Login(),
-          '/home': (context) => Home(),
+          '/home': (context) => Landing(),
         },
       ),
     );

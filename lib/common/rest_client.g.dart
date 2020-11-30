@@ -16,7 +16,7 @@ class _RestClient implements RestClient {
   String baseUrl;
 
   @override
-  Future<Configurations> getConfigurations() async {
+  Future<ConfigurationsResponse> getConfigurations() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -29,7 +29,7 @@ class _RestClient implements RestClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = Configurations.fromJson(_result.data);
+    final value = ConfigurationsResponse.fromJson(_result.data);
     return value;
   }
 

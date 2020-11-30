@@ -5,7 +5,7 @@ class Constants {
   static const String refreshToken = 'refreshToken';
   static const String baseUrl = "http://10.0.2.2:8000/api/v1";
 
-  static const int _deepPurplePrimaryValue = 0xFF673AB7;
+  static const int _deepPurplePrimaryValue = 0xFF7837D9;
 
   static const MaterialColor accentColor = Colors.grey;
   static const Color tertiaryColor = Colors.white;
@@ -22,7 +22,7 @@ class Constants {
       600: Color(0xFF5E35B1),
       700: Color(0xFF512DA8),
       800: Color(0xFF4527A0),
-      900: Color(0xFF311B92),
+      900: Color(0xFF1F182E),
     },
   );
   static const Color secondaryColor = Color(_deepPurplePrimaryValue);

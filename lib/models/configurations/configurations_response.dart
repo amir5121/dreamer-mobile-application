@@ -1,0 +1,20 @@
+import 'package:json_annotation/json_annotation.dart';
+
+import 'configurations.dart';
+
+part 'configurations_response.g.dart';
+
+@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+class ConfigurationsResponse {
+  final String message;
+  final int code;
+  final Configurations data;
+
+  ConfigurationsResponse(this.message, this.code, this.data);
+
+  factory ConfigurationsResponse.fromJson(Map<String, dynamic> json) {
+    return _$ConfigurationsResponseFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() => _$ConfigurationsResponseToJson(this);
+}

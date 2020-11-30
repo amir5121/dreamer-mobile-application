@@ -1,10 +1,10 @@
 import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
-import 'package:dreamer/models/configurations/configurations.dart';
+import 'package:dreamer/models/configurations/configurations_response.dart';
 
 class ConfigurationsViewModel extends RequestNotifier {
   bool _isLoading = true;
-  Configurations _configurations;
+  ConfigurationsResponse _configurations;
 
   void loadData() async {
     _configurations = await makeRequest(
@@ -18,7 +18,7 @@ class ConfigurationsViewModel extends RequestNotifier {
     return _isLoading;
   }
 
-  Configurations get configurations {
+  ConfigurationsResponse get configurations {
     return _configurations;
   }
 }

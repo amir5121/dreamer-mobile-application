@@ -1,84 +1,75 @@
-import 'package:dreamer/common/constants.dart';
+import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:dreamer/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Home extends StatefulWidget {
+class Splash extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _SplashState createState() => _SplashState();
 }
 
-class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Bitch please',
-      style: optionStyle,
-    ),
-  ];
+class _SplashState extends State<Splash> {
+  @override
+  void initState() {
+    super.initState();
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
-
   @override
   Widget build(BuildContext context) {
+    ConfigurationsViewModel configurationsResponse =
+    context.watch<ConfigurationsViewModel>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (configurationsResponse.isLoading == false &&
+          configurationsResponse.hasError == false) {
+        if (configurationsResponse.configurations.data.self == null) {
+          Navigator.pushReplacementNamed(context, '/login');
+        } else {
+          Navigator.pushReplacementNamed(context, '/home');
+        }
+      }
+    });
+
     return DreamerScaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: Icon(
-          Icons.add,
-          color: Constants.tertiaryColor,
-        ),
-        backgroundColor: Constants.secondaryColor,
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border:
-              Border(top: BorderSide(width: 1, color: Constants.accentColor)),
-        ),
-        child: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: Theme.of(context).primaryColor,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Journal',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'Statics',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'Notifications',
-            ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Consumer<ConfigurationsViewModel>(
+              builder: (context, configurations, child) =>
+              configurations.hasError
+                  ? Column(
+                children: [
+                  Text(
+                    "Something wen't wrong",
+                  ),
+                  Text(
+                    configurations.errorMessage,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .caption,
+                  ),
+                ],
+              )
+                  : Column(
+                children: [
+                  Text(
+                    "Hello there dreamer",
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: LinearProgressIndicator(),
+                  ),
+                ],
+              ),
+            )
           ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
         ),
       ),
     );
