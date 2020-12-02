@@ -8,6 +8,7 @@ part of 'post_response.dart';
 
 PostResponse _$PostResponseFromJson(Map<String, dynamic> json) {
   return PostResponse(
+    json['messageCode'] as String,
     json['message'] as String,
     json['code'] as int,
     json['data'] == null
@@ -18,6 +19,7 @@ PostResponse _$PostResponseFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$PostResponseToJson(PostResponse instance) =>
     <String, dynamic>{
+      'messageCode': instance.messageCode,
       'message': instance.message,
       'code': instance.code,
       'data': instance.data,

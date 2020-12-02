@@ -27,7 +27,7 @@ class Singleton {
           ..options.baseUrl = Constants.baseUrl
           ..options.followRedirects = false
           ..options.validateStatus = ((status) => status < 300),
-        _retry = RetryOptions() {
+        _retry = RetryOptions(maxAttempts: 5) {
     this._client = RestClient(this._dio);
 
     Dio refreshDio = Dio();
@@ -45,18 +45,24 @@ class Singleton {
           if (e.response != null &&
               e.response.statusCode == 401 &&
               e.response.data['errors']['code'] == 'token_not_valid') {
+            print("asking for refresh token... LOCKING");
             _dio.interceptors.requestLock.lock();
+            try {
+              Response refreshResponse = await refreshDio.post(
+                Constants.baseUrl + '/auth/jwt/refresh/',
+                data: {
+                  "refresh": await _storage.read(key: Constants.refreshToken)
+                },
+              );
 
-            Response refreshResponse = await refreshDio.post(
-              Constants.baseUrl + '/auth/jwt/refresh/',
-              data: {
-                "refresh": await _storage.read(key: Constants.refreshToken)
-              },
-            );
-            await _storage.write(
-                key: Constants.accessToken,
-                value: refreshResponse.data["access"]);
-            _dio.interceptors.requestLock.unlock();
+              await _storage.write(
+                  key: Constants.accessToken,
+                  value: refreshResponse.data["access"]);
+            } on DioError catch (_) {
+              print("Failed to acquire token");
+            } finally {
+              _dio.interceptors.requestLock.unlock();
+            }
           }
           return e;
         },

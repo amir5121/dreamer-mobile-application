@@ -40,8 +40,8 @@ class _LandingState extends State<Landing> {
 
   @override
   void initState() {
-    postViewModel.loadPosts();
     super.initState();
+    postViewModel.loadPosts();
   }
 
   @override

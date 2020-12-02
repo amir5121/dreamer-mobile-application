@@ -26,4 +26,6 @@ class Constants {
     },
   );
   static const Color secondaryColor = Color(_deepPurplePrimaryValue);
+
+  static const String INVALID_TOKEN = "token_not_valid";
 }

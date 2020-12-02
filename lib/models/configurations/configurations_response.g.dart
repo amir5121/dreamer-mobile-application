@@ -9,6 +9,7 @@ part of 'configurations_response.dart';
 ConfigurationsResponse _$ConfigurationsResponseFromJson(
     Map<String, dynamic> json) {
   return ConfigurationsResponse(
+    json['message_code'] as String,
     json['message'] as String,
     json['code'] as int,
     Configurations.fromJson(json['data'] as Map<String, dynamic>),
@@ -18,6 +19,7 @@ ConfigurationsResponse _$ConfigurationsResponseFromJson(
 Map<String, dynamic> _$ConfigurationsResponseToJson(
         ConfigurationsResponse instance) =>
     <String, dynamic>{
+      'message_code': instance.messageCode,
       'message': instance.message,
       'code': instance.code,
       'data': instance.data,
