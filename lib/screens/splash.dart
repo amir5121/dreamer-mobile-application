@@ -1,4 +1,5 @@
 import 'package:dreamer/common/constants.dart';
+import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:dreamer/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class Splash extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Consumer<ConfigurationsViewModel>(
+            DreamConsumer<ConfigurationsViewModel>(
               builder: (context, configurations, child) =>
                   configurations.hasError
                       ? Column(

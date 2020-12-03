@@ -1,3 +1,4 @@
+import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,7 @@ class _LoginState extends State<Login> {
                   ),
                   Container(
                     width: double.infinity,
-                    child: Consumer<AuthViewModel>(
+                    child: DreamConsumer<AuthViewModel>(
                       builder: (context, auth, child) => RaisedButton(
                         child: Text('Log in'),
                         onPressed: auth.isLoading
