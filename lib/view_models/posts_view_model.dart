@@ -5,9 +5,9 @@ import 'package:dreamer/models/post/post_response.dart';
 class PostViewModel extends RequestNotifier {
   PostResponse _posts;
 
-  void loadPosts() async {
-    _posts = await makeRequest(
-      () => Singleton().client.getPosts('timeline'),
+  Future<PostResponse> loadDeeperPosts() async {
+    return _posts = await makeRequest(
+      () => Singleton().client.getPosts('timeline', true),
     );
   }
 

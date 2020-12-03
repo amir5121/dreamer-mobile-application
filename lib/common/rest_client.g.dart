@@ -55,10 +55,16 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<PostResponse> getPosts(status) async {
+  Future<PostResponse> getPosts(status, showMulti, [page]) async {
     ArgumentError.checkNotNull(status, 'status');
+    ArgumentError.checkNotNull(showMulti, 'showMulti');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'status': status};
+    final queryParameters = <String, dynamic>{
+      r'status': status,
+      r'show_multi': showMulti,
+      r'page': page
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>('/post/posts/',
         queryParameters: queryParameters,

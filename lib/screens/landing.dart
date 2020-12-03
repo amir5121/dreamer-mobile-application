@@ -15,7 +15,7 @@ class _LandingState extends State<Landing> {
   PostViewModel postViewModel = PostViewModel();
 
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
     Text(
@@ -41,7 +41,7 @@ class _LandingState extends State<Landing> {
   @override
   void initState() {
     super.initState();
-    postViewModel.loadPosts();
+    postViewModel.loadDeeperPosts();
   }
 
   @override
@@ -68,17 +68,16 @@ class _LandingState extends State<Landing> {
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            border:
-            Border(top: BorderSide(width: 1, color: Constants.accentColor)),
+            border: Border(
+              top: BorderSide(width: 1, color: Constants.accentColor),
+            ),
           ),
           child: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
-                backgroundColor: Theme
-                    .of(context)
-                    .primaryColor,
+                backgroundColor: Theme.of(context).primaryColor,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.business),

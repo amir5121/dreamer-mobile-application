@@ -7,6 +7,7 @@ class RequestNotifier extends ChangeNotifier {
   String _errorMessage;
   int _errorStatus;
   String _errorCode;
+  // bool _isLoading = true;
   bool _isLoading = false;
 
   Future<T> makeRequest<T>(Function f) async {
