@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/singleton.dart';
 import 'package:flutter/foundation.dart';
 
@@ -20,7 +21,7 @@ class RequestNotifier extends ChangeNotifier {
         return e is DioError &&
             e.response != null &&
             e.response.statusCode == 401 &&
-            e.response.data['message_code'] == 'token_not_valid';
+            e.response.data['message_code'] == Constants.INVALID_TOKEN;
       });
       _isLoading = false;
       notifyListeners();

@@ -82,14 +82,17 @@ class _LandingState extends State<Landing> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.business),
                 label: 'Journal',
+                backgroundColor: Theme.of(context).primaryColor,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.school),
                 label: 'Statics',
+                backgroundColor: Theme.of(context).primaryColor,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.school),
-                label: 'Notifications',
+                label: 'Settings',
+                backgroundColor: Theme.of(context).primaryColor,
               ),
             ],
             currentIndex: _selectedIndex,
