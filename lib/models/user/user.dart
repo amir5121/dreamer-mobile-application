@@ -10,9 +10,11 @@ class User {
   final String dateJoined;
   final String email;
   final String identifier;
+  final String avatarImage;
+  final String fullName;
 
   User(this.username, this.firstName, this.lastName, this.dateJoined,
-      this.email, this.identifier);
+      this.email, this.identifier, this.avatarImage, this.fullName);
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
