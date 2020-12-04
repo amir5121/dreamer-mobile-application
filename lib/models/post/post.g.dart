@@ -9,7 +9,7 @@ part of 'post.dart';
 Post _$PostFromJson(Map<String, dynamic> json) {
   return Post(
     User.fromJson(json['user'] as Map<String, dynamic>),
-    json['created'] as String,
+    DateTime.parse(json['created'] as String),
     json['modified'] as String,
     json['status'] as String,
     (json['text'] as List).map((e) => e as String).toList(),
@@ -19,7 +19,7 @@ Post _$PostFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'user': instance.user,
-      'created': instance.created,
+      'created': instance.created.toIso8601String(),
       'modified': instance.modified,
       'status': instance.status,
       'text': instance.text,

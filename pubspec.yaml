@@ -31,6 +31,7 @@ dependencies:
   retrofit:
   carousel_slider:
   infinite_scroll_pagination:
+  timeago:
 
 dev_dependencies:
   json_serializable:

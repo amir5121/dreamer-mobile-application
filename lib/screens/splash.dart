@@ -1,7 +1,7 @@
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
-import 'package:dreamer/widgets/dreamer_scaffold.dart';
+import 'package:dreamer/base_widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

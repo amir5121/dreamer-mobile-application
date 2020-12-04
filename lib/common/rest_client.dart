@@ -17,8 +17,14 @@ abstract class RestClient {
   @GET("/configuration/initial/")
   Future<ConfigurationsResponse> getConfigurations();
 
+  @GET("/post/timeline/")
+  Future<PostResponse> getTimeline({
+    @Query("show_multi") bool showMulti,
+    @Query("page") int page,
+  });
+
   @GET("/post/posts/")
-  Future<PostResponse> getPosts(
-      @Query("status") String status, @Query("show_multi") bool showMulti,
-      [@Query("page") int page]);
+  Future<PostResponse> getPosts({
+    @Query("page") int page,
+  });
 }

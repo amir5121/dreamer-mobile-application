@@ -1,11 +1,11 @@
 import 'package:dreamer/common/constants.dart';
-import 'package:dreamer/screens/home.dart';
+import 'package:dreamer/screens/home/home.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';
-import 'package:dreamer/widgets/dreamer_scaffold.dart';
+import 'package:dreamer/base_widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'journal.dart';
+import 'journal/journal.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -47,9 +47,11 @@ class _LandingState extends State<Landing> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) {
-          return postViewModel;
-        }),
+        ChangeNotifierProvider(
+          create: (context) {
+            return postViewModel;
+          },
+        ),
       ],
       child: DreamerScaffold(
         showAppBar: _selectedIndex != 1,
