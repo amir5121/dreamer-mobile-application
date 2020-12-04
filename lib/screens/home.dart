@@ -43,14 +43,14 @@ class _HomeState extends State<Home> {
   Widget _homeHeading() {
     CarouselController buttonCarouselController = CarouselController();
 
-    return DreamConsumer<PostViewModel>(
-      loadingBuilder: (context, timeline, child) {
+    return DreamConsumer2<PostViewModel, ConfigurationsViewModel>(
+      loadingBuilder: (context, timeline, configurations, child) {
         return Text("Loading");
       },
-      errorBuilder: (context, timeline, child) {
+      errorBuilder: (context, timeline, configurations, child) {
         return Text(timeline.errorMessage);
       },
-      builder: (context, timeline, child) {
+      builder: (context, timeline, configurations, child) {
         return Column(
           children: [
             Card(
@@ -59,58 +59,49 @@ class _HomeState extends State<Home> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: DreamConsumer<ConfigurationsViewModel>(
-                loadingBuilder: (context, configurations, child) {
-                  return Text("I should have had the configurations by now. loading...");
-                },
-                builder: (context, configurations, child) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          configurations.configurations.data.mainBackground,
-                        ),
-                        fit: BoxFit.fitWidth,
-                        alignment: Alignment.topCenter,
-                      ),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      configurations.configurations.data.mainBackground,
                     ),
-                    child: CarouselSlider(
-                      carouselController: buttonCarouselController,
-                      options: CarouselOptions(
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            _current = index;
-                          });
-                        },
-                      ),
-                      items: timeline.posts.data.results.map<Widget>((Post post) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    post.text[0],
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ),
-                                OutlineButton(
-                                  onPressed: () {},
-                                  child: Text("Go deeper"),
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }).toList(),
-                    ),
-                  );
-                },
+                    fit: BoxFit.fitWidth,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
+                child: CarouselSlider(
+                  carouselController: buttonCarouselController,
+                  options: CarouselOptions(
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        _current = index;
+                      });
+                    },
+                  ),
+                  items: timeline.posts.data.results.map<Widget>((Post post) {
+                    return Builder(builder: (BuildContext context) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              post.text[0],
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          ),
+                          OutlineButton(
+                            onPressed: () {},
+                            child: Text("Go deeper"),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      );
+                    });
+                  }).toList(),
+                ),
               ),
             ),
             Container(
