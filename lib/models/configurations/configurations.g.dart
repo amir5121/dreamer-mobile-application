@@ -11,10 +11,12 @@ Configurations _$ConfigurationsFromJson(Map<String, dynamic> json) {
     json['self'] == null
         ? null
         : User.fromJson(json['self'] as Map<String, dynamic>),
+    json['main_background'] as String,
   );
 }
 
 Map<String, dynamic> _$ConfigurationsToJson(Configurations instance) =>
     <String, dynamic>{
       'self': instance.self,
+      'main_background': instance.mainBackground,
     };

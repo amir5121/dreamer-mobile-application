@@ -8,14 +8,13 @@ class RequestNotifier extends ChangeNotifier {
   String _errorMessage;
   int _errorStatus;
   String _errorCode;
-  // bool _isLoading = true;
   bool _isLoading = false;
 
-  Future<T> makeRequest<T>(Function f) async {
+  Future<T> makeRequest<T>(Function f, {bool notify = true}) async {
     try {
       unSetError();
       _isLoading = true;
-      notifyListeners();
+      if (notify) notifyListeners();
       T result = await Singleton().retry.retry(() => f(), retryIf: (e) {
         print("MakeRequest Retry! $e");
         return e is DioError &&
@@ -24,13 +23,13 @@ class RequestNotifier extends ChangeNotifier {
             e.response.data['message_code'] == Constants.INVALID_TOKEN;
       });
       _isLoading = false;
-      notifyListeners();
+      if (notify) notifyListeners();
       print("makeRequest result $result");
       return result;
     } on DioError catch (e) {
       print("failed completely asda $e");
       setResponseError(e);
-      notifyListeners();
+      if (notify) notifyListeners();
     } catch (e) {
       setError(
         errorMessage: "Something wen't wrong",
@@ -38,6 +37,7 @@ class RequestNotifier extends ChangeNotifier {
         errorStatus: null,
       );
     }
+    return null;
   }
 
   void setResponseError(DioError err) {
@@ -45,6 +45,12 @@ class RequestNotifier extends ChangeNotifier {
       setError(
         errorMessage: "Server Failure! Try again Later!",
         errorCode: null,
+        errorStatus: err.response.statusCode,
+      );
+    } else if (err.response.statusCode == 404) {
+      setError(
+        errorMessage: "Not Found",
+        errorCode: Constants.NOT_FOUND,
         errorStatus: err.response.statusCode,
       );
     } else {

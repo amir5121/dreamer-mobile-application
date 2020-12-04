@@ -42,7 +42,7 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
-        '/utils/configurations/',
+        '/configuration/initial/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

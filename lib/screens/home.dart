@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dio/dio.dart';
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/dream_consumer.dart';
-import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/post/post.dart';
 import 'package:dreamer/models/post/post_response.dart';
+import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -22,22 +22,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) async {
-      // duplicate logic here.. i don't like it..
-      // but i'm also not gonna put more time into fixing this
-      // The issue is caused by calling notifyListener while in init state..
-      // so adding listener should not happen in init state which then it would be weird..
-      // i probably will have to fix this issue before production release as they would
-      // need more thing from home page than just loading a bunch of text.. but it's 1am now
-      // may be calling remove listeners and adding one again on each build..
-      // das ist nicht schön wieder;
-
-      PostResponse posts = await Singleton().retry.retry(
-          () => Singleton().client.getPosts('timeline', false, pageKey), retryIf: (e) {
-        return e is DioError &&
-            e.response != null &&
-            e.response.statusCode == 401 &&
-            e.response.data['message_code'] == Constants.INVALID_TOKEN;
-      });
+      PostResponse posts =
+          await Provider.of<PostViewModel>(context).loadTimelinePosts(pageKey + 1);
 
       if (posts.data.next == null) {
         _pagingController.appendLastPage(posts.data.results);
@@ -73,49 +59,58 @@ class _HomeState extends State<Home> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/background.webp"),
-                    fit: BoxFit.fitWidth,
-                    alignment: Alignment.topCenter,
-                  ),
-                ),
-                child: CarouselSlider(
-                  carouselController: buttonCarouselController,
-                  options: CarouselOptions(
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _current = index;
-                      });
-                    },
-                  ),
-                  items: timeline.posts.data.results.map<Widget>((Post post) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                post.text[0],
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ),
-                            OutlineButton(
-                              onPressed: () {},
-                              child: Text("Go deeper"),
-                              borderSide: BorderSide(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
+              child: DreamConsumer<ConfigurationsViewModel>(
+                loadingBuilder: (context, configurations, child) {
+                  return Text("I should have had the configurations by now. loading...");
+                },
+                builder: (context, configurations, child) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          configurations.configurations.data.mainBackground,
+                        ),
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.topCenter,
+                      ),
+                    ),
+                    child: CarouselSlider(
+                      carouselController: buttonCarouselController,
+                      options: CarouselOptions(
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _current = index;
+                          });
+                        },
+                      ),
+                      items: timeline.posts.data.results.map<Widget>((Post post) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    post.text[0],
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                ),
+                                OutlineButton(
+                                  onPressed: () {},
+                                  child: Text("Go deeper"),
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         );
-                      },
-                    );
-                  }).toList(),
-                ),
+                      }).toList(),
+                    ),
+                  );
+                },
               ),
             ),
             Container(

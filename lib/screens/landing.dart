@@ -5,6 +5,8 @@ import 'package:dreamer/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'journal.dart';
+
 class Landing extends StatefulWidget {
   @override
   _LandingState createState() => _LandingState();
@@ -18,10 +20,7 @@ class _LandingState extends State<Landing> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    Journal(),
     Text(
       'Index 2: School',
       style: optionStyle,
@@ -53,6 +52,7 @@ class _LandingState extends State<Landing> {
         }),
       ],
       child: DreamerScaffold(
+        showAppBar: _selectedIndex != 1,
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
@@ -91,7 +91,7 @@ class _LandingState extends State<Landing> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.school),
-                label: 'Settings',
+                label: 'Notifications',
                 backgroundColor: Theme.of(context).primaryColor,
               ),
             ],

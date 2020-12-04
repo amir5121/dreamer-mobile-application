@@ -12,10 +12,9 @@ abstract class RestClient {
   factory RestClient(Dio dio) = _RestClient;
 
   @POST("/auth/jwt/create/")
-  Future<AuthTokens> loginWithPassword(
-      @Body() LoginCredentials loginCredentials);
+  Future<AuthTokens> loginWithPassword(@Body() LoginCredentials loginCredentials);
 
-  @GET("/utils/configurations/")
+  @GET("/configuration/initial/")
   Future<ConfigurationsResponse> getConfigurations();
 
   @GET("/post/posts/")

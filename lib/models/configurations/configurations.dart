@@ -7,8 +7,9 @@ part 'configurations.g.dart';
 class Configurations {
   @JsonKey(nullable: true)
   final User self;
+  final String mainBackground;
 
-  Configurations(this.self);
+  Configurations(this.self, this.mainBackground);
 
   factory Configurations.fromJson(Map<String, dynamic> json) {
     return _$ConfigurationsFromJson(json);
