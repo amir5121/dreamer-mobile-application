@@ -1,6 +1,5 @@
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/models/post/post.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Widget journalPostItem(Post post, context) {
@@ -8,7 +7,7 @@ Widget journalPostItem(Post post, context) {
     decoration: BoxDecoration(
       color: Theme.of(context).primaryColor,
       border: Border(
-        bottom: BorderSide(width: 0.5, color: Constants.accentColor),
+        bottom: BorderSide(width: 1, color: Constants.accentColor),
       ),
     ),
     padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),

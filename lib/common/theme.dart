@@ -1,5 +1,4 @@
 import 'package:dreamer/common/constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -20,6 +19,7 @@ final appTheme = ThemeData(
     bodyText2: TextStyle(color: Constants.accentColor),
     subtitle1: TextStyle(color: Constants.accentColor),
     headline4: TextStyle(color: Constants.tertiaryColor),
+    headline6: TextStyle(color: Constants.tertiaryColor),
     caption: TextStyle(color: Colors.blueGrey),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(

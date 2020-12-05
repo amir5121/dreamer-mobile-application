@@ -2,7 +2,6 @@ import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/models/user/user.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends SliverPersistentHeaderDelegate {
@@ -67,7 +66,9 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                               children: [
                                 OutlineButton(
                                   child: Icon(Icons.settings),
-                                  onPressed: null,
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/settings');
+                                  },
                                   shape: CircleBorder(
                                     side: BorderSide(),
                                   ),
@@ -100,7 +101,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
           top: opacity > 0.8 ? 70.0 : 0,
           // right: null,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            margin: EdgeInsets.only(left: 16, right: 8, top: 4),
             child: CircleAvatar(
               // child: Text("Dreamer"),
               radius: opacity > 0.5 ? 34 : 24,

@@ -1,5 +1,4 @@
 import 'package:dreamer/common/request_notifier.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,14 +21,17 @@ class DreamConsumer<T extends RequestNotifier> extends Consumer {
   Widget buildWithChild(BuildContext context, Widget child) {
     T requestNotifier = Provider.of<T>(context);
     if (requestNotifier.hasError && snackOnError) {
-      Future<Null>.delayed(Duration(), () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: Duration(seconds: 6),
-            content: Text(requestNotifier.errorMessage),
-          ),
-        );
-      });
+      Future<Null>.delayed(
+        Duration(),
+        () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 6),
+              content: Text(requestNotifier.errorMessage),
+            ),
+          );
+        },
+      );
     }
     if (requestNotifier.isLoading && loadingBuilder != null) {
       return loadingBuilder(

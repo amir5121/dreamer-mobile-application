@@ -18,7 +18,6 @@ class _JournalState extends State<Journal> {
     _pagingController.addPageRequestListener((pageKey) async {
       PostResponse posts =
           await Provider.of<PostViewModel>(context).loadMyJournal(pageKey + 1);
-
       if (posts.data.next == null) {
         _pagingController.appendLastPage(posts.data.results);
       } else {
@@ -42,6 +41,14 @@ class _JournalState extends State<Journal> {
               // pinned: true,
               delegate: ProfileHeader(),
             ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Text("Wow such empty!"),
+                ],
+              ),
+            ),
+            // Paginator.listView
             PagedSliverList<int, Post>(
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<Post>(

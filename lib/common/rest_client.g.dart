@@ -37,6 +37,26 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<AuthTokens> signUpWithPassword(signUpCredentials) async {
+    ArgumentError.checkNotNull(signUpCredentials, 'signUpCredentials');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(signUpCredentials?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('/auth/users/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AuthTokens.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<ConfigurationsResponse> getConfigurations() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

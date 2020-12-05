@@ -1,7 +1,7 @@
+import 'package:dreamer/base_widgets/dreamer_scaffold.dart';
 import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
-import 'package:dreamer/base_widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,23 +32,16 @@ class _LoginState extends State<Login> {
         Provider.of<ConfigurationsViewModel>(context, listen: false).loadData();
         Navigator.pushReplacementNamed(context, '/home');
       }
-      if (auth.hasError) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(auth.errorMessage),
-          ),
-        );
-      }
     });
     return DreamerScaffold(
       body: Container(
-        padding: EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(48.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Sign up',
+              'Login',
               style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(
@@ -140,9 +133,18 @@ class _LoginState extends State<Login> {
                 Expanded(
                   child: RaisedButton(
                     color: Colors.white70,
-                    child: Text(
-                      "Google",
-                      style: TextStyle(color: Colors.black54),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Icon(Icons.clean_hands),
+                        Expanded(
+                          child: Text(
+                            "Google",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                        ),
+                      ],
                     ),
                     onPressed: () {},
                   ),
@@ -154,11 +156,15 @@ class _LoginState extends State<Login> {
                   child: RaisedButton(
                     color: Colors.white70,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          "Facebook",
-                          style: TextStyle(color: Colors.black54),
+                        Icon(Icons.wash),
+                        Expanded(
+                          child: Text(
+                            "Facebook",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black54),
+                          ),
                         ),
                       ],
                     ),
@@ -174,7 +180,9 @@ class _LoginState extends State<Login> {
                 MaterialButton(
                   minWidth: 0,
                   padding: EdgeInsets.only(left: 8, right: 8),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/signup');
+                  },
                   child: Text(
                     "Sign up",
                   ),

@@ -9,6 +9,7 @@ class RequestNotifier extends ChangeNotifier {
   int _errorStatus;
   String _errorCode;
   bool _isLoading = false;
+  bool _madeSuccessfulRequest = false;
 
   Future<T> makeRequest<T>(Function f, {bool notify = true}) async {
     try {
@@ -23,6 +24,7 @@ class RequestNotifier extends ChangeNotifier {
             e.response.data['message_code'] == Constants.INVALID_TOKEN;
       });
       _isLoading = false;
+      _madeSuccessfulRequest = true;
       if (notify) notifyListeners();
       print("makeRequest result $result");
       return result;
@@ -99,5 +101,18 @@ class RequestNotifier extends ChangeNotifier {
 
   bool get isLoading {
     return _isLoading;
+  }
+
+  bool get madeSuccessfulRequest {
+    return _madeSuccessfulRequest;
+  }
+
+  void reset() {
+    _madeSuccessfulRequest = false;
+    _hasError = false;
+    _errorMessage = null;
+    _errorStatus = null;
+    _errorCode = null;
+    _isLoading = false;
   }
 }

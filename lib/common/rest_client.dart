@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
+import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/configurations/configurations_response.dart';
 import 'package:dreamer/models/post/post_response.dart';
 import 'package:retrofit/retrofit.dart';
@@ -13,6 +14,9 @@ abstract class RestClient {
 
   @POST("/auth/jwt/create/")
   Future<AuthTokens> loginWithPassword(@Body() LoginCredentials loginCredentials);
+
+  @POST("/auth/users/")
+  Future<AuthTokens> signUpWithPassword(@Body() SignUpCredentials signUpCredentials);
 
   @GET("/configuration/initial/")
   Future<ConfigurationsResponse> getConfigurations();

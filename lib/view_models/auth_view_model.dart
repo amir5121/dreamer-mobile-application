@@ -3,10 +3,12 @@ import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
+import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthViewModel extends RequestNotifier {
   AuthTokens _login;
+  bool hasLoggedOut = false;
 
   void loginWithPassword(String email, String password) async {
     _login = await makeRequest<AuthTokens>(
@@ -14,12 +16,33 @@ class AuthViewModel extends RequestNotifier {
             LoginCredentials(email, password),
           ),
     );
-
     final storage = FlutterSecureStorage();
 
     await storage.write(key: Constants.accessToken, value: _login.accessToken);
-    await storage.write(
-        key: Constants.refreshToken, value: _login.refreshToken);
+    await storage.write(key: Constants.refreshToken, value: _login.refreshToken);
+  }
+
+  void logout() async {
+    final storage = FlutterSecureStorage();
+
+    await storage.delete(key: Constants.accessToken);
+    await storage.delete(key: Constants.refreshToken);
+    hasLoggedOut = true;
+    _login = null;
+    notifyListeners();
+  }
+
+  void signUpWithPassword(String email, String password, String rePassword) async {
+    _login = await makeRequest<AuthTokens>(
+      () => Singleton().client.signUpWithPassword(
+            SignUpCredentials(email, password, rePassword),
+          ),
+    );
+  }
+
+  void reset() {
+    super.reset();
+    _login = null;
   }
 
   AuthTokens get login {

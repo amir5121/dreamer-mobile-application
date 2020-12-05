@@ -32,6 +32,7 @@ dependencies:
   carousel_slider:
   infinite_scroll_pagination:
   timeago:
+  flutter_phoenix:
 
 dev_dependencies:
   json_serializable:

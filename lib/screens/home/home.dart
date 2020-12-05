@@ -3,7 +3,6 @@ import 'package:dreamer/models/post/post.dart';
 import 'package:dreamer/models/post/post_response.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';
 import 'package:dreamer/screens/home/home_heading.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
