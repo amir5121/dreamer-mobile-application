@@ -96,12 +96,12 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<PostResponse> getPosts({page}) async {
+  Future<DreamResponse> getDreams({page}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('/post/posts/',
+    final _result = await _dio.request<Map<String, dynamic>>('/post/dreams/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -109,7 +109,7 @@ class _RestClient implements RestClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = PostResponse.fromJson(_result.data);
+    final value = DreamResponse.fromJson(_result.data);
     return value;
   }
 }

@@ -1,8 +1,8 @@
 import 'package:dreamer/common/constants.dart';
-import 'package:dreamer/models/post/post.dart';
+import 'package:dreamer/models/dream/dream.dart';
 import 'package:flutter/material.dart';
 
-Widget journalPostItem(Post post, context) {
+Widget dreamItem(Dream dream, context) {
   return Container(
     decoration: BoxDecoration(
       color: Theme.of(context).primaryColor,
@@ -24,7 +24,7 @@ Widget journalPostItem(Post post, context) {
                     // child: Text("Dreamer"),
                     radius: 24,
                     backgroundImage: NetworkImage(
-                      post.user.avatarImage,
+                      dream.user.avatarImage,
                     ),
                   ),
                   Padding(
@@ -33,11 +33,11 @@ Widget journalPostItem(Post post, context) {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          post.user.fullName,
+                          dream.user.fullName,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         Text(
-                          post.user.email,
+                          dream.user.email,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
@@ -59,13 +59,13 @@ Widget journalPostItem(Post post, context) {
           children: [
             Expanded(
               child: Text(
-                post.text[0],
+                dream.text[0],
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                post.createdFormatted,
+                dream.createdFormatted,
                 style: Theme.of(context).textTheme.caption,
               ),
             ),

@@ -33,6 +33,7 @@ class RequestNotifier extends ChangeNotifier {
       setResponseError(e);
       if (notify) notifyListeners();
     } catch (e) {
+      print("Caught error $e");
       setError(
         errorMessage: "Something wen't wrong",
         errorCode: null,
@@ -69,6 +70,7 @@ class RequestNotifier extends ChangeNotifier {
     @required String errorCode,
     @required int errorStatus,
   }) {
+    print('Settinggg errorrrr $errorMessage');
     _isLoading = false;
     _hasError = true;
     _errorMessage = errorMessage;

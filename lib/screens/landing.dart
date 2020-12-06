@@ -1,5 +1,6 @@
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/screens/home/home.dart';
+import 'package:dreamer/view_models/dreams_view_model.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';
 import 'package:dreamer/base_widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,11 @@ class _LandingState extends State<Landing> {
         ChangeNotifierProvider(
           create: (context) {
             return postViewModel;
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return DreamViewModel();
           },
         ),
       ],

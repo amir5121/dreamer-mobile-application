@@ -1,7 +1,7 @@
-import 'package:dreamer/models/post/post.dart';
+import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/screens/journal/journal_post_item.dart';
 import 'package:dreamer/screens/journal/profile_header.dart';
-import 'package:dreamer/view_models/posts_view_model.dart';
+import 'package:dreamer/view_models/dreams_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
@@ -14,21 +14,21 @@ class Journal extends StatefulWidget {
 class _JournalState extends State<Journal> {
   @override
   void initState() {
-    var postViewModel = Provider.of<PostViewModel>(context, listen: false);
+    var dreamViewModel = Provider.of<DreamViewModel>(context, listen: false);
     _pagingController.addPageRequestListener((pageKey) {
-      postViewModel.loadMyJournal(pageKey + 1).then(
-        (PostViewModel postsResults) {
-          if (postsResults.hasError == true) {
-            if (postViewModel.errorStatus == 404) {
+      dreamViewModel.loadMyJournal(pageKey).then(
+        (DreamViewModel dreams) {
+          if (dreams.hasError == true) {
+            if (dreamViewModel.errorStatus == 404) {
               _pagingController.appendLastPage([]);
             } else {
-              _pagingController.error = postsResults.errorMessage;
+              _pagingController.error = dreams.errorMessage;
             }
           } else {
-            if (postsResults.posts.data.next == null) {
-              _pagingController.appendLastPage(postsResults.posts.data.results);
+            if (dreams.dreams.data.next == null) {
+              _pagingController.appendLastPage(dreams.dreams.data.results);
             } else {
-              _pagingController.appendPage(postsResults.posts.data.results, pageKey + 1);
+              _pagingController.appendPage(dreams.dreams.data.results, pageKey + 1);
             }
           }
         },
@@ -38,7 +38,8 @@ class _JournalState extends State<Journal> {
     super.initState();
   }
 
-  final PagingController<int, Post> _pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, Dream> _pagingController =
+      PagingController(firstPageKey: 1);
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +52,10 @@ class _JournalState extends State<Journal> {
               // pinned: true,
               delegate: ProfileHeader(),
             ),
-            PagedSliverList<int, Post>(
+            PagedSliverList<int, Dream>(
               pagingController: _pagingController,
-              builderDelegate: PagedChildBuilderDelegate<Post>(
-                itemBuilder: (context, item, index) => journalPostItem(item, context),
+              builderDelegate: PagedChildBuilderDelegate<Dream>(
+                itemBuilder: (context, item, index) => dreamItem(item, context),
                 noItemsFoundIndicatorBuilder: (_) => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

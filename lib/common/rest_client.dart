@@ -3,6 +3,7 @@ import 'package:dreamer/models/auth/auth_tokens.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/configurations/configurations_response.dart';
+import 'package:dreamer/models/dream/dream_response.dart';
 import 'package:dreamer/models/post/post_response.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -27,8 +28,8 @@ abstract class RestClient {
     @Query("page") int page,
   });
 
-  @GET("/post/posts/")
-  Future<PostResponse> getPosts({
+  @GET("/post/dreams/")
+  Future<DreamResponse> getDreams({
     @Query("page") int page,
   });
 }

@@ -19,14 +19,6 @@ class PostViewModel extends RequestNotifier {
     return this;
   }
 
-  Future<PostViewModel> loadMyJournal(page) async {
-    await makeRequest(
-      () => Singleton().client.getPosts(page: page),
-      notify: false,
-    );
-    return this;
-  }
-
   PostResponse get posts {
     return _posts;
   }
