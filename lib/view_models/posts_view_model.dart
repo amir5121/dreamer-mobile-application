@@ -11,18 +11,20 @@ class PostViewModel extends RequestNotifier {
     );
   }
 
-  Future<PostResponse> loadTimelinePosts(page) async {
-    return await makeRequest(
+  Future<PostViewModel> loadTimelinePosts(page) async {
+    await makeRequest(
       () => Singleton().client.getTimeline(showMulti: false, page: page),
       notify: false,
     );
+    return this;
   }
 
-  Future<PostResponse> loadMyJournal(page) async {
-    return await makeRequest(
+  Future<PostViewModel> loadMyJournal(page) async {
+    await makeRequest(
       () => Singleton().client.getPosts(page: page),
       notify: false,
     );
+    return this;
   }
 
   PostResponse get posts {
