@@ -14,10 +14,10 @@ class Journal extends StatefulWidget {
 class _JournalState extends State<Journal> {
   @override
   void initState() {
-    var dreamViewModel = Provider.of<DreamViewModel>(context, listen: false);
+    var dreamViewModel = Provider.of<JournalViewModel>(context, listen: false);
     _pagingController.addPageRequestListener((pageKey) {
       dreamViewModel.loadMyJournal(pageKey).then(
-        (DreamViewModel dreams) {
+        (JournalViewModel dreams) {
           if (dreams.hasError == true) {
             if (dreamViewModel.errorStatus == 404) {
               _pagingController.appendLastPage([]);

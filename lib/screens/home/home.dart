@@ -4,7 +4,6 @@ import 'package:dreamer/screens/home/home_heading.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,9 +15,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    PostViewModel timelineViewModel = Provider.of<PostViewModel>(context, listen: false);
+    PostViewModel timelineViewModel = PostViewModel();
     _pagingController.addPageRequestListener((pageKey) {
-      timelineViewModel.loadTimelinePosts(pageKey + 1).then(
+      timelineViewModel.loadTimelinePosts(pageKey).then(
         (PostViewModel postsResults) {
           if (postsResults.hasError == true) {
             if (timelineViewModel.errorStatus == 404) {

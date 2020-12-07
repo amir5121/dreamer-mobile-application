@@ -5,14 +5,14 @@ import 'package:dreamer/models/post/post_response.dart';
 class PostViewModel extends RequestNotifier {
   PostResponse _posts;
 
-  Future<PostResponse> loadDeeperPosts() async {
-    return _posts = await makeRequest(
+  void loadDeeperPosts() async {
+    _posts = await makeRequest(
       () => Singleton().client.getTimeline(showMulti: true),
     );
   }
 
   Future<PostViewModel> loadTimelinePosts(page) async {
-    await makeRequest(
+    _posts = await makeRequest(
       () => Singleton().client.getTimeline(showMulti: false, page: page),
       notify: false,
     );

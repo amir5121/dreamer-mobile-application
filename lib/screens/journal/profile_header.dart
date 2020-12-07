@@ -80,9 +80,6 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                                     "Edit profile",
                                     style: Theme.of(context).textTheme.bodyText2,
                                   ),
-                                  // borderSide: BorderSide(
-                                  //   color: Colors.white,
-                                  // ),
                                 ),
                               ],
                             ),

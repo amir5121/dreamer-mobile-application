@@ -29,4 +29,5 @@ class Constants {
 
   static const String INVALID_TOKEN = "token_not_valid";
   static const String NOT_FOUND = "not_found";
+  static const String CONNECTION_FAILURE = "connection_failure";
 }

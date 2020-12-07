@@ -17,23 +17,23 @@ class RequestNotifier extends ChangeNotifier {
       _isLoading = true;
       if (notify) notifyListeners();
       T result = await Singleton().retry.retry(() => f(), retryIf: (e) {
-        print("MakeRequest Retry! $e");
+        debugPrint("MakeRequest Retry! $e");
         return e is DioError &&
-            e.response != null &&
-            e.response.statusCode == 401 &&
-            e.response.data['message_code'] == Constants.INVALID_TOKEN;
+            (e.response == null ||
+                e.response.statusCode == 401 &&
+                    e.response.data['message_code'] == Constants.INVALID_TOKEN);
       });
       _isLoading = false;
       _madeSuccessfulRequest = true;
       if (notify) notifyListeners();
-      print("makeRequest result $result");
+      debugPrint("makeRequest result $result");
       return result;
     } on DioError catch (e) {
-      print("failed completely asda $e");
+      debugPrint("failed completely asda $e");
       setResponseError(e);
       if (notify) notifyListeners();
     } catch (e) {
-      print("Caught error $e");
+      debugPrint("Caught error $e");
       setError(
         errorMessage: "Something wen't wrong",
         errorCode: null,
@@ -44,7 +44,13 @@ class RequestNotifier extends ChangeNotifier {
   }
 
   void setResponseError(DioError err) {
-    if (err.response.statusCode == 500) {
+    if (err.response == null) {
+      setError(
+        errorMessage: "Connection could not be made! ${err.error}",
+        errorCode: null,
+        errorStatus: null,
+      );
+    } else if (err.response.statusCode == 500) {
       setError(
         errorMessage: "Server Failure! Try again Later!",
         errorCode: null,
@@ -70,7 +76,7 @@ class RequestNotifier extends ChangeNotifier {
     @required String errorCode,
     @required int errorStatus,
   }) {
-    print('Settinggg errorrrr $errorMessage');
+    debugPrint('Settinggg errorrrr $errorMessage');
     _isLoading = false;
     _hasError = true;
     _errorMessage = errorMessage;

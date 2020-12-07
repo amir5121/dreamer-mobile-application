@@ -40,10 +40,19 @@ class Splash extends StatelessWidget {
                             Text(
                               "Something wen't wrong",
                             ),
-                            Text(
-                              configurations.errorMessage,
-                              style: Theme.of(context).textTheme.caption,
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                configurations.errorMessage,
+                                style: Theme.of(context).textTheme.caption,
+                              ),
                             ),
+                            IconButton(
+                              icon: Icon(Icons.loop),
+                              onPressed: () {
+                                configurations.loadData();
+                              },
+                            )
                           ],
                         )
                       : Column(

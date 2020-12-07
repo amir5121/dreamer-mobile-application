@@ -55,7 +55,7 @@ class _LandingState extends State<Landing> {
         ),
         ChangeNotifierProvider(
           create: (context) {
-            return DreamViewModel();
+            return JournalViewModel();
           },
         ),
       ],
@@ -66,7 +66,7 @@ class _LandingState extends State<Landing> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Add your onPressed code here!
+            Navigator.pushNamed(context, '/story');
           },
           child: Icon(
             Icons.add,

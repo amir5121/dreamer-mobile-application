@@ -1,6 +1,7 @@
 import 'package:dreamer/common/theme.dart';
 import 'package:dreamer/screens/landing.dart';
 import 'package:dreamer/screens/login.dart';
+import 'package:dreamer/screens/questionnaire/story.dart';
 import 'package:dreamer/screens/settings.dart';
 import 'package:dreamer/screens/sign_up.dart';
 import 'package:dreamer/screens/splash.dart';
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
           '/home': (context) => Landing(),
           '/signup': (context) => SignUp(),
           '/settings': (context) => Settings(),
+          '/story': (context) => Story(),
         },
       ),
     );

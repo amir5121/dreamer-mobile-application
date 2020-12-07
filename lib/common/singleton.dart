@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/rest_client.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart'
-    as SecureStorage;
+import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as SecureStorage;
 import 'package:retry/retry.dart';
 
 class Singleton {
@@ -45,21 +45,18 @@ class Singleton {
           if (e.response != null &&
               e.response.statusCode == 401 &&
               e.response.data['errors']['code'] == 'token_not_valid') {
-            print("asking for refresh token... LOCKING");
+            debugPrint("asking for refresh token... LOCKING");
             _dio.interceptors.requestLock.lock();
             try {
               Response refreshResponse = await refreshDio.post(
                 Constants.baseUrl + '/auth/jwt/refresh/',
-                data: {
-                  "refresh": await _storage.read(key: Constants.refreshToken)
-                },
+                data: {"refresh": await _storage.read(key: Constants.refreshToken)},
               );
 
               await _storage.write(
-                  key: Constants.accessToken,
-                  value: refreshResponse.data["access"]);
+                  key: Constants.accessToken, value: refreshResponse.data["access"]);
             } on DioError catch (_) {
-              print("Failed to acquire token");
+              debugPrint("Failed to acquire token");
             } finally {
               _dio.interceptors.requestLock.unlock();
             }
