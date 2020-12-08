@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
         ),
         itemBuilder: (context, item, index) {
           if (index == 0) {
-            return homeHeading(setState);
+            return HomeHeading();
           }
           return _homeTimelineItem(item);
         },

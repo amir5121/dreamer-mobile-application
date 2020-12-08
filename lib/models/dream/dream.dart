@@ -8,19 +8,20 @@ part 'dream.g.dart';
 
 @JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
 class Dream {
-  final DateTime created;
-  final DateTime modified;
-  final String identifier;
-  final User user;
-  final String publicationStatus;
-  final String dreamClearance;
-  final String text;
-  final String title;
-  final DateTime dreamDate;
-  final List<Element> elements;
-  final List<Feeling> feelings;
+  String text;
+  String title;
+  DateTime created;
+  DateTime modified;
+  String identifier;
+  User user;
+  String publicationStatus;
+  String dreamClearance;
+  DateTime dreamDate;
+  List<Element> elements;
+  List<Feeling> feelings;
 
-  Dream(this.created,
+  Dream(
+      {this.created,
       this.modified,
       this.identifier,
       this.user,
@@ -30,8 +31,7 @@ class Dream {
       this.title,
       this.dreamDate,
       this.elements,
-      this.feelings);
-
+      this.feelings});
 
   factory Dream.fromJson(Map<String, dynamic> json) => _$DreamFromJson(json);
 

@@ -8,19 +8,19 @@ part of 'dream.dart';
 
 Dream _$DreamFromJson(Map<String, dynamic> json) {
   return Dream(
-    DateTime.parse(json['created'] as String),
-    DateTime.parse(json['modified'] as String),
-    json['identifier'] as String,
-    User.fromJson(json['user'] as Map<String, dynamic>),
-    json['publication_status'] as String,
-    json['dream_clearance'] as String,
-    json['text'] as String,
-    json['title'] as String,
-    DateTime.parse(json['dream_date'] as String),
-    (json['elements'] as List)
+    created: DateTime.parse(json['created'] as String),
+    modified: DateTime.parse(json['modified'] as String),
+    identifier: json['identifier'] as String,
+    user: User.fromJson(json['user'] as Map<String, dynamic>),
+    publicationStatus: json['publication_status'] as String,
+    dreamClearance: json['dream_clearance'] as String,
+    text: json['text'] as String,
+    title: json['title'] as String,
+    dreamDate: DateTime.parse(json['dream_date'] as String),
+    elements: (json['elements'] as List)
         .map((e) => Element.fromJson(e as Map<String, dynamic>))
         .toList(),
-    (json['feelings'] as List)
+    feelings: (json['feelings'] as List)
         .map((e) => Feeling.fromJson(e as Map<String, dynamic>))
         .toList(),
   );

@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         // In this sample app, CatalogModel never changes, so a simple Provider
         // is sufficient.
         ChangeNotifierProvider(create: (context) => configurationsViewModel),
-        ChangeNotifierProvider(create: (context) => AuthViewModel()),
+        ChangeNotifierProvider(create: (context) => AuthViewModel())
       ],
       child: MaterialApp(
         title: 'Dreamer',
