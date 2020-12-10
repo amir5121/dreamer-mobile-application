@@ -1,4 +1,4 @@
-import 'package:dreamer/models/dream/element.dart';
+import 'package:dreamer/models/dream/dream_element.dart';
 import 'package:dreamer/models/dream/feeling.dart';
 import 'package:dreamer/models/user/user.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -17,7 +17,7 @@ class Dream {
   String publicationStatus;
   String dreamClearance;
   DateTime dreamDate;
-  List<Element> elements;
+  List<DreamElement> elements;
   List<Feeling> feelings;
 
   Dream(

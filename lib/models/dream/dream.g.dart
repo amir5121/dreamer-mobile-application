@@ -27,7 +27,7 @@ Dream _$DreamFromJson(Map<String, dynamic> json) {
         : DateTime.parse(json['dream_date'] as String),
     elements: (json['elements'] as List)
         ?.map((e) =>
-            e == null ? null : Element.fromJson(e as Map<String, dynamic>))
+            e == null ? null : DreamElement.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     feelings: (json['feelings'] as List)
         ?.map((e) =>

@@ -11,6 +11,10 @@ final appTheme = ThemeData(
   errorColor: Colors.deepOrangeAccent,
   scaffoldBackgroundColor: Constants.deepPurple[900],
   buttonTheme: ButtonThemeData(
+    // padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+    // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    // minWidth: 0,
+    // height: 0,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(18.0),
     ),

@@ -67,13 +67,16 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  OutlineButton(
-                                    child: Icon(Icons.settings),
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, '/settings');
-                                    },
-                                    shape: CircleBorder(
-                                      side: BorderSide(),
+                                  ButtonTheme(
+                                    minWidth: 0,
+                                    child: OutlineButton(
+                                      child: Icon(Icons.settings),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/settings');
+                                      },
+                                      shape: CircleBorder(
+                                        side: BorderSide(),
+                                      ),
                                     ),
                                   ),
                                   OutlineButton(

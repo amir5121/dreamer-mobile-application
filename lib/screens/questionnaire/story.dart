@@ -2,6 +2,7 @@ import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/common/widgets/dots.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/feeling_detail.dart';
+import 'package:dreamer/screens/questionnaire/questionnaire_element.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_feeling_picker.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_overall_feelings.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_step_widget.dart';
@@ -35,6 +36,7 @@ class _StoryState extends State<Story> {
     _journalLogger.add(QuestionnaireInit(dream: dream));
     _journalLogger.add(QuestionnaireOverallFeelings(dream: dream));
     _journalLogger.add(QuestionnaireFeelingPicker(dream: dream));
+    _journalLogger.add(QuestionnaireElement(dream: dream));
     super.initState();
   }
 
@@ -57,7 +59,7 @@ class _StoryState extends State<Story> {
                 return FlatButton(
                   child: Text(isLastItem ? "Finish" : "Next"),
                   onPressed: journalViewModel.isLoading
-                      ? () {}
+                      ? null
                       : () {
                           if (_journalLogger[_current].next()) {
                             if (_current < _journalLogger.length - 1) {
@@ -65,12 +67,15 @@ class _StoryState extends State<Story> {
                                 _current++;
                               });
                             } else {
-                              journalViewModel.submitDream(dream).then((_) {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  '/home',
-                                  arguments: Landing.journal,
-                                );
+                              journalViewModel
+                                  .submitDream(dream)
+                                  .then((JournalViewModel journalResponse) {
+                                if (!journalResponse.hasError)
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    '/home',
+                                    arguments: Landing.journal,
+                                  );
                               });
                             }
                           }

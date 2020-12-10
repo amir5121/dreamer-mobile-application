@@ -14,10 +14,11 @@ class JournalViewModel extends RequestNotifier {
     return this;
   }
 
-  Future<void> submitDream(Dream dream) {
-    return makeRequest(
+  Future<JournalViewModel> submitDream(Dream dream) async {
+    await makeRequest(
       () => Singleton().client.submitDream(dream: dream),
     );
+    return this;
   }
 
   DreamResponse get dreams {

@@ -37,7 +37,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
             .where((FeelingDetail element) =>
                 widget.dream.feelings[_current].feelingParent == element.parentType)
             .toList());
-    return Container(
+    return Padding(
       padding: EdgeInsets.only(top: 36.0, left: 36.0, right: 36.0),
       child: Column(
         children: [
@@ -75,12 +75,12 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
 
   @override
   bool next() {
-    if (_current < widget.dream.feelings.length - 1) {
-      widget.dream.feelings
-          .singleWhere((Feeling element) =>
-              pickedOutFeeling.split("_")[0] == element.feelingParent)
-          .feeling = pickedOutFeeling;
+    widget.dream.feelings
+        .singleWhere(
+            (Feeling element) => pickedOutFeeling.split("_")[0] == element.feelingParent)
+        .feeling = pickedOutFeeling;
 
+    if (_current < widget.dream.feelings.length - 1) {
       setState(() {
         pickedOutFeeling = null;
         _current++;
