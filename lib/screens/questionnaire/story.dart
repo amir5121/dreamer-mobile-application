@@ -71,7 +71,7 @@ class _StoryState extends State<Story> {
                                   .submitDream(dream)
                                   .then((JournalViewModel journalResponse) {
                                 if (!journalResponse.hasError)
-                                  Navigator.pushReplacementNamed(
+                                  Navigator.popAndPushNamed(
                                     context,
                                     '/home',
                                     arguments: Landing.journal,
