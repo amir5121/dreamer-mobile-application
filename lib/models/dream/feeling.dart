@@ -1,13 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'feeling.g.dart';
 
 @JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
 class Feeling {
-  final int rate;
-  final String type;
+  int rate;
+  String feeling;
+  final String feelingParent;
 
-  Feeling(this.rate, this.type);
+  Feeling({@required this.rate, @required this.feeling, @required this.feelingParent});
 
   factory Feeling.fromJson(Map<String, dynamic> json) => _$FeelingFromJson(json);
 

@@ -95,7 +95,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
         AnimatedPositioned(
           duration: Duration(milliseconds: 200),
           right: opacity > 0.8 ? 310 : 0,
-          top: opacity > 0.8 ? 70.0 : 0,
+          top: opacity > 0.8 ? 100.0 : 0,
           // right: null,
           child: Container(
             margin: EdgeInsets.only(left: 16, right: 8, top: 4),

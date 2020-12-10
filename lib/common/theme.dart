@@ -28,13 +28,14 @@ final appTheme = ThemeData(
     backgroundColor: Constants.deepPurple[900],
   ),
   inputDecorationTheme: InputDecorationTheme(
-      contentPadding: EdgeInsets.only(left: 16),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(16),
-        ),
+    contentPadding: EdgeInsets.all(8),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(16),
       ),
-      errorStyle: TextStyle(fontSize: 16)),
+    ),
+    errorStyle: TextStyle(fontSize: 16),
+  ),
   appBarTheme: AppBarTheme(
     color: Constants.deepPurple[900],
   ),

@@ -1,8 +1,11 @@
-import 'package:dreamer/base_widgets/dots.dart';
+import 'package:dreamer/common/widgets/dots.dart';
 import 'package:dreamer/models/dream/dream.dart';
+import 'package:dreamer/models/dream/feeling_detail.dart';
+import 'package:dreamer/screens/questionnaire/questionnaire_feeling_picker.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_overall_feelings.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_step_widget.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_init.dart';
+import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:dreamer/view_models/dreams_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,9 +22,17 @@ class _StoryState extends State<Story> {
 
   @override
   void initState() {
-    super.initState();
+    dream.feelings = context
+        .read<ConfigurationsViewModel>()
+        .configurations
+        .data
+        .mainFeelings
+        .map((FeelingDetail e) => e.convertToFeeling())
+        .toList();
     _journalLogger.add(QuestionnaireInit(dream: dream));
     _journalLogger.add(QuestionnaireOverallFeelings(dream: dream));
+    _journalLogger.add(QuestionnaireFeelingPicker(dream: dream));
+    super.initState();
   }
 
   @override

@@ -12,6 +12,12 @@ Configurations _$ConfigurationsFromJson(Map<String, dynamic> json) {
         ? null
         : User.fromJson(json['self'] as Map<String, dynamic>),
     json['main_background'] as String,
+    (json['feelings'] as List)
+        .map((e) => FeelingDetail.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    (json['main_feelings'] as List)
+        .map((e) => FeelingDetail.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -19,4 +25,6 @@ Map<String, dynamic> _$ConfigurationsToJson(Configurations instance) =>
     <String, dynamic>{
       'self': instance.self,
       'main_background': instance.mainBackground,
+      'feelings': instance.feelings,
+      'main_feelings': instance.mainFeelings,
     };

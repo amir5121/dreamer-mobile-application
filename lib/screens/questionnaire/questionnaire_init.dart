@@ -1,7 +1,7 @@
-import 'package:dreamer/base_widgets/dreamer_fake_text_field.dart';
-import 'package:dreamer/base_widgets/dreamer_text_field.dart';
-import 'package:dreamer/base_widgets/let_scroll.dart';
 import 'package:dreamer/common/forward_interface.dart';
+import 'package:dreamer/common/widgets/dreamer_fake_text_field.dart';
+import 'package:dreamer/common/widgets/dreamer_text_field.dart';
+import 'package:dreamer/common/widgets/let_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -65,9 +65,9 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forwar
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(36.0),
-      child: LetScroll(
+    return LetScroll(
+      child: Container(
+        padding: EdgeInsets.all(36.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

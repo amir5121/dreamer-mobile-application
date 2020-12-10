@@ -33,6 +33,7 @@ dependencies:
   infinite_scroll_pagination:
   timeago:
   flutter_phoenix:
+  package_info:
 
 dev_dependencies:
   json_serializable:

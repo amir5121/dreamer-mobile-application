@@ -25,7 +25,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    configurationsViewModel.loadData();
+    configurationsViewModel
+        .loadBuildData()
+        .then((value) => configurationsViewModel.loadConfigurations());
     super.initState();
   }
 
@@ -47,7 +49,7 @@ class _MyAppState extends State<MyApp> {
           '/': (context) => Splash(),
           '/login': (context) => Login(),
           '/home': (context) => Landing(),
-          '/signup': (context) => SignUp(),
+          '/sign-up': (context) => SignUp(),
           '/settings': (context) => Settings(),
           '/story': (context) => Story(),
         },

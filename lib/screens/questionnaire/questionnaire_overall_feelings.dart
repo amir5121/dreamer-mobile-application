@@ -1,4 +1,7 @@
+import 'package:dreamer/common/extensions/string_extension.dart';
 import 'package:dreamer/common/forward_interface.dart';
+import 'package:dreamer/common/widgets/feeling_slider.dart';
+import 'package:dreamer/models/dream/feeling.dart';
 import 'package:flutter/material.dart';
 
 import 'questionnaire_step_widget.dart';
@@ -21,40 +24,47 @@ class QuestionnaireOverallFeelings extends QuestionnaireStepWidget {
 
 class _QuestionnaireOverallFeelingState extends State<QuestionnaireOverallFeelings>
     implements Forward {
-  double _currentSliderValue = 20;
-
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(36.0),
-      child: Slider(
-        value: _currentSliderValue,
-        min: 0,
-        max: 100,
-        divisions: 5,
-        label: _currentSliderValue.round().toString(),
-        onChanged: (double value) {
-          setState(() {
-            _currentSliderValue = value;
-          });
-        },
+      child: Column(
+        children: [
+          Text(
+            'What feelings did you experience in your dream?',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          ...widget.dream.feelings
+              .map<Widget>(
+                (Feeling feeling) => Container(
+                  margin: EdgeInsets.only(top: 8),
+                  child: FeelingSlider(
+                    label: feeling.feelingParent.capitalize(),
+                    setValue: (int value) => feeling.rate = value,
+                    initialValue: feeling.rate,
+                  ),
+                ),
+              )
+              .toList(),
+        ],
       ),
     );
   }
 
   @override
   bool next() {
+    int sumOfFeeling = 0;
+    widget.dream.feelings.forEach((Feeling element) => sumOfFeeling += element.rate);
+    if (sumOfFeeling < 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: Duration(seconds: 6),
+          content: Text("Please select feelings you had during sleep."),
+        ),
+      );
+      return false;
+    }
+    widget.dream.feelings.removeWhere((Feeling feeling) => feeling.rate == 0);
     return true;
-    // if (_formKey.currentState.validate()) {
-    //   widget.dream.title = titleController.text;
-    //   widget.dream.text = titleController.text;
-    //   widget.dream.dreamDate = DateTime(
-    //     selectedDate.year,
-    //     selectedDate.month,
-    //     selectedDate.day,
-    //     selectedTime.hour,
-    //     selectedTime.minute,
-    //   );
-    // }
   }
 }

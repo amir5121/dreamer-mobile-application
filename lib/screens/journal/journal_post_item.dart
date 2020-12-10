@@ -59,7 +59,7 @@ Widget dreamItem(Dream dream, context) {
           children: [
             Expanded(
               child: Text(
-                dream.text[0],
+                dream.text,
               ),
             ),
             Padding(

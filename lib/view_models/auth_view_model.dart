@@ -10,7 +10,7 @@ class AuthViewModel extends RequestNotifier {
   AuthTokens _login;
   bool hasLoggedOut = false;
 
-  void loginWithPassword(String email, String password) async {
+  Future<AuthViewModel> loginWithPassword(String email, String password) async {
     _login = await makeRequest<AuthTokens>(
       () => Singleton().client.loginWithPassword(
             LoginCredentials(email, password),
@@ -20,6 +20,7 @@ class AuthViewModel extends RequestNotifier {
 
     await storage.write(key: Constants.accessToken, value: _login.accessToken);
     await storage.write(key: Constants.refreshToken, value: _login.refreshToken);
+    return this;
   }
 
   void logout() async {

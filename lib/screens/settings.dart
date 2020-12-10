@@ -1,4 +1,4 @@
-import 'package:dreamer/base_widgets/dreamer_scaffold.dart';
+import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';

@@ -57,9 +57,10 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ConfigurationsResponse> getConfigurations() async {
+  Future<ConfigurationsResponse> getConfigurations(buildNumber) async {
+    ArgumentError.checkNotNull(buildNumber, 'buildNumber');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'build_number': buildNumber};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
         '/configuration/initial/',

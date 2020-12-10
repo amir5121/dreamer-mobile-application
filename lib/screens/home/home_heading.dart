@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dreamer/base_widgets/dots.dart';
 import 'package:dreamer/common/dream_consumer.dart';
+import 'package:dreamer/common/widgets/dots.dart';
 import 'package:dreamer/models/post/post.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';

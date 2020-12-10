@@ -20,7 +20,9 @@ abstract class RestClient {
   Future<AuthTokens> signUpWithPassword(@Body() SignUpCredentials signUpCredentials);
 
   @GET("/configuration/initial/")
-  Future<ConfigurationsResponse> getConfigurations();
+  Future<ConfigurationsResponse> getConfigurations(
+    @Query("build_number") String buildNumber,
+  );
 
   @GET("/post/timeline/")
   Future<PostResponse> getTimeline({

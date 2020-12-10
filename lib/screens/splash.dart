@@ -1,7 +1,7 @@
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
-import 'package:dreamer/base_widgets/dreamer_scaffold.dart';
+import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,62 +12,63 @@ class Splash extends StatelessWidget {
         context.watch<ConfigurationsViewModel>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (configurationsResponse.isLoading == false) {
+      if (configurationsResponse.isLoading == false &&
+          configurationsResponse.configurations != null) {
         if (configurationsResponse.hasError == false) {
           if (configurationsResponse.configurations.data.self == null) {
             Navigator.pushReplacementNamed(context, '/login');
           } else {
             Navigator.pushReplacementNamed(context, '/home');
           }
-        } else if (configurationsResponse.errorCode ==
-            Constants.INVALID_TOKEN) {
+        } else if (configurationsResponse.errorCode == Constants.INVALID_TOKEN) {
           Navigator.pushReplacementNamed(context, '/login');
         }
       }
     });
 
     return DreamerScaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+      body: DreamConsumer<ConfigurationsViewModel>(
+        builder: (context, configurations, child) => Column(
           children: [
-            DreamConsumer<ConfigurationsViewModel>(
-              builder: (context, configurations, child) =>
-                  configurations.hasError
-                      ? Column(
-                          children: [
-                            Text(
-                              "Something wen't wrong",
+            Expanded(
+                child: configurations.hasError
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Something wen't wrong",
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              configurations.errorMessage,
+                              style: Theme.of(context).textTheme.caption,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                configurations.errorMessage,
-                                style: Theme.of(context).textTheme.caption,
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.loop),
-                              onPressed: () {
-                                configurations.loadData();
-                              },
-                            )
-                          ],
-                        )
-                      : Column(
-                          children: [
-                            Text(
-                              "Hello there dreamer",
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(32.0),
-                              child: LinearProgressIndicator(),
-                            ),
-                          ],
-                        ),
-            )
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.loop),
+                            onPressed: () {
+                              configurations.loadConfigurations();
+                            },
+                          )
+                        ],
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Hello there dreamer",
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: LinearProgressIndicator(),
+                          ),
+                        ],
+                      )),
+            Text("Build ${configurations.buildNumber}"),
+            Text("Version ${configurations.version}"),
+            SizedBox(height: 16)
           ],
         ),
       ),

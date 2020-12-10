@@ -8,12 +8,14 @@ part of 'feeling.dart';
 
 Feeling _$FeelingFromJson(Map<String, dynamic> json) {
   return Feeling(
-    json['rate'] as int,
-    json['type'] as String,
+    rate: json['rate'] as int,
+    feeling: json['feeling'] as String,
+    feelingParent: json['feeling_parent'] as String,
   );
 }
 
 Map<String, dynamic> _$FeelingToJson(Feeling instance) => <String, dynamic>{
       'rate': instance.rate,
-      'type': instance.type,
+      'feeling': instance.feeling,
+      'feeling_parent': instance.feelingParent,
     };
