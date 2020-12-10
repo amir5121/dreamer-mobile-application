@@ -1,5 +1,6 @@
 import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
+import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
 
 class JournalViewModel extends RequestNotifier {
@@ -11,6 +12,12 @@ class JournalViewModel extends RequestNotifier {
       notify: false,
     );
     return this;
+  }
+
+  Future<void> submitDream(Dream dream) {
+    return makeRequest(
+      () => Singleton().client.submitDream(dream: dream),
+    );
   }
 
   DreamResponse get dreams {

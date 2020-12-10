@@ -8,34 +8,44 @@ part of 'dream.dart';
 
 Dream _$DreamFromJson(Map<String, dynamic> json) {
   return Dream(
-    created: DateTime.parse(json['created'] as String),
-    modified: DateTime.parse(json['modified'] as String),
+    created: json['created'] == null
+        ? null
+        : DateTime.parse(json['created'] as String),
+    modified: json['modified'] == null
+        ? null
+        : DateTime.parse(json['modified'] as String),
     identifier: json['identifier'] as String,
-    user: User.fromJson(json['user'] as Map<String, dynamic>),
+    user: json['user'] == null
+        ? null
+        : User.fromJson(json['user'] as Map<String, dynamic>),
     publicationStatus: json['publication_status'] as String,
     dreamClearance: json['dream_clearance'] as String,
     text: json['text'] as String,
     title: json['title'] as String,
-    dreamDate: DateTime.parse(json['dream_date'] as String),
+    dreamDate: json['dream_date'] == null
+        ? null
+        : DateTime.parse(json['dream_date'] as String),
     elements: (json['elements'] as List)
-        .map((e) => Element.fromJson(e as Map<String, dynamic>))
-        .toList(),
+        ?.map((e) =>
+            e == null ? null : Element.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
     feelings: (json['feelings'] as List)
-        .map((e) => Feeling.fromJson(e as Map<String, dynamic>))
-        .toList(),
+        ?.map((e) =>
+            e == null ? null : Feeling.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
 Map<String, dynamic> _$DreamToJson(Dream instance) => <String, dynamic>{
       'text': instance.text,
       'title': instance.title,
-      'created': instance.created.toIso8601String(),
-      'modified': instance.modified.toIso8601String(),
+      'created': instance.created?.toIso8601String(),
+      'modified': instance.modified?.toIso8601String(),
       'identifier': instance.identifier,
       'user': instance.user,
       'publication_status': instance.publicationStatus,
       'dream_clearance': instance.dreamClearance,
-      'dream_date': instance.dreamDate.toIso8601String(),
+      'dream_date': instance.dreamDate?.toIso8601String(),
       'elements': instance.elements,
       'feelings': instance.feelings,
     };

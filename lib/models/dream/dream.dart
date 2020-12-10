@@ -6,7 +6,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 part 'dream.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(nullable: true, fieldRename: FieldRename.snake)
 class Dream {
   String text;
   String title;

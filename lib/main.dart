@@ -45,13 +45,43 @@ class _MyAppState extends State<MyApp> {
         title: 'Dreamer',
         theme: appTheme,
         initialRoute: '/',
-        routes: {
-          '/': (context) => Splash(),
-          '/login': (context) => Login(),
-          '/home': (context) => Landing(),
-          '/sign-up': (context) => SignUp(),
-          '/settings': (context) => Settings(),
-          '/story': (context) => Story(),
+        onGenerateRoute: (settings) {
+          final arguments = settings.arguments;
+          switch (settings.name) {
+            case '/login':
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) => Login(),
+              );
+            case '/home':
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) {
+                  if (arguments is int) return Landing(selectedIndex: arguments);
+                  return Landing(selectedIndex: 0);
+                },
+              );
+            case '/sign-up':
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) => SignUp(),
+              );
+            case '/settings':
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) => Settings(),
+              );
+            case '/story':
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) => Story(),
+              );
+            default:
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) => Splash(),
+              );
+          }
         },
       ),
     );

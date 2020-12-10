@@ -38,14 +38,14 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
                 widget.dream.feelings[_current].feelingParent == element.parentType)
             .toList());
     return Container(
-      padding: EdgeInsets.all(36.0),
+      padding: EdgeInsets.only(top: 36.0, left: 36.0, right: 36.0),
       child: Column(
         children: [
           Text(
             'In ${choices[1].parentType.capitalize()}, to which you were feeling closer?',
             style: Theme.of(context).textTheme.headline6,
           ),
-          SizedBox(height: 32),
+          SizedBox(height: 16),
           Expanded(
             child: ListView.builder(
               // shrinkWrap: true,

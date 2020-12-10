@@ -1,3 +1,4 @@
+import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/common/widgets/dots.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/feeling_detail.dart';
@@ -9,6 +10,8 @@ import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:dreamer/view_models/dreams_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../landing.dart';
 
 class Story extends StatefulWidget {
   @override
@@ -49,18 +52,30 @@ class _StoryState extends State<Story> {
           elevation: 0,
           centerTitle: true,
           actions: [
-            FlatButton(
-              child: Text(isLastItem ? "Finish" : "Next"),
-              onPressed: () {
-                if (_journalLogger[_current].next()) {
-                  if (_current < _journalLogger.length - 1) {
-                    setState(() {
-                      _current++;
-                    });
-                  } else {
-                    Navigator.pushReplacementNamed(context, '/home');
-                  }
-                }
+            DreamConsumer<JournalViewModel>(
+              builder: (context, journalViewModel, child) {
+                return FlatButton(
+                  child: Text(isLastItem ? "Finish" : "Next"),
+                  onPressed: journalViewModel.isLoading
+                      ? () {}
+                      : () {
+                          if (_journalLogger[_current].next()) {
+                            if (_current < _journalLogger.length - 1) {
+                              setState(() {
+                                _current++;
+                              });
+                            } else {
+                              journalViewModel.submitDream(dream).then((_) {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  '/home',
+                                  arguments: Landing.journal,
+                                );
+                              });
+                            }
+                          }
+                        },
+                );
               },
             )
           ],

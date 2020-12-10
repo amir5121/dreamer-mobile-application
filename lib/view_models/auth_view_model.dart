@@ -34,7 +34,7 @@ class AuthViewModel extends RequestNotifier {
   }
 
   void signUpWithPassword(String email, String password, String rePassword) async {
-    _login = await makeRequest<AuthTokens>(
+    await makeRequest<AuthTokens>(
       () => Singleton().client.signUpWithPassword(
             SignUpCredentials(email, password, rePassword),
           ),

@@ -37,7 +37,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<AuthTokens> signUpWithPassword(signUpCredentials) async {
+  Future<IgnoreData> signUpWithPassword(signUpCredentials) async {
     ArgumentError.checkNotNull(signUpCredentials, 'signUpCredentials');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -52,7 +52,7 @@ class _RestClient implements RestClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = AuthTokens.fromJson(_result.data);
+    final value = IgnoreData.fromJson(_result.data);
     return value;
   }
 
@@ -111,6 +111,26 @@ class _RestClient implements RestClient {
             baseUrl: baseUrl),
         data: _data);
     final value = DreamResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<IgnoreData> submitDream({dream}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(dream?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('/post/dreams/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = IgnoreData.fromJson(_result.data);
     return value;
   }
 }

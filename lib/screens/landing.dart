@@ -9,6 +9,13 @@ import 'package:provider/provider.dart';
 import 'journal/journal.dart';
 
 class Landing extends StatefulWidget {
+  static final int home = 0;
+  static final int journal = 1;
+
+  final int selectedIndex;
+
+  const Landing({Key key, this.selectedIndex}) : super(key: key);
+
   @override
   _LandingState createState() => _LandingState();
 }
@@ -40,8 +47,9 @@ class _LandingState extends State<Landing> {
 
   @override
   void initState() {
-    super.initState();
     postViewModel.loadDeeperPosts();
+    _selectedIndex = widget.selectedIndex;
+    super.initState();
   }
 
   @override
