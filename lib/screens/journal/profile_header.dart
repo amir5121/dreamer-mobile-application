@@ -15,12 +15,13 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
     double opacity = 1 - 2 * (1 - percentage);
     return Stack(
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Flex(
+          direction: Axis.vertical,
           children: [
-            Row(
-              children: [
-                RawMaterialButton(
+            Expanded(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: RawMaterialButton(
                   onPressed: () {},
                   fillColor: Colors.black12,
                   child: Icon(
@@ -28,75 +29,76 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                   ),
                   shape: CircleBorder(),
                 ),
-              ],
+              ),
             ),
             if (!opacity.isNegative)
-              Opacity(
-                opacity: opacity,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    border: Border(
-                      bottom: BorderSide(width: 1, color: Constants.accentColor),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 35 - (1 - opacity) * 35),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  user.fullName,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                                Text(
-                                  user.email,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                OutlineButton(
-                                  child: Icon(Icons.settings),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/settings');
-                                  },
-                                  shape: CircleBorder(
-                                    side: BorderSide(),
-                                  ),
-                                ),
-                                OutlineButton(
-                                  padding: EdgeInsets.symmetric(horizontal: 32),
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Edit profile",
-                                    style: Theme.of(context).textTheme.bodyText2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+              Expanded(
+                child: Opacity(
+                  opacity: opacity,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      border: Border(
+                        bottom: BorderSide(width: 1, color: Constants.accentColor),
                       ),
-                    ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8 * opacity, horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    user.fullName,
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                  Text(
+                                    user.email,
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  OutlineButton(
+                                    child: Icon(Icons.settings),
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, '/settings');
+                                    },
+                                    shape: CircleBorder(
+                                      side: BorderSide(),
+                                    ),
+                                  ),
+                                  OutlineButton(
+                                    padding: EdgeInsets.symmetric(horizontal: 32),
+                                    onPressed: () {},
+                                    child: Text(
+                                      "Edit profile",
+                                      style: Theme.of(context).textTheme.bodyText2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
           ],
         ),
-        AnimatedPositioned(
+        AnimatedAlign(
           duration: Duration(milliseconds: 200),
-          right: opacity > 0.8 ? 310 : 0,
-          top: opacity > 0.8 ? 100.0 : 0,
-          // right: null,
+          alignment: opacity > 0.8 ? Alignment.centerLeft : Alignment.topRight,
           child: Container(
             margin: EdgeInsets.only(left: 16, right: 8, top: 4),
             child: CircleAvatar(
@@ -151,7 +153,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate _) => true;
 
   @override
-  double get maxExtent => 250.0;
+  double get maxExtent => 230.0;
 
   @override
   double get minExtent => 80.0;
