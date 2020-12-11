@@ -138,7 +138,7 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forwar
   bool next() {
     if (_formKey.currentState.validate()) {
       widget.dream.title = titleController.text;
-      widget.dream.text = titleController.text;
+      widget.dream.text = descriptionController.text;
       widget.dream.dreamDate = DateTime(
         selectedDate.year,
         selectedDate.month,

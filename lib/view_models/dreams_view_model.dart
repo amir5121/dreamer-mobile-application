@@ -2,11 +2,13 @@ import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
+import 'package:dreamer/models/dream/dream_retrieve.dart';
 
-class JournalViewModel extends RequestNotifier {
+class DreamViewModel extends RequestNotifier {
   DreamResponse _dreams;
+  DreamRetrieve _dream;
 
-  Future<JournalViewModel> loadMyJournal(page) async {
+  Future<DreamViewModel> loadMyJournal(page) async {
     _dreams = await makeRequest(
       () => Singleton().client.getDreams(page: page),
       notify: false,
@@ -14,7 +16,14 @@ class JournalViewModel extends RequestNotifier {
     return this;
   }
 
-  Future<JournalViewModel> submitDream(Dream dream) async {
+  Future<DreamViewModel> loadDream(String identifier) async {
+    _dream = await makeRequest(
+      () => Singleton().client.getDream(identifier: identifier),
+    );
+    return this;
+  }
+
+  Future<DreamViewModel> submitDream(Dream dream) async {
     await makeRequest(
       () => Singleton().client.submitDream(dream: dream),
     );
@@ -23,5 +32,9 @@ class JournalViewModel extends RequestNotifier {
 
   DreamResponse get dreams {
     return _dreams;
+  }
+
+  DreamRetrieve get dream {
+    return _dream;
   }
 }

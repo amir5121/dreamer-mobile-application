@@ -23,7 +23,7 @@ class AuthViewModel extends RequestNotifier {
     return this;
   }
 
-  void logout() async {
+  Future<AuthViewModel> logout() async {
     final storage = FlutterSecureStorage();
 
     await storage.delete(key: Constants.accessToken);
@@ -31,6 +31,7 @@ class AuthViewModel extends RequestNotifier {
     hasLoggedOut = true;
     _login = null;
     notifyListeners();
+    return this;
   }
 
   void signUpWithPassword(String email, String password, String rePassword) async {

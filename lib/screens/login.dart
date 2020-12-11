@@ -1,7 +1,8 @@
+import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
 import 'package:dreamer/common/widgets/dreamer_text_field.dart';
 import 'package:dreamer/common/widgets/let_scroll.dart';
-import 'package:dreamer/common/dream_consumer.dart';
+import 'package:dreamer/common/widgets/text_ful_divider.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
@@ -99,34 +100,11 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(right: 16, left: 16),
-                    child: Text(
-                      "OR",
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                    ),
-                  )
-                ],
-              ),
+              SizedBox(height: 32),
+              TextFulDivider(text: Text("OR")),
+              SizedBox(height: 16),
               Text("Log in with"),
-              SizedBox(
-                height: 8,
-              ),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

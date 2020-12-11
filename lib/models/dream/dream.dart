@@ -15,7 +15,7 @@ class Dream {
   String identifier;
   User user;
   String publicationStatus;
-  String dreamClearance;
+  int dreamClearance;
   DateTime dreamDate;
   List<DreamElement> elements;
   List<Feeling> feelings;
@@ -38,6 +38,6 @@ class Dream {
   Map<String, dynamic> toJson() => _$DreamToJson(this);
 
   String get createdFormatted {
-    return timeago.format(created, locale: 'en_short');
+    return timeago.format(created, locale: 'en');
   }
 }

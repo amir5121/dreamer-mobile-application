@@ -5,6 +5,7 @@ import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/configurations/configurations_response.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
+import 'package:dreamer/models/dream/dream_retrieve.dart';
 import 'package:dreamer/models/ignore_data.dart';
 import 'package:dreamer/models/post/post_response.dart';
 import 'package:retrofit/retrofit.dart';
@@ -35,6 +36,11 @@ abstract class RestClient {
   @GET("/post/dreams/")
   Future<DreamResponse> getDreams({
     @Query("page") int page,
+  });
+
+  @GET("/post/dreams/{identifier}/")
+  Future<DreamRetrieve> getDream({
+    @Path("identifier") String identifier,
   });
 
   @POST("/post/dreams/")

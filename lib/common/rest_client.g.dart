@@ -115,6 +115,25 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<DreamRetrieve> getDream({identifier}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/post/dreams/$identifier/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = DreamRetrieve.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<IgnoreData> submitDream({dream}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

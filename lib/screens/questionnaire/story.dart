@@ -2,17 +2,17 @@ import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/common/widgets/dots.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/feeling_detail.dart';
+import 'package:dreamer/screens/landing.dart';
+import 'package:dreamer/screens/questionnaire/questionnaire_clearance_picker.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_element.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_feeling_picker.dart';
+import 'package:dreamer/screens/questionnaire/questionnaire_init.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_overall_feelings.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_step_widget.dart';
-import 'package:dreamer/screens/questionnaire/questionnaire_init.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:dreamer/view_models/dreams_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../landing.dart';
 
 class Story extends StatefulWidget {
   @override
@@ -34,6 +34,7 @@ class _StoryState extends State<Story> {
         .map((FeelingDetail e) => e.convertToFeeling())
         .toList();
     _journalLogger.add(QuestionnaireInit(dream: dream));
+    _journalLogger.add(QuestionnaireClearancePicker(dream: dream));
     _journalLogger.add(QuestionnaireOverallFeelings(dream: dream));
     _journalLogger.add(QuestionnaireFeelingPicker(dream: dream));
     _journalLogger.add(QuestionnaireElement(dream: dream));
@@ -44,7 +45,7 @@ class _StoryState extends State<Story> {
   Widget build(BuildContext context) {
     final bool isLastItem = _current == _journalLogger.length - 1;
     return ChangeNotifierProvider(
-      create: (context) => JournalViewModel(),
+      create: (context) => DreamViewModel(),
       child: Scaffold(
         appBar: AppBar(
           title: Dots(
@@ -54,7 +55,7 @@ class _StoryState extends State<Story> {
           elevation: 0,
           centerTitle: true,
           actions: [
-            DreamConsumer<JournalViewModel>(
+            DreamConsumer<DreamViewModel>(
               builder: (context, journalViewModel, child) {
                 return FlatButton(
                   child: Text(isLastItem ? "Finish" : "Next"),
@@ -69,13 +70,15 @@ class _StoryState extends State<Story> {
                             } else {
                               journalViewModel
                                   .submitDream(dream)
-                                  .then((JournalViewModel journalResponse) {
-                                if (!journalResponse.hasError)
+                                  .then((DreamViewModel journalResponse) {
+                                if (!journalResponse.hasError) {
+                                  Navigator.pop(context);
                                   Navigator.popAndPushNamed(
                                     context,
                                     '/home',
                                     arguments: Landing.journal,
                                   );
+                                }
                               });
                             }
                           }

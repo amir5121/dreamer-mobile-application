@@ -1,4 +1,5 @@
 import 'package:dreamer/common/theme.dart';
+import 'package:dreamer/screens/dream/dream_detail.dart';
 import 'package:dreamer/screens/landing.dart';
 import 'package:dreamer/screens/login.dart';
 import 'package:dreamer/screens/questionnaire/story.dart';
@@ -75,6 +76,11 @@ class _MyAppState extends State<MyApp> {
               return MaterialPageRoute(
                 settings: settings,
                 builder: (context) => Story(),
+              );
+            case '/dream':
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) => DreamDetail(identifier: arguments),
               );
             default:
               return MaterialPageRoute(

@@ -19,7 +19,7 @@ Dream _$DreamFromJson(Map<String, dynamic> json) {
         ? null
         : User.fromJson(json['user'] as Map<String, dynamic>),
     publicationStatus: json['publication_status'] as String,
-    dreamClearance: json['dream_clearance'] as String,
+    dreamClearance: json['dream_clearance'] as int,
     text: json['text'] as String,
     title: json['title'] as String,
     dreamDate: json['dream_date'] == null

@@ -1,5 +1,5 @@
-import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
 import 'package:dreamer/common/constants.dart';
+import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -16,21 +16,17 @@ class Settings extends StatelessWidget {
     {
       "name": "Log out",
       "action": (context) {
-        Provider.of<AuthViewModel>(context, listen: false).logout();
+        Provider.of<AuthViewModel>(context, listen: false)
+            .logout()
+            .then((AuthViewModel authViewModel) {
+          if (authViewModel.hasLoggedOut) Phoenix.rebirth(context);
+        });
       }
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    AuthViewModel authViewModel = Provider.of<AuthViewModel>(context);
-    Future<Null>.delayed(
-      Duration(),
-      () {
-        if (authViewModel.hasLoggedOut) Phoenix.rebirth(context);
-      },
-    );
-
     return DreamerScaffold(
       body: ListView.builder(
         itemBuilder: (context, index) {

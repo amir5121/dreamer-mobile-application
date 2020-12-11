@@ -18,6 +18,9 @@ Configurations _$ConfigurationsFromJson(Map<String, dynamic> json) {
     (json['main_feelings'] as List)
         .map((e) => FeelingDetail.fromJson(e as Map<String, dynamic>))
         .toList(),
+    (json['clearance_choices'] as List)
+        .map((e) => DreamClearance.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -27,4 +30,5 @@ Map<String, dynamic> _$ConfigurationsToJson(Configurations instance) =>
       'main_background': instance.mainBackground,
       'feelings': instance.feelings,
       'main_feelings': instance.mainFeelings,
+      'clearance_choices': instance.clearanceChoices,
     };

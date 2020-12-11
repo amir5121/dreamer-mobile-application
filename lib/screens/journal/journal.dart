@@ -14,10 +14,10 @@ class Journal extends StatefulWidget {
 class _JournalState extends State<Journal> {
   @override
   void initState() {
-    var dreamViewModel = Provider.of<JournalViewModel>(context, listen: false);
+    var dreamViewModel = Provider.of<DreamViewModel>(context, listen: false);
     _pagingController.addPageRequestListener((pageKey) {
       dreamViewModel.loadMyJournal(pageKey).then(
-        (JournalViewModel dreams) {
+        (DreamViewModel dreams) {
           if (dreams.hasError == true) {
             if (dreamViewModel.errorStatus == 404) {
               _pagingController.appendLastPage([]);
@@ -55,7 +55,7 @@ class _JournalState extends State<Journal> {
             PagedSliverList<int, Dream>(
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<Dream>(
-                itemBuilder: (context, item, index) => dreamItem(item, context),
+                itemBuilder: (context, dream, index) => dreamItem(dream, context),
                 noItemsFoundIndicatorBuilder: (_) => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

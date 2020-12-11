@@ -1,12 +1,12 @@
-import 'package:dreamer/common/constants.dart';
-import 'package:dreamer/models/dream/feeling.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:dreamer/common/extensions/string_extension.dart';
 import 'package:dreamer/common/forward_interface.dart';
+import 'package:dreamer/common/widgets/toggle_button.dart';
+import 'package:dreamer/models/dream/feeling.dart';
 import 'package:dreamer/models/dream/feeling_detail.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_step_widget.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
-import 'package:dreamer/common/extensions/string_extension.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QuestionnaireFeelingPicker extends QuestionnaireStepWidget {
   final _questionnaireFeelingPickerState = _QuestionnaireFeelingPickerState();
@@ -52,11 +52,9 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
               itemBuilder: (context, index) {
                 if (index < choices.length) {
                   FeelingDetail choice = choices[index];
-                  return RaisedButton(
-                    color: pickedOutFeeling == choice.detailedType
-                        ? Constants.deepPurple[500]
-                        : Constants.accentColor[700],
-                    child: Text(choice.detailedType.split("_")[1].capitalize()),
+                  return ToggleButton(
+                    active: pickedOutFeeling == choice.detailedType,
+                    label: choice.detailedType.split("_")[1].capitalize(),
                     onPressed: () {
                       setState(() {
                         pickedOutFeeling = choice.detailedType;
