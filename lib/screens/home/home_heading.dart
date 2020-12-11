@@ -48,34 +48,40 @@ class _HomeHeadingState extends State<HomeHeading> {
                   carouselController: buttonCarouselController,
                   options: CarouselOptions(
                     onPageChanged: (index, reason) {
-                      setState(() {
-                        _current = index;
-                      });
+                      setState(
+                        () {
+                          _current = index;
+                        },
+                      );
                     },
                   ),
-                  items: timeline.posts.data.results.map<Widget>((Post post) {
-                    return Builder(builder: (BuildContext context) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              post.text[0],
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          ),
-                          OutlineButton(
-                            onPressed: () {},
-                            child: Text("Go deeper"),
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
+                  items: timeline.posts.data.results.map<Widget>(
+                    (Post post) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  post.text[0],
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ),
+                              OutlineButton(
+                                onPressed: () {},
+                                child: Text("Go deeper"),
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       );
-                    });
-                  }).toList(),
+                    },
+                  ).toList(),
                 ),
               ),
             ),
@@ -86,9 +92,6 @@ class _HomeHeadingState extends State<HomeHeading> {
                 selected: _current,
               ),
             ),
-            // Container(
-            //   child: Text(timeline.posts?.data?.results[0]?.text[0]),
-            // )
           ],
         );
       },

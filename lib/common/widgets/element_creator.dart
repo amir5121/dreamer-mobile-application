@@ -21,13 +21,15 @@ class _ElementCreatorState extends State<ElementCreator> {
         Wrap(
           children: [
             ...widget.controllers
-                .map<Widget>((TextEditingController controller) => Padding(
-                      padding: const EdgeInsets.only(top: 8.0, right: 8.0),
-                      child: FractionallySizedBox(
-                        widthFactor: 0.4,
-                        child: TextFormField(controller: controller),
-                      ),
-                    ))
+                .map<Widget>(
+                  (TextEditingController controller) => Padding(
+                    padding: const EdgeInsets.only(top: 8.0, right: 8.0),
+                    child: FractionallySizedBox(
+                      widthFactor: 0.4,
+                      child: TextFormField(controller: controller),
+                    ),
+                  ),
+                )
                 .toList(),
             ButtonTheme(
               minWidth: 0,
@@ -43,7 +45,9 @@ class _ElementCreatorState extends State<ElementCreator> {
                                   controller.text.length == 0)
                               .length <
                           1) {
-                        widget.controllers.add(TextEditingController());
+                        widget.controllers.add(
+                          TextEditingController(),
+                        );
                       }
                     });
                   },

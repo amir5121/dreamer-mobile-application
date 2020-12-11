@@ -13,7 +13,11 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(Phoenix(child: MyApp()));
+  runApp(
+    Phoenix(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -26,9 +30,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    configurationsViewModel
-        .loadBuildData()
-        .then((value) => configurationsViewModel.loadConfigurations());
+    configurationsViewModel.loadBuildData().then(
+          (value) => configurationsViewModel.loadConfigurations(),
+        );
     super.initState();
   }
 
@@ -40,7 +44,9 @@ class _MyAppState extends State<MyApp> {
         // In this sample app, CatalogModel never changes, so a simple Provider
         // is sufficient.
         ChangeNotifierProvider(create: (context) => configurationsViewModel),
-        ChangeNotifierProvider(create: (context) => AuthViewModel())
+        ChangeNotifierProvider(
+          create: (context) => AuthViewModel(),
+        )
       ],
       child: MaterialApp(
         title: 'Dreamer',

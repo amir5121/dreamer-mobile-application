@@ -1,7 +1,7 @@
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/dream_consumer.dart';
-import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
+import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,41 +31,42 @@ class Splash extends StatelessWidget {
         builder: (context, configurations, child) => Column(
           children: [
             Expanded(
-                child: configurations.hasError
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Something wen't wrong",
+              child: configurations.hasError
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Something wen't wrong",
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            configurations.errorMessage,
+                            style: Theme.of(context).textTheme.caption,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              configurations.errorMessage,
-                              style: Theme.of(context).textTheme.caption,
-                            ),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.loop),
-                            onPressed: () {
-                              configurations.loadConfigurations();
-                            },
-                          )
-                        ],
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Hello there dreamer",
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(32.0),
-                            child: LinearProgressIndicator(),
-                          ),
-                        ],
-                      )),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.loop),
+                          onPressed: () {
+                            configurations.loadConfigurations();
+                          },
+                        )
+                      ],
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Hello there dreamer",
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: LinearProgressIndicator(),
+                        ),
+                      ],
+                    ),
+            ),
             Text("Build ${configurations.buildNumber}"),
             Text("Version ${configurations.version}"),
             SizedBox(height: 16)

@@ -30,7 +30,10 @@ class _FeelingSliderState extends State<FeelingSlider> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(width: 80, child: Text(widget.label)),
+        Container(
+          width: 80,
+          child: Text(widget.label),
+        ),
         Expanded(
           child: Slider(
             value: _currentSliderValue,
@@ -42,7 +45,9 @@ class _FeelingSliderState extends State<FeelingSlider> {
               setState(() {
                 _currentSliderValue = value;
               });
-              widget.setValue(value.toInt());
+              widget.setValue(
+                value.toInt(),
+              );
             },
           ),
         ),

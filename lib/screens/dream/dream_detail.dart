@@ -83,9 +83,13 @@ class _DreamDetailState extends State<DreamDetail> {
                 children: [
                   Row(
                     children: [
-                      Text(feeling.feelingParent.capitalize()),
+                      Text(
+                        feeling.feelingParent.capitalize(),
+                      ),
                       Text(" - "),
-                      Text(feeling.feelingDisplay()),
+                      Text(
+                        feeling.feelingDisplay(),
+                      ),
                     ],
                   ),
                   Padding(
@@ -107,7 +111,9 @@ class _DreamDetailState extends State<DreamDetail> {
 
   ClipRRect _linearProgress(int value, int maxValue, String label) {
     return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
+      borderRadius: BorderRadius.all(
+        Radius.circular(10),
+      ),
       child: Row(
         children: [
           Expanded(

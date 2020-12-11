@@ -32,11 +32,12 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
   @override
   Widget build(BuildContext context) {
     List<FeelingDetail> choices = context.select(
-        (ConfigurationsViewModel configurationsViewModel) => configurationsViewModel
-            .configurations.data.feelings
-            .where((FeelingDetail element) =>
-                widget.dream.feelings[_current].feelingParent == element.parentType)
-            .toList());
+      (ConfigurationsViewModel configurationsViewModel) => configurationsViewModel
+          .configurations.data.feelings
+          .where((FeelingDetail element) =>
+              widget.dream.feelings[_current].feelingParent == element.parentType)
+          .toList(),
+    );
     return Padding(
       padding: EdgeInsets.only(top: 36.0, left: 36.0, right: 36.0),
       child: Column(

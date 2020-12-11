@@ -65,17 +65,5 @@ class Singleton {
         },
       ),
     );
-    // _dio.interceptors
-    //     .add(InterceptorsWrapper(onRequest: (Options options) async {
-    //   // If no token, request token firstly and lock this interceptor
-    //   // to prevent other request enter this interceptor.
-    //   _dio.interceptors.requestLock.lock();
-    //   // We use a new Dio(to avoid dead lock) instance to request token.
-    //   Response response = await tokenDio.get("/token");
-    //   //Set the token to headers
-    //   options.headers["token"] = response.data["data"]["token"];
-    //   _dio.interceptors.requestLock.unlock();
-    //   return options; //continue
-    // }));
   }
 }
