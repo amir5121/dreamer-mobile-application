@@ -97,6 +97,25 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<PostRetrieve> getPost({id}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/post/timeline/$id/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = PostRetrieve.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<DreamResponse> getDreams({page}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};

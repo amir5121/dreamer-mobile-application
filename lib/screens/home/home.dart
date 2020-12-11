@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
           } else {
             if (pageKey == 1) {
               // this is for heading
-              _pagingController.appendPage([Post(null, null)], pageKey + 1);
+              _pagingController.appendPage([Post.empty()], pageKey + 1);
             }
             if (postsResults.posts.data.next == null) {
               _pagingController.appendLastPage(postsResults.posts.data.results);

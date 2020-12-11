@@ -70,7 +70,13 @@ class _HomeHeadingState extends State<HomeHeading> {
                                 ),
                               ),
                               OutlineButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/post',
+                                    arguments: post.id,
+                                  );
+                                },
                                 child: Text("Go deeper"),
                                 borderSide: BorderSide(
                                   color: Colors.white,

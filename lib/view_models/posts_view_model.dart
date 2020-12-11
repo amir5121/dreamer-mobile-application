@@ -1,13 +1,21 @@
 import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/post/post_response.dart';
+import 'package:dreamer/models/post/post_retrieve.dart';
 
 class PostViewModel extends RequestNotifier {
   PostResponse _posts;
+  PostRetrieve _lastRetrievedPost;
 
   void loadDeeperPosts() async {
     _posts = await makeRequest(
       () => Singleton().client.getTimeline(showMulti: true),
+    );
+  }
+
+  void getPost(int id) async {
+    _lastRetrievedPost = await makeRequest(
+      () => Singleton().client.getPost(id: id),
     );
   }
 
@@ -21,5 +29,9 @@ class PostViewModel extends RequestNotifier {
 
   PostResponse get posts {
     return _posts;
+  }
+
+  PostRetrieve get lastRetrievedPost {
+    return _lastRetrievedPost;
   }
 }

@@ -8,6 +8,7 @@ import 'package:dreamer/models/dream/dream_response.dart';
 import 'package:dreamer/models/dream/dream_retrieve.dart';
 import 'package:dreamer/models/ignore_data.dart';
 import 'package:dreamer/models/post/post_response.dart';
+import 'package:dreamer/models/post/post_retrieve.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'rest_client.g.dart';
@@ -31,6 +32,11 @@ abstract class RestClient {
   Future<PostResponse> getTimeline({
     @Query("show_multi") bool showMulti,
     @Query("page") int page,
+  });
+
+  @GET("/post/timeline/{id}/")
+  Future<PostRetrieve> getPost({
+    @Path("id") int id,
   });
 
   @GET("/post/dreams/")

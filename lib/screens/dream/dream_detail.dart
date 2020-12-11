@@ -39,14 +39,14 @@ class _DreamDetailState extends State<DreamDetail> {
                     DreamPostHeader(dream: dream),
                     SizedBox(height: 16),
                     Text(dream.text),
-                    SizedBox(height: 32),
+                    SizedBox(height: 16),
                     _dreamDivider(context, "Elements"),
                     SizedBox(height: 8),
                     _elements(dream, context),
                     _dreamDivider(context, "Feelings"),
                     SizedBox(height: 8),
                     _feelings(dream),
-                    SizedBox(height: 32),
+                    SizedBox(height: 8),
                     _dreamDivider(context, "Dream Transparency"),
                     SizedBox(height: 8),
                     _linearProgress(
@@ -112,7 +112,7 @@ class _DreamDetailState extends State<DreamDetail> {
   ClipRRect _linearProgress(int value, int maxValue, String label) {
     return ClipRRect(
       borderRadius: BorderRadius.all(
-        Radius.circular(10),
+        Radius.circular(50),
       ),
       child: Row(
         children: [

@@ -2,6 +2,7 @@ import 'package:dreamer/common/theme.dart';
 import 'package:dreamer/screens/dream/dream_detail.dart';
 import 'package:dreamer/screens/landing.dart';
 import 'package:dreamer/screens/login.dart';
+import 'package:dreamer/screens/post_detail.dart';
 import 'package:dreamer/screens/questionnaire/story.dart';
 import 'package:dreamer/screens/settings.dart';
 import 'package:dreamer/screens/sign_up.dart';
@@ -87,6 +88,11 @@ class _MyAppState extends State<MyApp> {
               return MaterialPageRoute(
                 settings: settings,
                 builder: (context) => DreamDetail(identifier: arguments),
+              );
+            case '/post':
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) => PostDetail(postId: arguments),
               );
             default:
               return MaterialPageRoute(

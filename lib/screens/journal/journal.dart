@@ -55,7 +55,7 @@ class _JournalState extends State<Journal> {
             PagedSliverList<int, Dream>(
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<Dream>(
-                itemBuilder: (context, dream, index) => dreamItem(dream, context),
+                itemBuilder: (context, item, index) => dreamItem(item, context),
                 noItemsFoundIndicatorBuilder: (_) => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

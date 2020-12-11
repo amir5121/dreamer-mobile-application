@@ -4,10 +4,15 @@ part 'post.g.dart';
 
 @JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
 class Post {
+  final int id;
   final DateTime created;
   final List<String> text;
 
-  Post(this.created, this.text);
+  Post(this.created, this.text, this.id);
+
+  factory Post.empty() {
+    return Post(null, null, null);
+  }
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 
