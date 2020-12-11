@@ -1,3 +1,4 @@
+import 'package:dreamer/common/constants.dart';
 import 'package:flutter/material.dart';
 
 class FeelingSlider extends StatefulWidget {
@@ -5,10 +6,11 @@ class FeelingSlider extends StatefulWidget {
   final Function setValue;
   final int initialValue;
 
-  const FeelingSlider({Key key,
-    @required this.label,
-    @required this.setValue,
-    @required this.initialValue})
+  const FeelingSlider(
+      {Key key,
+      @required this.label,
+      @required this.setValue,
+      @required this.initialValue})
       : super(key: key);
 
   @override
@@ -33,8 +35,8 @@ class _FeelingSliderState extends State<FeelingSlider> {
           child: Slider(
             value: _currentSliderValue,
             min: 0,
-            max: 10,
-            divisions: 10,
+            max: Constants.maxFeelingSlider.toDouble(),
+            divisions: Constants.maxFeelingSlider,
             label: _currentSliderValue.round().toString(),
             onChanged: (double value) {
               setState(() {

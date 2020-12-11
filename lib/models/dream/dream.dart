@@ -16,6 +16,7 @@ class Dream {
   User user;
   String publicationStatus;
   int dreamClearance;
+  String dreamClearanceDisplay;
   DateTime dreamDate;
   List<DreamElement> elements;
   List<Feeling> feelings;
@@ -30,6 +31,7 @@ class Dream {
       this.text,
       this.title,
       this.dreamDate,
+      this.dreamClearanceDisplay,
       this.elements,
       this.feelings});
 

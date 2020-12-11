@@ -25,6 +25,7 @@ Dream _$DreamFromJson(Map<String, dynamic> json) {
     dreamDate: json['dream_date'] == null
         ? null
         : DateTime.parse(json['dream_date'] as String),
+    dreamClearanceDisplay: json['dream_clearance_display'] as String,
     elements: (json['elements'] as List)
         ?.map((e) =>
             e == null ? null : DreamElement.fromJson(e as Map<String, dynamic>))
@@ -45,6 +46,7 @@ Map<String, dynamic> _$DreamToJson(Dream instance) => <String, dynamic>{
       'user': instance.user,
       'publication_status': instance.publicationStatus,
       'dream_clearance': instance.dreamClearance,
+      'dream_clearance_display': instance.dreamClearanceDisplay,
       'dream_date': instance.dreamDate?.toIso8601String(),
       'elements': instance.elements,
       'feelings': instance.feelings,

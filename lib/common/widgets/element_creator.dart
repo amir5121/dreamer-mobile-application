@@ -25,15 +25,7 @@ class _ElementCreatorState extends State<ElementCreator> {
                       padding: const EdgeInsets.only(top: 8.0, right: 8.0),
                       child: FractionallySizedBox(
                         widthFactor: 0.4,
-                        child: TextFormField(
-                          controller: controller,
-                          // validator: (value) {
-                          //   if (value.isEmpty) {
-                          //     return 'Please enter';
-                          //   }
-                          //   return null;
-                          // },
-                        ),
+                        child: TextFormField(controller: controller),
                       ),
                     ))
                 .toList(),
