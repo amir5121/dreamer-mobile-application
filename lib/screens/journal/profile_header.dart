@@ -42,57 +42,51 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                         bottom: BorderSide(width: 1, color: Constants.accentColor),
                       ),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8 * opacity, horizontal: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    user.fullName,
-                                    style: Theme.of(context).textTheme.bodyText1,
+                              ButtonTheme(
+                                minWidth: 0,
+                                child: OutlineButton(
+                                  child: Icon(Icons.settings),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/settings');
+                                  },
+                                  shape: CircleBorder(
+                                    side: BorderSide(),
                                   ),
-                                  Text(
-                                    user.email,
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ],
+                                ),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  ButtonTheme(
-                                    minWidth: 0,
-                                    child: OutlineButton(
-                                      child: Icon(Icons.settings),
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/settings');
-                                      },
-                                      shape: CircleBorder(
-                                        side: BorderSide(),
-                                      ),
-                                    ),
-                                  ),
-                                  OutlineButton(
-                                    padding: EdgeInsets.symmetric(horizontal: 32),
-                                    onPressed: () {},
-                                    child: Text(
-                                      "Edit profile",
-                                      style: Theme.of(context).textTheme.bodyText2,
-                                    ),
-                                  ),
-                                ],
+                              OutlineButton(
+                                padding: EdgeInsets.symmetric(horizontal: 32),
+                                onPressed: () {},
+                                child: Text(
+                                  "Edit profile",
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                user.fullName,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                              Text(
+                                user.email,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

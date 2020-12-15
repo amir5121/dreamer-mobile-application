@@ -33,63 +33,96 @@ class _StoryState extends State<Story> {
         .mainFeelings
         .map((FeelingDetail e) => e.convertToFeeling())
         .toList();
-    _journalLogger.add(QuestionnaireInit(dream: dream));
-    _journalLogger.add(QuestionnaireClearancePicker(dream: dream));
-    _journalLogger.add(QuestionnaireOverallFeelings(dream: dream));
-    _journalLogger.add(QuestionnaireFeelingPicker(dream: dream));
-    _journalLogger.add(QuestionnaireElement(dream: dream));
+    _journalLogger.add(
+      QuestionnaireInit(
+        dream: dream,
+        goToNext: goToNext,
+      ),
+    );
+    _journalLogger.add(
+      QuestionnaireClearancePicker(
+        dream: dream,
+        goToNext: goToNext,
+      ),
+    );
+    _journalLogger.add(
+      QuestionnaireOverallFeelings(
+        dream: dream,
+        goToNext: goToNext,
+      ),
+    );
+    _journalLogger.add(
+      QuestionnaireFeelingPicker(
+        dream: dream,
+        goToNext: goToNext,
+      ),
+    );
+    _journalLogger.add(
+      QuestionnaireElement(
+        dream: dream,
+        goToNext: goToNext,
+      ),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final DreamViewModel dreamViewModel = DreamViewModel();
     final bool isLastItem = _current == _journalLogger.length - 1;
+    if (isLastItem) {
+      dreamViewModel.submitDream(dream).then(
+        (DreamViewModel journalResponse) {
+          if (!journalResponse.hasError) {
+            Navigator.pop(context);
+            Navigator.popAndPushNamed(
+              context,
+              '/home',
+              arguments: Landing.journal,
+            );
+          }
+        },
+      );
+    }
     return ChangeNotifierProvider(
-      create: (context) => DreamViewModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Dots(
-            count: _journalLogger.length,
-            selected: _current,
-          ),
-          elevation: 0,
-          centerTitle: true,
-          actions: [
-            DreamConsumer<DreamViewModel>(
-              builder: (context, journalViewModel, child) {
-                return FlatButton(
+      create: (context) {
+        return dreamViewModel;
+      },
+      child: DreamConsumer<DreamViewModel>(
+        builder: (context, journalViewModel, child) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Dots(
+                count: _journalLogger.length,
+                selected: _current,
+              ),
+              elevation: 0,
+              centerTitle: true,
+              actions: [
+                FlatButton(
                   child: Text(isLastItem ? "Finish" : "Next"),
                   onPressed: journalViewModel.isLoading
                       ? null
                       : () {
                           if (_journalLogger[_current].next()) {
-                            if (_current < _journalLogger.length - 1) {
-                              setState(() {
-                                _current++;
-                              });
-                            } else {
-                              journalViewModel
-                                  .submitDream(dream)
-                                  .then((DreamViewModel journalResponse) {
-                                if (!journalResponse.hasError) {
-                                  Navigator.pop(context);
-                                  Navigator.popAndPushNamed(
-                                    context,
-                                    '/home',
-                                    arguments: Landing.journal,
-                                  );
-                                }
-                              });
-                            }
+                            goToNext();
                           }
                         },
-                );
-              },
-            )
-          ],
-        ),
-        body: _journalLogger[_current],
+                ),
+              ],
+            ),
+            body: _journalLogger[_current],
+          );
+        },
       ),
     );
+  }
+
+  void goToNext() {
+    setState(() {
+      if (_current < _journalLogger.length - 1) {
+        _current++;
+      }
+    });
   }
 }

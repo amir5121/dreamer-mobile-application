@@ -11,7 +11,8 @@ class QuestionnaireElement extends QuestionnaireStepWidget {
   static const characterIndex = 1;
   static const objectIndex = 2;
 
-  QuestionnaireElement({Key key, dream}) : super(key: key, dream: dream);
+  QuestionnaireElement({Key key, dream, goToNext})
+      : super(key: key, dream: dream, goToNext: goToNext);
   final questionnaireElementState = _QuestionnaireElementState();
   final List<ElementCreator> elementCreators = [
     ElementCreator(label: "Place"),
@@ -81,7 +82,8 @@ class _QuestionnaireElementState extends State<QuestionnaireElement> implements 
             .where((TextEditingController controller) => controller.text.length > 0)
             .map<String>(
               (TextEditingController controller) => controller.text,
-            ).toList();
+            )
+            .toList();
         if (elementTexts.isNotEmpty) {
           elements.add(
             DreamElement(

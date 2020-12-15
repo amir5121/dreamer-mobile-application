@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 class QuestionnaireClearancePicker extends QuestionnaireStepWidget {
   final _questionnaireClearancePickerState = _QuestionnaireClearancePickerState();
 
-  QuestionnaireClearancePicker({Key key, dream}) : super(key: key, dream: dream);
+  QuestionnaireClearancePicker({Key key, dream, goToNext})
+      : super(key: key, dream: dream, goToNext: goToNext);
 
   @override
   _QuestionnaireClearancePickerState createState() {
@@ -53,6 +54,7 @@ class _QuestionnaireClearancePickerState extends State<QuestionnaireClearancePic
                       setState(() {
                         pickedOutFeeling = choice.value;
                       });
+                      this.next();
                     },
                   );
                 }
@@ -71,6 +73,7 @@ class _QuestionnaireClearancePickerState extends State<QuestionnaireClearancePic
       return false;
     }
     widget.dream.dreamClearance = pickedOutFeeling;
+    widget.goToNext();
     return true;
   }
 }

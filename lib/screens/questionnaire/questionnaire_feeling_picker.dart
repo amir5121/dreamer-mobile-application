@@ -11,7 +11,8 @@ import 'package:provider/provider.dart';
 class QuestionnaireFeelingPicker extends QuestionnaireStepWidget {
   final _questionnaireFeelingPickerState = _QuestionnaireFeelingPickerState();
 
-  QuestionnaireFeelingPicker({Key key, dream}) : super(key: key, dream: dream);
+  QuestionnaireFeelingPicker({Key key, dream, goToNext})
+      : super(key: key, dream: dream, goToNext: goToNext);
 
   @override
   _QuestionnaireFeelingPickerState createState() {
@@ -60,6 +61,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
                       setState(() {
                         pickedOutFeeling = choice.detailedType;
                       });
+                      this.next();
                     },
                   );
                 }
@@ -86,6 +88,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
       });
       return false;
     }
+    widget.goToNext();
     return true;
   }
 }

@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'questionnaire_step_widget.dart';
 
 class QuestionnaireOverallFeelings extends QuestionnaireStepWidget {
-  QuestionnaireOverallFeelings({Key key, dream}) : super(key: key, dream: dream);
+  QuestionnaireOverallFeelings({Key key, dream, goToNext})
+      : super(key: key, dream: dream, goToNext: goToNext);
 
   final _questionnaireOverallFeelingState = _QuestionnaireOverallFeelingState();
 

@@ -8,7 +8,8 @@ import 'package:intl/intl.dart';
 import 'questionnaire_step_widget.dart';
 
 class QuestionnaireInit extends QuestionnaireStepWidget {
-  QuestionnaireInit({Key key, dream}) : super(key: key, dream: dream);
+  QuestionnaireInit({Key key, dream, goToNext})
+      : super(key: key, dream: dream, goToNext: goToNext);
 
   final _questionnaireInitState = _QuestionnaireInitState();
 

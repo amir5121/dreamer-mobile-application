@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 abstract class QuestionnaireStepWidget extends StatefulWidget implements Forward {
   final Dream dream;
+  final Function goToNext;
 
-  QuestionnaireStepWidget({Key key, this.dream}) : super(key: key);
+  QuestionnaireStepWidget({Key key, @required this.dream, @required this.goToNext})
+      : super(key: key);
 }

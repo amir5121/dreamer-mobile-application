@@ -11,8 +11,25 @@ class ElementCreator extends StatefulWidget {
 }
 
 class _ElementCreatorState extends State<ElementCreator> {
+  FocusNode focusNode;
+
+  @override
+  void initState() {
+    focusNode = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      focusNode.requestFocus();
+    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,15 +38,24 @@ class _ElementCreatorState extends State<ElementCreator> {
         Wrap(
           children: [
             ...widget.controllers
-                .map<Widget>(
-                  (TextEditingController controller) => Padding(
-                    padding: const EdgeInsets.only(top: 8.0, right: 8.0),
-                    child: FractionallySizedBox(
-                      widthFactor: 0.4,
-                      child: TextFormField(controller: controller),
-                    ),
-                  ),
+                .asMap()
+                .map<int, Widget>(
+                  (int index, TextEditingController controller) => MapEntry(
+                      index,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, right: 8.0),
+                        child: FractionallySizedBox(
+                          widthFactor: 0.4,
+                          child: TextFormField(
+                            controller: controller,
+                            focusNode: widget.controllers.length - 1 == index && index > 0
+                                ? focusNode
+                                : null,
+                          ),
+                        ),
+                      )),
                 )
+                .values
                 .toList(),
             ButtonTheme(
               minWidth: 0,
@@ -39,17 +65,19 @@ class _ElementCreatorState extends State<ElementCreator> {
                   // padding: EdgeInsets.all(0),
                   child: Icon(Icons.add),
                   onPressed: () {
-                    setState(() {
-                      if (widget.controllers
-                              .where((TextEditingController controller) =>
-                                  controller.text.length == 0)
-                              .length <
-                          1) {
-                        widget.controllers.add(
-                          TextEditingController(),
-                        );
-                      }
-                    });
+                    if (widget.controllers
+                            .where((TextEditingController controller) =>
+                                controller.text.length == 0)
+                            .length <
+                        1) {
+                      setState(
+                        () {
+                          widget.controllers.add(
+                            TextEditingController(),
+                          );
+                        },
+                      );
+                    }
                   },
                   shape: CircleBorder(
                     side: BorderSide(),
