@@ -1,6 +1,7 @@
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
 import 'package:dreamer/screens/home/home.dart';
+import 'package:dreamer/screens/statics/statics.dart';
 import 'package:dreamer/view_models/dreams_view_model.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,7 @@ class _LandingState extends State<Landing> {
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
     Journal(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    Statics(),
     Text(
       'Index 3: Bitch please',
       style: optionStyle,

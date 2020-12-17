@@ -1,6 +1,8 @@
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:flutter/material.dart';
 
+import 'dreamer_dialog.dart';
+
 class DreamPostHeader extends StatelessWidget {
   final Dream dream;
 
@@ -45,7 +47,27 @@ class DreamPostHeader extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.keyboard_arrow_down),
                 color: Theme.of(context).accentColor,
-                onPressed: () {},
+                onPressed: () {
+                  showDreamDialog(
+                    context,
+                    child: Column(
+                      children: [
+                        FlatButton(
+                          child: Text("Edit Dream"),
+                          onPressed: () {
+                            print("edddddditttt");
+                          },
+                        ),
+                        FlatButton(
+                          child: Text("Delete Dream"),
+                          onPressed: () {
+                            print("deleeeeteeee");
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
               )
             ],
           ),

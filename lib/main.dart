@@ -1,5 +1,5 @@
 import 'package:dreamer/common/theme.dart';
-import 'package:dreamer/screens/dream/dream_detail.dart';
+import 'package:dreamer/screens/dream_detail.dart';
 import 'package:dreamer/screens/landing.dart';
 import 'package:dreamer/screens/login.dart';
 import 'package:dreamer/screens/post_detail.dart';

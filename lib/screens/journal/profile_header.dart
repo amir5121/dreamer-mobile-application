@@ -12,81 +12,82 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
         (constraints.maxHeight - minExtent) / (maxExtent - minExtent);
 
     if (++index > Colors.primaries.length - 1) index = 0;
-    double opacity = 1 - 2 * (1 - percentage);
+    double opacity = 1 - 3 * (1 - percentage);
     return Stack(
       children: [
-        Flex(
-          direction: Axis.vertical,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: RawMaterialButton(
-                  onPressed: () {},
-                  fillColor: Colors.black12,
-                  child: Icon(
-                    Icons.arrow_back,
-                  ),
-                  shape: CircleBorder(),
+            Align(
+              alignment: Alignment.topLeft,
+              child: RawMaterialButton(
+                onPressed: () {},
+                fillColor: Colors.black12,
+                child: Icon(
+                  Icons.arrow_back,
                 ),
+                shape: CircleBorder(),
               ),
             ),
             if (!opacity.isNegative)
-              Expanded(
-                child: Opacity(
-                  opacity: opacity,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      border: Border(
-                        bottom: BorderSide(width: 1, color: Constants.accentColor),
-                      ),
+              Opacity(
+                opacity: opacity,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    border: Border(
+                      bottom: BorderSide(width: 1, color: Constants.accentColor),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ButtonTheme(
-                                minWidth: 0,
-                                child: OutlineButton(
-                                  child: Icon(Icons.settings),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/settings');
-                                  },
-                                  shape: CircleBorder(
-                                    side: BorderSide(),
-                                  ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8.0,
+                      left: 8,
+                      right: 8,
+                      bottom: 16,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ButtonTheme(
+                              minWidth: 0,
+                              child: OutlineButton(
+                                child: Icon(Icons.settings),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/settings');
+                                },
+                                shape: CircleBorder(
+                                  side: BorderSide(),
                                 ),
                               ),
-                              OutlineButton(
-                                padding: EdgeInsets.symmetric(horizontal: 32),
-                                onPressed: () {},
-                                child: Text(
-                                  "Edit profile",
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
+                            ),
+                            OutlineButton(
+                              padding: EdgeInsets.symmetric(horizontal: 32),
+                              onPressed: () {},
+                              child: Text(
+                                "Edit profile",
+                                style: Theme.of(context).textTheme.bodyText2,
                               ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                user.fullName,
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                              Text(
-                                user.email,
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.fullName,
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                            Text(
+                              user.email,
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),

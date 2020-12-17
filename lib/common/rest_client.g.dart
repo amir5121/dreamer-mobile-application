@@ -171,4 +171,22 @@ class _RestClient implements RestClient {
     final value = IgnoreData.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<AnalyticsResponse> getAnalytics(duration) async {
+    ArgumentError.checkNotNull(duration, 'duration');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'duration': duration};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>('/post/analytics/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = AnalyticsResponse.fromJson(_result.data);
+    return value;
+  }
 }

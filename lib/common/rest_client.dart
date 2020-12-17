@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dreamer/models/analytics/analytics_response.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
@@ -51,4 +52,9 @@ abstract class RestClient {
 
   @POST("/post/dreams/")
   Future<IgnoreData> submitDream({@Body() Dream dream});
+
+  @GET("/post/analytics/")
+  Future<AnalyticsResponse> getAnalytics(
+    @Query("duration") int duration,
+  );
 }
