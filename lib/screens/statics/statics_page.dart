@@ -1,5 +1,8 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dreamer/common/dream_consumer.dart';
+import 'package:dreamer/common/extensions/string_extension.dart';
 import 'package:dreamer/common/widgets/text_ful_divider.dart';
+import 'package:dreamer/models/analytics/feeling_summarize.dart';
 import 'package:dreamer/view_models/statics_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,11 +62,60 @@ class _StaticsPageState extends State<StaticsPage> {
                   ],
                 ),
                 _dreamDivider(context, "Emotion analysis"),
+                feelingAnalysis(statics)
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Row feelingAnalysis(statics) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              ...statics.statics.data.feelings.map<Widget>(
+                (FeelingSummarize feelingSummarize) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(feelingSummarize.label.capitalize()),
+                      Text("${((feelingSummarize.value * 100).toInt()).toString()}%")
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Container(
+            height: 200,
+            child: charts.PieChart(
+              [
+                charts.Series<FeelingSummarize, String>(
+                  id: 'Segments',
+                  // colorFn: (FeelingSummarize segment, _) =>
+                  //     charts.ColorUtil.fromDartColor(Constants.deepPurple[100]),
+                  domainFn: (FeelingSummarize segment, _) => segment.label,
+                  measureFn: (FeelingSummarize segment, _) => segment.value,
+                  data: statics.statics.data.feelings,
+                )
+              ],
+              animate: true,
+              defaultRenderer: charts.ArcRendererConfig(
+                arcWidth: 20,
+                // startAngle: 4 / 5 * pi,
+                // arcLength: 7 / 5 * pi,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

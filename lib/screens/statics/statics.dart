@@ -29,10 +29,11 @@ class _StaticsState extends State<Statics> {
               child: TabBarView(
                 children: _widgetOptions,
               ),
-            )
+            ),
           ],
         ),
       ),
+
     );
   }
 }
