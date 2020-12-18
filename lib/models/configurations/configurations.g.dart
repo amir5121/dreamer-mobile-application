@@ -21,6 +21,9 @@ Configurations _$ConfigurationsFromJson(Map<String, dynamic> json) {
     (json['clearance_choices'] as List)
         .map((e) => DreamClearance.fromJson(e as Map<String, dynamic>))
         .toList(),
+    (json['gender_choices'] as List)
+        .map((e) => Gender.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -31,4 +34,5 @@ Map<String, dynamic> _$ConfigurationsToJson(Configurations instance) =>
       'feelings': instance.feelings,
       'main_feelings': instance.mainFeelings,
       'clearance_choices': instance.clearanceChoices,
+      'gender_choices': instance.genderChoices,
     };

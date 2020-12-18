@@ -4,6 +4,7 @@ import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
+import 'package:dreamer/models/auth/update_user.dart';
 import 'package:dreamer/models/ignore_data.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -39,6 +40,14 @@ class AuthViewModel extends RequestNotifier {
     await makeRequest<IgnoreData>(
       () => Singleton().client.signUpWithPassword(
             SignUpCredentials(email, password, rePassword),
+          ),
+    );
+  }
+
+  Future<void> updateSelf(UpdateUser user) async {
+    return await makeRequest<IgnoreData>(
+      () => Singleton().client.updateSelf(
+            user,
           ),
     );
   }

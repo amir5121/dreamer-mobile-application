@@ -1,5 +1,6 @@
 import 'package:dreamer/common/theme.dart';
 import 'package:dreamer/screens/dream_detail.dart';
+import 'package:dreamer/screens/edit_profile.dart';
 import 'package:dreamer/screens/landing.dart';
 import 'package:dreamer/screens/login.dart';
 import 'package:dreamer/screens/post_detail.dart';
@@ -93,6 +94,11 @@ class _MyAppState extends State<MyApp> {
               return MaterialPageRoute(
                 settings: settings,
                 builder: (context) => PostDetail(postId: arguments),
+              );
+            case '/edit-profile':
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) => EditProfile(),
               );
             default:
               return MaterialPageRoute(

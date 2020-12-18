@@ -16,7 +16,7 @@ void showDreamDialog(BuildContext context, {@required Widget child}) {
               Padding(
                 padding: const EdgeInsets.only(
                   top: 12.0,
-                  bottom: 32,
+                  bottom: 16,
                   left: 64,
                   right: 64,
                 ),

@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 
-AppBar dreamAppBar = AppBar(
-  title: Text("Dreamer"),
-  elevation: 0,
-  centerTitle: true,
-);
-
 class DreamerScaffold extends StatelessWidget {
   final Widget body;
   final Widget bottomNavigationBar;
   final Widget floatingActionButton;
+  final List<Widget> actions;
   final AppBar appBar;
   final bool showAppBar;
 
-  const DreamerScaffold({
+  final AppBar dreamAppBar;
+
+  DreamerScaffold({
     Key key,
     this.body,
     this.bottomNavigationBar,
     this.floatingActionButton,
     this.showAppBar = true,
     this.appBar,
-  }) : super(key: key);
+    this.actions,
+  })  : dreamAppBar = AppBar(
+          title: Text("Dreamer"),
+          elevation: 0,
+          centerTitle: true,
+          actions: actions,
+        ),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {

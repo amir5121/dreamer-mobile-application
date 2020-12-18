@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 
 class ProfileHeader extends SliverPersistentHeaderDelegate {
   int index = 0;
+  final bool inProfileEdit;
+
+  ProfileHeader({this.inProfileEdit = true});
 
   Widget _journalHeader(context, constraints, User user) {
     final double percentage =
@@ -16,82 +19,91 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
     return Stack(
       children: [
         Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment:
+              inProfileEdit ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
           children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: RawMaterialButton(
-                onPressed: () {},
-                fillColor: Colors.black12,
-                child: Icon(
-                  Icons.arrow_back,
+            if (inProfileEdit)
+              Align(
+                alignment: Alignment.topLeft,
+                child: RawMaterialButton(
+                  onPressed: () {},
+                  fillColor: Colors.black12,
+                  child: Icon(
+                    Icons.arrow_back,
+                  ),
+                  shape: CircleBorder(),
                 ),
-                shape: CircleBorder(),
               ),
-            ),
             if (!opacity.isNegative)
-              Opacity(
-                opacity: opacity,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    border: Border(
-                      bottom: BorderSide(width: 1, color: Constants.accentColor),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8.0,
-                      left: 8,
-                      right: 8,
-                      bottom: 16,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            ButtonTheme(
-                              minWidth: 0,
-                              child: OutlineButton(
-                                child: Icon(Icons.settings),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/settings');
-                                },
-                                shape: CircleBorder(
-                                  side: BorderSide(),
-                                ),
-                              ),
-                            ),
-                            OutlineButton(
-                              padding: EdgeInsets.symmetric(horizontal: 32),
-                              onPressed: () {},
-                              child: Text(
-                                "Edit profile",
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                            ),
-                          ],
+              inProfileEdit
+                  ? Opacity(
+                      opacity: opacity,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          border: Border(
+                            bottom: BorderSide(width: 1, color: Constants.accentColor),
+                          ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              user.fullName,
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                            Text(
-                              user.email,
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8.0,
+                            left: 8,
+                            right: 8,
+                            bottom: 16,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ButtonTheme(
+                                    minWidth: 0,
+                                    child: OutlineButton(
+                                      child: Icon(Icons.settings),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/settings');
+                                      },
+                                      shape: CircleBorder(
+                                        side: BorderSide(),
+                                      ),
+                                    ),
+                                  ),
+                                  OutlineButton(
+                                    padding: EdgeInsets.symmetric(horizontal: 32),
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, '/edit-profile');
+                                    },
+                                    child: Text(
+                                      "Edit profile",
+                                      style: Theme.of(context).textTheme.bodyText2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    user.fullName,
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                  Text(
+                                    user.email,
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
+                      ),
+                    )
+                  : Container(
+                      color: Constants.deepPurple[900],
+                      height: 75 * opacity,
                     ),
-                  ),
-                ),
-              ),
           ],
         ),
         AnimatedAlign(
@@ -127,7 +139,6 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                         configurations.configurations.data.mainBackground,
                       ),
                       fit: BoxFit.fitWidth,
-                      alignment: Alignment.topCenter,
                     ),
                   ),
                   height: constraints.maxHeight,
@@ -151,7 +162,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate _) => true;
 
   @override
-  double get maxExtent => 230.0;
+  double get maxExtent => inProfileEdit ? 230.0 : 150;
 
   @override
   double get minExtent => 80.0;

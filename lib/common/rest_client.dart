@@ -3,6 +3,7 @@ import 'package:dreamer/models/analytics/analytics_response.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
+import 'package:dreamer/models/auth/update_user.dart';
 import 'package:dreamer/models/configurations/configurations_response.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
@@ -23,6 +24,9 @@ abstract class RestClient {
 
   @POST("/auth/users/")
   Future<IgnoreData> signUpWithPassword(@Body() SignUpCredentials signUpCredentials);
+
+  @PATCH("/auth/users/me/")
+  Future<IgnoreData> updateSelf(@Body() UpdateUser user);
 
   @GET("/configuration/initial/")
   Future<ConfigurationsResponse> getConfigurations(
