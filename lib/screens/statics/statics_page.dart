@@ -44,35 +44,49 @@ class _StaticsPageState extends State<StaticsPage> {
             loadingBuilder: (context, statics, child) => Text("Loading"),
             builder: (context, statics, child) {
               final Analytics analytics = statics.statics.data;
-              return Column(
-                children: [
-                  _dreamDivider(context, "Word Cloud"),
-                  SizedBox(height: 16),
-                  Text(analytics.mainQuote),
-                  SizedBox(height: 16),
-                  Image.network(
-                    analytics.wordCloud,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.file_download),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.share),
-                        onPressed: () {},
-                      )
-                    ],
-                  ),
-                  _dreamDivider(context, "Emotion analysis"),
-                  feelingAnalysis(analytics),
-                  _dreamDivider(context, "Transparency analysis"),
-                  clearanceAnalysis(analytics),
-                  // _dreamDivider(context, "Jungian Archetypes"),
-                ],
-              );
+              return analytics.dreamsCount == 0
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "No dream has been logged!",
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          "zzz time?",
+                        ),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        _dreamDivider(context, "Word Cloud"),
+                        SizedBox(height: 16),
+                        Text(analytics.mainQuote),
+                        SizedBox(height: 16),
+                        Image.network(
+                          analytics.wordCloud,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.file_download),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.share),
+                              onPressed: () {},
+                            )
+                          ],
+                        ),
+                        _dreamDivider(context, "Emotion analysis"),
+                        feelingAnalysis(analytics),
+                        _dreamDivider(context, "Transparency analysis"),
+                        clearanceAnalysis(analytics),
+                        // _dreamDivider(context, "Jungian Archetypes"),
+                      ],
+                    );
             },
           ),
         ),
