@@ -13,4 +13,5 @@ class DreamClearance {
       _$DreamClearanceFromJson(json);
 
   Map<String, dynamic> toJson() => _$DreamClearanceToJson(this);
+
 }

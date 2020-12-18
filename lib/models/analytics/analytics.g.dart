@@ -13,7 +13,10 @@ Analytics _$AnalyticsFromJson(Map<String, dynamic> json) {
     (json['feelings'] as List)
         .map((e) => FeelingSummarize.fromJson(e as Map<String, dynamic>))
         .toList(),
-    json['dream_count'] as int,
+    json['dreams_count'] as int,
+    (json['clearances'] as List)
+        .map((e) => ClearanceSummarize.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -21,5 +24,6 @@ Map<String, dynamic> _$AnalyticsToJson(Analytics instance) => <String, dynamic>{
       'main_quote': instance.mainQuote,
       'word_cloud': instance.wordCloud,
       'feelings': instance.feelings,
-      'dream_count': instance.dreamCount,
+      'clearances': instance.clearances,
+      'dreams_count': instance.dreamsCount,
     };
