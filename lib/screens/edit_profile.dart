@@ -82,7 +82,7 @@ class _EditProfileState extends State<EditProfile> {
                         buildContext.read<ConfigurationsViewModel>().loadConfigurations();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            duration: Duration(seconds: 1),
+                            duration: Duration(milliseconds: 500),
                             content: Text(
                               "Updated profile!",
                               style: TextStyle(
