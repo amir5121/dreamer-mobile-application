@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/rest_client.dart';
+import 'package:dreamer/common/storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart' as SecureStorage;
 import 'package:retry/retry.dart';
 
 class Singleton {
@@ -15,8 +15,6 @@ class Singleton {
   factory Singleton() {
     return _singleton;
   }
-
-  final _storage = SecureStorage.FlutterSecureStorage();
 
   RestClient get client => _client;
 
@@ -35,7 +33,7 @@ class Singleton {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (Options options) async {
-          String accessToken = await _storage.read(key: Constants.accessToken);
+          String accessToken = await DreamerStorage().read(key: Constants.accessToken);
           if (accessToken == null) return options;
           String authorizationToken = "JWT $accessToken";
           options.headers["Authorization"] = authorizationToken;
@@ -50,10 +48,12 @@ class Singleton {
             try {
               Response refreshResponse = await refreshDio.post(
                 Constants.baseUrl + '/auth/jwt/refresh/',
-                data: {"refresh": await _storage.read(key: Constants.refreshToken)},
+                data: {
+                  "refresh": await DreamerStorage().read(key: Constants.refreshToken)
+                },
               );
 
-              await _storage.write(
+              DreamerStorage().write(
                   key: Constants.accessToken, value: refreshResponse.data["access"]);
             } on DioError catch (_) {
               debugPrint("Failed to acquire token");

@@ -30,7 +30,7 @@ class _PostDetailState extends State<PostDetail> {
           builder: (context, retrievedPost, child) {
             Post post = retrievedPost.lastRetrievedPost.data;
             return Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -66,6 +66,8 @@ class _PostDetailState extends State<PostDetail> {
     return CarouselSlider(
       carouselController: buttonCarouselController,
       options: CarouselOptions(
+        aspectRatio:
+            MediaQuery.of(context).orientation == Orientation.portrait ? 3 / 1 : 9 / 1,
         viewportFraction: 1,
         onPageChanged: (index, reason) {
           setState(
@@ -82,11 +84,16 @@ class _PostDetailState extends State<PostDetail> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      text,
-                      style: Theme.of(context).textTheme.bodyText1,
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        text,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyText1,
+                      ),
                     ),
                   ),
                 ],

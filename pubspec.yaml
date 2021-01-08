@@ -34,6 +34,10 @@ dependencies:
   timeago:
   flutter_phoenix:
   package_info:
+  flutter_sound:
+  permission_handler:
+  universal_html:
+  path_provider:
   charts_flutter:
 
 dev_dependencies:

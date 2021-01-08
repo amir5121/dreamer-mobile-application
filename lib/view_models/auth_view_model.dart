@@ -1,12 +1,12 @@
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
+import 'package:dreamer/common/storage.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/auth/update_user.dart';
 import 'package:dreamer/models/ignore_data.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthViewModel extends RequestNotifier {
   AuthTokens _login;
@@ -18,18 +18,15 @@ class AuthViewModel extends RequestNotifier {
             LoginCredentials(email, password),
           ),
     );
-    final storage = FlutterSecureStorage();
 
-    await storage.write(key: Constants.accessToken, value: _login.accessToken);
-    await storage.write(key: Constants.refreshToken, value: _login.refreshToken);
+    DreamerStorage().write(key: Constants.accessToken, value: _login.accessToken);
+    DreamerStorage().write(key: Constants.refreshToken, value: _login.refreshToken);
     return this;
   }
 
   Future<AuthViewModel> logout() async {
-    final storage = FlutterSecureStorage();
-
-    await storage.delete(key: Constants.accessToken);
-    await storage.delete(key: Constants.refreshToken);
+    DreamerStorage().delete(key: Constants.accessToken);
+    DreamerStorage().delete(key: Constants.refreshToken);
     hasLoggedOut = true;
     _login = null;
     notifyListeners();

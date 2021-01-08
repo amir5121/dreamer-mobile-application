@@ -2,6 +2,7 @@ import 'package:dreamer/common/forward_interface.dart';
 import 'package:dreamer/common/widgets/dreamer_fake_text_field.dart';
 import 'package:dreamer/common/widgets/dreamer_text_field.dart';
 import 'package:dreamer/common/widgets/let_scroll.dart';
+import 'package:dreamer/common/widgets/recorder.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -59,9 +60,10 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forwar
 
   @override
   void dispose() {
-    super.dispose();
     titleController.dispose();
     descriptionController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -126,6 +128,11 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forwar
                   SizedBox(
                     height: 16,
                   ),
+                  Container(
+                    width: double.infinity,
+                    child: Text("Voice"),
+                  ),
+                  Recorder()
                 ],
               ),
             ),

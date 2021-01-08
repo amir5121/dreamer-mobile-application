@@ -40,11 +40,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // Using MultiProvider is convenient when providing multiple objects.
     return MultiProvider(
       providers: [
-        // In this sample app, CatalogModel never changes, so a simple Provider
-        // is sufficient.
         ChangeNotifierProvider(create: (context) => configurationsViewModel),
         ChangeNotifierProvider(
           create: (context) => AuthViewModel(),

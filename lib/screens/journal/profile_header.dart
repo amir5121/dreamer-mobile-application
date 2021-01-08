@@ -111,11 +111,26 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
           alignment: opacity > 0.8 ? Alignment.centerLeft : Alignment.topRight,
           child: Container(
             margin: EdgeInsets.only(left: 16, right: 8, top: 4),
-            child: CircleAvatar(
-              // child: Text("Dreamer"),
-              radius: opacity > 0.5 ? 34 : 24,
-              backgroundImage: NetworkImage(
-                user.avatarImage,
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  barrierDismissible: true,
+                  context: context,
+                  builder: (_) => Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.network(user.avatarImage, fit: BoxFit.fitWidth),
+                    ],
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                // child: Text("Dreamer"),
+                radius: opacity > 0.5 ? 34 : 24,
+                backgroundImage: NetworkImage(
+                  user.avatarImage,
+                ),
               ),
             ),
           ),

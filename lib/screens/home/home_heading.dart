@@ -47,6 +47,10 @@ class _HomeHeadingState extends State<HomeHeading> {
                 child: CarouselSlider(
                   carouselController: buttonCarouselController,
                   options: CarouselOptions(
+                    aspectRatio:
+                        MediaQuery.of(context).orientation == Orientation.portrait
+                            ? 2 / 1
+                            : 4 / 1,
                     onPageChanged: (index, reason) {
                       setState(
                         () {
