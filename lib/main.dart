@@ -13,11 +13,18 @@ import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
-void main() {
-  runApp(
-    Phoenix(
-      child: MyApp(),
+Future<void> main() async {
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://06f4ea19c399443889f37e1b87662903@sentry.stickergramapp.com//3';
+    },
+    appRunner: () => runApp(
+      Phoenix(
+        child: MyApp(),
+      ),
     ),
   );
 }

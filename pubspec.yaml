@@ -39,6 +39,7 @@ dependencies:
   universal_html:
   path_provider:
   charts_flutter:
+  sentry_flutter:
 
 dev_dependencies:
   json_serializable:

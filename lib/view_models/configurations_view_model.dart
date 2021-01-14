@@ -15,8 +15,8 @@ class ConfigurationsViewModel extends RequestNotifier {
     if (kIsWeb) {
       appName = "Dreamer";
       packageName = "null";
-      version = "1";
-      buildNumber = "1";
+      version = "web";
+      buildNumber = "web";
     } else {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       appName = packageInfo.appName;
