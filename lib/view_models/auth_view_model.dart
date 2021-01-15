@@ -32,7 +32,7 @@ class AuthViewModel extends RequestNotifier {
   }
 
   Future<AuthViewModel> logout() async {
-    _login = await makeRequest<AuthTokens>(
+    await makeRequest<void>(
       () async => Singleton()
           .client
           .logout(
@@ -42,7 +42,7 @@ class AuthViewModel extends RequestNotifier {
               Constants.CLIENT_SECRET,
             ),
           )
-          .then((value) {
+          .then((_) {
         DreamerStorage().delete(key: Constants.ACCESS_TOKEN);
         DreamerStorage().delete(key: Constants.REFRESH_TOKEN);
         hasLoggedOut = true;
