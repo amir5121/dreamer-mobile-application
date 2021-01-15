@@ -4,6 +4,7 @@ import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sentry/sentry.dart';
 
 class Splash extends StatelessWidget {
   @override
@@ -18,6 +19,12 @@ class Splash extends StatelessWidget {
           if (configurationsResponse.configurations.data.self == null) {
             Navigator.pushReplacementNamed(context, '/login');
           } else {
+            Sentry.configureScope(
+              (scope) => scope.user = User(
+                username: configurationsResponse.configurations.data.self.username,
+                email: configurationsResponse.configurations.data.self.email,
+              ),
+            );
             Navigator.pushReplacementNamed(context, '/home');
           }
         } else if (configurationsResponse.errorCode == Constants.INVALID_TOKEN) {
@@ -49,7 +56,7 @@ class Splash extends StatelessWidget {
                           IconButton(
                             icon: Icon(Icons.loop),
                             onPressed: () {
-                              configurations.loadConfigurations();
+                              configurations.loadConfigurations(context);
                             },
                           )
                         ],

@@ -93,7 +93,8 @@ class _RecorderState extends State<Recorder> {
             },
           ),
           content: Text(
-              "Permission has been permanently denied. Grant permission from settings"),
+            "Permission has been permanently denied. Grant permission from settings",
+          ),
         ),
       );
     } else {

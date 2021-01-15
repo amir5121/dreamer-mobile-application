@@ -88,7 +88,8 @@ class _LoginState extends State<Login> {
                                     )
                                         .then((AuthViewModel authViewModel) {
                                       if (auth.login?.accessToken != null) {
-                                        configurationsViewModel.loadConfigurations();
+                                        configurationsViewModel
+                                            .loadConfigurations(context);
                                         Navigator.pushReplacementNamed(context, '/home');
                                       }
                                     });

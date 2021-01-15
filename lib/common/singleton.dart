@@ -33,30 +33,33 @@ class Singleton {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (Options options) async {
-          String accessToken = await DreamerStorage().read(key: Constants.accessToken);
+          String accessToken = await DreamerStorage().read(key: Constants.ACCESS_TOKEN);
           if (accessToken == null) return options;
-          String authorizationToken = "JWT $accessToken";
+          String authorizationToken = "Bearer $accessToken";
           options.headers["Authorization"] = authorizationToken;
           return options;
         },
         onError: (DioError e) async {
-          if (e.response != null &&
-              e.response.statusCode == 401 &&
-              e.response.data['errors']['code'] == 'token_not_valid') {
+          if (e.response != null && e.response.statusCode == 401) {
             debugPrint("asking for refresh token... LOCKING");
             _dio.interceptors.requestLock.lock();
             try {
               Response refreshResponse = await refreshDio.post(
-                Constants.baseUrl + '/auth/jwt/refresh/',
+                Constants.baseUrl + '/auth/token/',
                 data: {
-                  "refresh": await DreamerStorage().read(key: Constants.refreshToken)
+                  "refresh_token": await DreamerStorage().read(
+                    key: Constants.REFRESH_TOKEN,
+                  ),
+                  "grant_type": "refresh_token",
+                  "client_id": Constants.CLIENT_ID,
+                  "client_secret": Constants.CLIENT_SECRET,
                 },
               );
 
               DreamerStorage().write(
-                  key: Constants.accessToken, value: refreshResponse.data["access"]);
+                  key: Constants.ACCESS_TOKEN, value: refreshResponse.data["access"]);
             } on DioError catch (_) {
-              debugPrint("Failed to acquire token");
+              debugPrint("Failed to acquire token $_");
             } finally {
               _dio.interceptors.requestLock.unlock();
             }

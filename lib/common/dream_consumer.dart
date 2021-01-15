@@ -82,8 +82,8 @@ class DreamConsumer2<A extends RequestNotifier, B extends RequestNotifier>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: Duration(seconds: 6),
-            content:
-                Text("${requestNotifier.errorMessage}. ${requestNotifier2.errorMessage}"),
+            content: Text(
+                "${requestNotifier.errorMessage ?? ""}. ${requestNotifier2.errorMessage ?? ""}"),
           ),
         );
       });

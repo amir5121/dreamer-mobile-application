@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dreamer/common/constants.dart';
+import 'package:dreamer/common/extensions/string_extension.dart';
 import 'package:dreamer/common/singleton.dart';
 import 'package:flutter/foundation.dart';
 
@@ -44,6 +45,7 @@ class RequestNotifier extends ChangeNotifier {
   }
 
   void setResponseError(DioError err) {
+    debugPrint("setResponseError ${err.response.data}");
     if (err.response == null) {
       setError(
         errorMessage: "Connection could not be made! ${err.error}",
@@ -60,6 +62,15 @@ class RequestNotifier extends ChangeNotifier {
       setError(
         errorMessage: "Not Found",
         errorCode: Constants.NOT_FOUND,
+        errorStatus: err.response.statusCode,
+      );
+    } else if (err.response.statusCode == 400 &&
+        err.response.data.containsKey("error") &&
+        err.response.data["error"] == Constants.INVALID_GRANT) {
+      String errorDescription = err.response.data["error_description"];
+      setError(
+        errorMessage: errorDescription.capitalize(),
+        errorCode: Constants.INVALID_GRANT,
         errorStatus: err.response.statusCode,
       );
     } else {

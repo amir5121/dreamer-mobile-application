@@ -4,10 +4,20 @@ part 'login_credentials.g.dart';
 
 @JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
 class LoginCredentials {
-  final String email;
+  final String username;
   final String password;
+  final String clientId;
+  final String clientSecret;
 
-  LoginCredentials(this.email, this.password);
+  final String grantType;
+
+  LoginCredentials(
+    this.username,
+    this.password,
+    this.clientId,
+    this.clientSecret,
+    this.grantType,
+  );
 
   factory LoginCredentials.fromJson(Map<String, dynamic> json) =>
       _$LoginCredentialsFromJson(json);

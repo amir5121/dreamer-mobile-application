@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dreamer/models/analytics/analytics_response.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
+import 'package:dreamer/models/auth/logout_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/auth/update_user.dart';
 import 'package:dreamer/models/configurations/configurations_response.dart';
@@ -19,8 +20,11 @@ part 'rest_client.g.dart';
 abstract class RestClient {
   factory RestClient(Dio dio) = _RestClient;
 
-  @POST("/auth/jwt/create/")
+  @POST("/auth/token/")
   Future<AuthTokens> loginWithPassword(@Body() LoginCredentials loginCredentials);
+
+  @POST("/auth/revoke-token/")
+  Future<void> logout(@Body() LogoutCredentials loginCredentials);
 
   @POST("/auth/users/")
   Future<IgnoreData> signUpWithPassword(@Body() SignUpCredentials signUpCredentials);

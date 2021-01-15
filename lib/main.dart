@@ -15,16 +15,25 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+import 'common/constants.dart';
+
 Future<void> main() async {
-  await SentryFlutter.init(
-    (options) {
-      options.dsn =
-          'https://06f4ea19c399443889f37e1b87662903@sentry.stickergramapp.com//3';
-    },
-    appRunner: () => runApp(
-      Phoenix(
-        child: MyApp(),
-      ),
+  isInDebugMode
+      ? runDreamerApp()
+      : await SentryFlutter.init(
+          (options) {
+            options.debug = isInDebugMode;
+            options.dsn =
+                'https://06f4ea19c399443889f37e1b87662903@sentry.stickergramapp.com//3';
+          },
+          appRunner: () => runDreamerApp(),
+        );
+}
+
+void runDreamerApp() {
+  return runApp(
+    Phoenix(
+      child: MyApp(),
     ),
   );
 }
@@ -40,7 +49,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     configurationsViewModel.loadBuildData().then(
-          (value) => configurationsViewModel.loadConfigurations(),
+          (value) => configurationsViewModel.loadConfigurations(context),
         );
     super.initState();
   }

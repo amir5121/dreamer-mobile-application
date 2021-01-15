@@ -31,8 +31,7 @@ Dream _$DreamFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$DreamToJson(Dream instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$DreamToJson(Dream instance) => <String, dynamic>{
       'text': instance.text,
       'title': instance.title,
       'created': instance.created?.toIso8601String(),

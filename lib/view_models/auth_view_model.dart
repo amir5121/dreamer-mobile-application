@@ -4,6 +4,7 @@ import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/common/storage.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
+import 'package:dreamer/models/auth/logout_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/auth/update_user.dart';
 import 'package:dreamer/models/ignore_data.dart';
@@ -15,21 +16,40 @@ class AuthViewModel extends RequestNotifier {
   Future<AuthViewModel> loginWithPassword(String email, String password) async {
     _login = await makeRequest<AuthTokens>(
       () => Singleton().client.loginWithPassword(
-            LoginCredentials(email, password),
+            LoginCredentials(
+              email,
+              password,
+              Constants.CLIENT_ID,
+              Constants.CLIENT_SECRET,
+              "password",
+            ),
           ),
     );
 
-    DreamerStorage().write(key: Constants.accessToken, value: _login.accessToken);
-    DreamerStorage().write(key: Constants.refreshToken, value: _login.refreshToken);
+    DreamerStorage().write(key: Constants.ACCESS_TOKEN, value: _login?.accessToken);
+    DreamerStorage().write(key: Constants.REFRESH_TOKEN, value: _login?.refreshToken);
     return this;
   }
 
   Future<AuthViewModel> logout() async {
-    DreamerStorage().delete(key: Constants.accessToken);
-    DreamerStorage().delete(key: Constants.refreshToken);
-    hasLoggedOut = true;
-    _login = null;
-    notifyListeners();
+    _login = await makeRequest<AuthTokens>(
+      () async => Singleton()
+          .client
+          .logout(
+            LogoutCredentials(
+              await DreamerStorage().read(key: Constants.ACCESS_TOKEN),
+              Constants.CLIENT_ID,
+              Constants.CLIENT_SECRET,
+            ),
+          )
+          .then((value) {
+        DreamerStorage().delete(key: Constants.ACCESS_TOKEN);
+        DreamerStorage().delete(key: Constants.REFRESH_TOKEN);
+        hasLoggedOut = true;
+        _login = null;
+        notifyListeners();
+      }),
+    );
     return this;
   }
 

@@ -23,8 +23,7 @@ class _RestClient implements RestClient {
     final _data = <String, dynamic>{};
     _data.addAll(loginCredentials?.toJson() ?? <String, dynamic>{});
     _data.removeWhere((k, v) => v == null);
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '/auth/jwt/create/',
+    final _result = await _dio.request<Map<String, dynamic>>('/auth/token/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -34,6 +33,25 @@ class _RestClient implements RestClient {
         data: _data);
     final value = AuthTokens.fromJson(_result.data);
     return value;
+  }
+
+  @override
+  Future<void> logout(loginCredentials) async {
+    ArgumentError.checkNotNull(loginCredentials, 'loginCredentials');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(loginCredentials?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    await _dio.request<void>('/auth/revoke-token/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    return null;
   }
 
   @override

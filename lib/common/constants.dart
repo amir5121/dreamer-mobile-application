@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 
-class Constants {
-  static const String accessToken = 'accessToken';
-  static const String refreshToken = 'refreshToken';
+bool get isInDebugMode {
+  // Assume you're in production mode.
+  bool inDebugMode = false;
 
+  // Assert expressions are only evaluated during development. They are ignored
+  // in production. Therefore, this code only sets `inDebugMode` to true
+  // in a development environment.
+  assert(inDebugMode = true);
+
+  return inDebugMode;
+}
+
+class Constants {
   // static const String baseUrl = "http://10.0.2.2:8000/api/v1";
   // static const String baseUrl = "http://localhost:8000/api/v1";
   // static const String baseUrl = "https://amir.jprq.live/api/v1";
-  static const String baseUrl = "https://dreamer.stickergramapp.com/api/v1";
+  static String baseUrl = isInDebugMode
+      ? "http://10.0.2.2:8000/api/v1"
+      : "https://dreamer.stickergramapp.com/api/v1";
+
+  // static String baseUrl =  "https://dreamer.stickergramapp.com/api/v1";
 
   static const int _deepPurplePrimaryValue = 0xFF7837D9;
   static const int maxFeelingSlider = 10;
@@ -32,7 +45,14 @@ class Constants {
   );
   static const Color secondaryColor = Color(_deepPurplePrimaryValue);
 
+  static const String INVALID_GRANT = "invalid_grant";
   static const String INVALID_TOKEN = "token_not_valid";
   static const String NOT_FOUND = "not_found";
   static const String CONNECTION_FAILURE = "connection_failure";
+
+  static const String ACCESS_TOKEN = 'accessToken';
+  static const String REFRESH_TOKEN = 'refreshToken';
+  static const String CLIENT_ID = 'gm57SXQ1djmgk12Rs32EnDzc2AQMpsJbGHQ8CJpT';
+  static const String CLIENT_SECRET =
+      'odbNmDwkbWmbVecFsyv7XRTfykd1bXKFXgFBo6mO5X3u1idELwAd8pGpwFdNbv35sPTXNzFIWiYxOPot2u2CmbfKKrYbKABslrNV2UdFZn2Hl1DNc7r316eYJCprpuDd';
 }
