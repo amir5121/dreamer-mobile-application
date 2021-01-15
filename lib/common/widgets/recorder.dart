@@ -83,7 +83,7 @@ class _RecorderState extends State<Recorder> {
         _soundRecorder.stopRecorder();
       }
     } else if (await Permission.microphone.isPermanentlyDenied) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      Scaffold.of(context).showSnackBar(
         SnackBar(
           duration: Duration(seconds: 6),
           action: SnackBarAction(

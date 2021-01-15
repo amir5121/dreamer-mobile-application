@@ -34,7 +34,7 @@ class _SignUpState extends State<SignUp> {
           auth.madeSuccessfulRequest) {
         auth.reset();
         Navigator.pushReplacementNamed(context, '/login');
-        ScaffoldMessenger.of(context).showSnackBar(
+        Scaffold.of(context).showSnackBar(
           SnackBar(
             duration: Duration(seconds: 10),
             content: Text(

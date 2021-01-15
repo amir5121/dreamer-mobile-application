@@ -57,7 +57,7 @@ class _QuestionnaireOverallFeelingState extends State<QuestionnaireOverallFeelin
     int sumOfFeeling = 0;
     widget.dream.feelings.forEach((Feeling element) => sumOfFeeling += element.rate);
     if (sumOfFeeling < 1) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      Scaffold.of(context).showSnackBar(
         SnackBar(
           duration: Duration(seconds: 6),
           content: Text("Please select feelings you had during sleep."),
