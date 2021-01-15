@@ -5,6 +5,7 @@ import 'package:dreamer/screens/statics/statics.dart';
 import 'package:dreamer/view_models/dreams_view_model.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'journal/journal.dart';
@@ -89,12 +90,22 @@ class _LandingState extends State<Landing> {
           child: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: SvgPicture.asset(
+                  'assets/images/explore_b.svg',
+                  color: Constants.tertiaryColor,
+                  width: 20,
+                  height: 20,
+                ),
                 label: 'Home',
                 backgroundColor: Theme.of(context).primaryColor,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.business),
+                icon: SvgPicture.asset(
+                  'assets/images/journal.svg',
+                  color: Constants.tertiaryColor,
+                  width: 20,
+                  height: 20,
+                ),
                 label: 'Journal',
                 backgroundColor: Theme.of(context).primaryColor,
               ),

@@ -39,6 +39,7 @@ dependencies:
   universal_html:
   path_provider:
   charts_flutter:
+  flutter_svg:
   sentry_flutter:
   google_sign_in:
 #  flutter_facebook_auth:
@@ -47,9 +48,14 @@ dev_dependencies:
   json_serializable:
   retrofit_generator:
   build_runner:
+  flutter_launcher_icons:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -61,8 +67,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  #  assets:
-  #    - assets/images/background.webp
+  assets:
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
