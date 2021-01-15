@@ -45,7 +45,7 @@ class RequestNotifier extends ChangeNotifier {
   }
 
   void setResponseError(DioError err) {
-    debugPrint("setResponseError ${err.response.data}");
+    debugPrint("setResponseError ${err.response?.data}");
     if (err.response == null) {
       setError(
         errorMessage: "Connection could not be made! ${err.error}",
