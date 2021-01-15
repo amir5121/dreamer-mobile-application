@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dreamer/models/analytics/analytics_response.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
+import 'package:dreamer/models/auth/convert_token.dart';
 import 'package:dreamer/models/auth/login_credentials.dart';
 import 'package:dreamer/models/auth/logout_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
@@ -22,6 +23,9 @@ abstract class RestClient {
 
   @POST("/auth/token/")
   Future<AuthTokens> loginWithPassword(@Body() LoginCredentials loginCredentials);
+
+  @POST("/auth/convert-token/")
+  Future<AuthTokens> convertToken(@Body() ConvertToken loginCredentials);
 
   @POST("/auth/revoke-token/")
   Future<void> logout(@Body() LogoutCredentials loginCredentials);

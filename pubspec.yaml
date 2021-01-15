@@ -40,6 +40,8 @@ dependencies:
   path_provider:
   charts_flutter:
   sentry_flutter:
+  google_sign_in:
+  flutter_facebook_auth:
 
 dev_dependencies:
   json_serializable:
