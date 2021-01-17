@@ -1,11 +1,11 @@
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
+import 'package:dreamer/common/widgets/svg_icon.dart';
 import 'package:dreamer/screens/home/home.dart';
 import 'package:dreamer/screens/statics/statics.dart';
 import 'package:dreamer/view_models/dreams_view_model.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'journal/journal.dart';
@@ -88,34 +88,53 @@ class _LandingState extends State<Landing> {
             ),
           ),
           child: BottomNavigationBar(
+            showUnselectedLabels: true,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  'assets/images/explore_b.svg',
+                icon: SVGIcon(
+                  color: Constants.accentColor,
+                  assetAddress: 'assets/images/explore.svg',
+                ),
+                activeIcon: SVGIcon(
                   color: Constants.tertiaryColor,
-                  width: 20,
-                  height: 20,
+                  assetAddress: 'assets/images/explore_b.svg',
                 ),
                 label: 'Home',
                 backgroundColor: Theme.of(context).primaryColor,
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  'assets/images/journal.svg',
+                icon: SVGIcon(
+                  color: Constants.accentColor,
+                  assetAddress: 'assets/images/journal.svg',
+                ),
+                activeIcon: SVGIcon(
                   color: Constants.tertiaryColor,
-                  width: 20,
-                  height: 20,
+                  assetAddress: 'assets/images/journal_b.svg',
                 ),
                 label: 'Journal',
                 backgroundColor: Theme.of(context).primaryColor,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.school),
+                icon: SVGIcon(
+                  color: Constants.accentColor,
+                  assetAddress: 'assets/images/statics_b.svg',
+                ),
+                activeIcon: SVGIcon(
+                  color: Constants.tertiaryColor,
+                  assetAddress: 'assets/images/statics_b.svg',
+                ),
                 label: 'Statics',
                 backgroundColor: Theme.of(context).primaryColor,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.school),
+                icon: SVGIcon(
+                  color: Constants.accentColor,
+                  assetAddress: 'assets/images/notification_b.svg',
+                ),
+                activeIcon: SVGIcon(
+                  color: Constants.tertiaryColor,
+                  assetAddress: 'assets/images/notification_b.svg',
+                ),
                 label: 'Notifications',
                 backgroundColor: Theme.of(context).primaryColor,
               ),

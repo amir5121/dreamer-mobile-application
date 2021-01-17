@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dreamer/common/widgets/svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
@@ -180,7 +181,11 @@ class _RecorderState extends State<Recorder> {
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.mic),
+                  icon: SVGIcon(
+                    color: Constants.tertiaryColor,
+                    assetAddress: 'assets/images/mic.svg',
+                    size: 28,
+                  ),
                   onPressed: () {
                     _recordAudio();
                   },

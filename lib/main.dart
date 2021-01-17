@@ -10,6 +10,7 @@ import 'package:dreamer/screens/sign_up.dart';
 import 'package:dreamer/screens/splash.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
+import 'package:dreamer/view_models/firebase_messaging_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +62,11 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => configurationsViewModel),
         ChangeNotifierProvider(
           create: (context) => AuthViewModel(),
+        ),
+        ChangeNotifierProxyProvider<ConfigurationsViewModel, FirebaseMessagingViewModel>(
+          update: (_, configurationViewModel, previousFirebaseMessagingViewModel) =>
+              FirebaseMessagingViewModel(configurationViewModel),
+          create: (BuildContext context) => FirebaseMessagingViewModel(null),
         )
       ],
       child: MaterialApp(
