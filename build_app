@@ -1,0 +1,7 @@
+#!/bin/bash
+flutter clean
+flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
+nautilus build/app/outputs/flutter-apk/
+echo "Going to install on a device"
+adb uninstall com.amir.dreamer
+adb install build/app/outputs/flutter-apk/app-arm64-v8a-release.apk

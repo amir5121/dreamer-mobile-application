@@ -43,6 +43,7 @@ dependencies:
   sentry_flutter:
   google_sign_in:
   firebase_messaging:
+  firebase_analytics:
 #  flutter_facebook_auth:
 
 dev_dependencies:

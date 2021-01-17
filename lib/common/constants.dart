@@ -19,8 +19,10 @@ class Constants {
   // static const String baseUrl = "http://10.0.2.2:8000/api/v1";
   // static const String baseUrl = "http://localhost:8000/api/v1";
   // static const String baseUrl = "https://amir.jprq.live/api/v1";
+
+  // adb reverse tcp:8000 tcp:8000
   static String baseUrl = isInDebugMode
-      ? "http://10.0.2.2:8000/api/v1"
+      ? "http://localhost:8000/api/v1"
       : "https://dreamer.stickergramapp.com/api/v1";
 
   // static String baseUrl =  "https://serious-cat-38.loca.lt/api/v1";

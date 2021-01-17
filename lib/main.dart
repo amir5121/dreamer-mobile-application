@@ -11,11 +11,12 @@ import 'package:dreamer/screens/sign_up.dart';
 import 'package:dreamer/screens/splash.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-
 
 Future<void> main() async {
   isInDebugMode
@@ -45,9 +46,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ConfigurationsViewModel configurationsViewModel = ConfigurationsViewModel();
+  FirebaseAnalytics analytics;
 
   @override
   void initState() {
+    analytics = FirebaseAnalytics();
     configurationsViewModel.loadBuildData().then(
           (value) => configurationsViewModel.loadConfigurations(context),
         );
@@ -67,6 +70,9 @@ class _MyAppState extends State<MyApp> {
         title: 'Dreamer',
         theme: appTheme,
         initialRoute: '/',
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
         onGenerateRoute: (settings) {
           final arguments = settings.arguments;
           switch (settings.name) {
