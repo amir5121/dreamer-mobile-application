@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/rest_client.dart';
 import 'package:dreamer/common/storage.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:retry/retry.dart';
 
 class Singleton {
   static final Singleton _singleton = Singleton._internal();
+  static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   final Dio _dio;
   final RetryOptions _retry;
@@ -20,6 +22,8 @@ class Singleton {
 
   RetryOptions get retry => _retry;
 
+  FirebaseMessaging get firebaseMessaging => _firebaseMessaging;
+
   Singleton._internal()
       : this._dio = Dio()
           ..options.baseUrl = Constants.baseUrl
@@ -27,6 +31,30 @@ class Singleton {
           ..options.validateStatus = ((status) => status < 300),
         _retry = RetryOptions(maxAttempts: 5) {
     this._client = RestClient(this._dio);
+    {
+      firebaseMessaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+          print("onMessage: $message");
+        },
+        onBackgroundMessage: myBackgroundMessageHandler,
+        onLaunch: (Map<String, dynamic> message) async {
+          print("onLaunch: $message");
+        },
+        onResume: (Map<String, dynamic> message) async {
+          print("onResume: $message");
+        },
+      );
+      firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true),
+      );
+
+      firebaseMessaging.onIosSettingsRegistered
+          .listen((IosNotificationSettings settings) {
+        print("Settings registered: $settings");
+      });
+      debugPrint("thisisisisisi shouldd happen onnncceeee");
+    }
 
     Dio refreshDio = Dio();
 
@@ -68,5 +96,21 @@ class Singleton {
         },
       ),
     );
+  }
+
+  static Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
+    if (message.containsKey('data')) {
+      // Handle data message
+      final dynamic data = message['data'];
+      print("AAAAAAAAAA $data");
+    }
+
+    if (message.containsKey('notification')) {
+      // Handle notification message
+      final dynamic notification = message['notification'];
+      print("AAAAAAAAAA $notification");
+    }
+
+    // Or do other work.
   }
 }

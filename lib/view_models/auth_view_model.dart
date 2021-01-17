@@ -9,6 +9,7 @@ import 'package:dreamer/models/auth/logout_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/auth/update_user.dart';
 import 'package:dreamer/models/ignore_data.dart';
+import 'package:dreamer/models/notification/notification_register.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthViewModel extends RequestNotifier {
@@ -65,9 +66,7 @@ class AuthViewModel extends RequestNotifier {
             ),
           ),
     );
-
-    DreamerStorage().write(key: Constants.ACCESS_TOKEN, value: _login?.accessToken);
-    DreamerStorage().write(key: Constants.REFRESH_TOKEN, value: _login?.refreshToken);
+    saveLoginInfo();
     return this;
   }
 
@@ -90,9 +89,7 @@ class AuthViewModel extends RequestNotifier {
             ),
           ),
     );
-
-    DreamerStorage().write(key: Constants.ACCESS_TOKEN, value: _login?.accessToken);
-    DreamerStorage().write(key: Constants.REFRESH_TOKEN, value: _login?.refreshToken);
+    saveLoginInfo();
     // Create a new credential
     // final GoogleAuthCredential credential = GoogleAuthProvider.credential(
     //   accessToken: googleAuth.accessToken,
@@ -109,7 +106,31 @@ class AuthViewModel extends RequestNotifier {
     _login = null;
   }
 
+  void saveLoginInfo() {
+    assert(_login != null);
+    print("the fff is happening ${_login.accessToken}");
+    if (_login.accessToken != null) {
+      submitToken();
+      DreamerStorage().write(key: Constants.ACCESS_TOKEN, value: _login.accessToken);
+      DreamerStorage().write(key: Constants.REFRESH_TOKEN, value: _login.refreshToken);
+    }
+  }
+
   AuthTokens get login {
     return _login;
+  }
+
+  void submitToken() async {
+    print("Push Messaging token 000000:");
+    Singleton().firebaseMessaging.getToken().then((String token) async {
+      assert(token != null);
+      print("Push Messaging token: $token");
+      await makeRequest(() => Singleton().client.registerToken(
+            NotificationRegister(
+              token,
+              Constants.platform,
+            ),
+          ));
+    });
   }
 }

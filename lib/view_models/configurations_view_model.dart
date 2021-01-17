@@ -3,6 +3,7 @@ import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/common/storage.dart';
 import 'package:dreamer/models/configurations/configurations_response.dart';
+import 'package:dreamer/models/user/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -45,5 +46,9 @@ class ConfigurationsViewModel extends RequestNotifier {
 
   ConfigurationsResponse get configurations {
     return _configurations;
+  }
+
+  User get authenticatedUser {
+    return _configurations?.data?.self;
   }
 }

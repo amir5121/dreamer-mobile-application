@@ -16,13 +16,13 @@ class Splash extends StatelessWidget {
       if (configurationsResponse.isLoading == false &&
           configurationsResponse.configurations != null) {
         if (configurationsResponse.hasError == false) {
-          if (configurationsResponse.configurations.data.self == null) {
+          if (configurationsResponse.authenticatedUser == null) {
             Navigator.pushReplacementNamed(context, '/login');
           } else {
             Sentry.configureScope(
               (scope) => scope.user = User(
-                username: configurationsResponse.configurations.data.self.username,
-                email: configurationsResponse.configurations.data.self.email,
+                username: configurationsResponse.authenticatedUser.username,
+                email: configurationsResponse.authenticatedUser.email,
               ),
             );
             Navigator.pushReplacementNamed(context, '/home');

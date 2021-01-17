@@ -40,7 +40,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
-    User user = context.read<ConfigurationsViewModel>().configurations.data.self;
+    User user = context.read<ConfigurationsViewModel>().authenticatedUser;
     nameController.text = user.fullName;
     selectedDate = user.birthDate;
     super.initState();

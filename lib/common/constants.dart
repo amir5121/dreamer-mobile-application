@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 bool get isInDebugMode {
@@ -56,4 +59,25 @@ class Constants {
   static const String CLIENT_ID = 'gm57SXQ1djmgk12Rs32EnDzc2AQMpsJbGHQ8CJpT';
   static const String CLIENT_SECRET =
       'odbNmDwkbWmbVecFsyv7XRTfykd1bXKFXgFBo6mO5X3u1idELwAd8pGpwFdNbv35sPTXNzFIWiYxOPot2u2CmbfKKrYbKABslrNV2UdFZn2Hl1DNc7r316eYJCprpuDd';
+
+  static String get platform {
+    if (kIsWeb) {
+      return "web";
+    } else {
+      if (Platform.isAndroid) {
+        return "android";
+      } else if (Platform.isIOS) {
+        return "ios";
+      } else if (Platform.isFuchsia) {
+        return "fuchsia";
+      } else if (Platform.isLinux) {
+        return "linux";
+      } else if (Platform.isMacOS) {
+        return "mac";
+      } else if (Platform.isWindows) {
+        return "windows";
+      }
+      return "unknown";
+    }
+  }
 }

@@ -95,13 +95,6 @@ class RequestNotifier extends ChangeNotifier {
     _errorStatus = errorStatus;
   }
 
-  void unSetError() {
-    _hasError = false;
-    _errorMessage = null;
-    _errorStatus = null;
-    _errorCode = null;
-  }
-
   bool get hasError {
     return _hasError;
   }
@@ -126,12 +119,16 @@ class RequestNotifier extends ChangeNotifier {
     return _madeSuccessfulRequest;
   }
 
-  void reset() {
-    _madeSuccessfulRequest = false;
+  void unSetError() {
     _hasError = false;
     _errorMessage = null;
     _errorStatus = null;
     _errorCode = null;
+  }
+
+  void reset() {
+    _madeSuccessfulRequest = false;
     _isLoading = false;
+    unSetError();
   }
 }

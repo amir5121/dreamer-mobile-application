@@ -11,6 +11,7 @@ import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
 import 'package:dreamer/models/dream/dream_retrieve.dart';
 import 'package:dreamer/models/ignore_data.dart';
+import 'package:dreamer/models/notification/notification_register.dart';
 import 'package:dreamer/models/post/post_response.dart';
 import 'package:dreamer/models/post/post_retrieve.dart';
 import 'package:retrofit/retrofit.dart';
@@ -64,6 +65,11 @@ abstract class RestClient {
 
   @POST("/post/dreams/")
   Future<IgnoreData> submitDream({@Body() Dream dream});
+
+  @POST("/devices/")
+  Future<IgnoreData> registerToken(
+    @Body() NotificationRegister user,
+  );
 
   @GET("/post/analytics/")
   Future<AnalyticsResponse> getAnalytics(

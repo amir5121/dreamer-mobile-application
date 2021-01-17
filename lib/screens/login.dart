@@ -141,7 +141,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Form _loginForm(AuthViewModel auth, configurationsViewModel) {
+  Form _loginForm(AuthViewModel auth, ConfigurationsViewModel configurationsViewModel) {
     return Form(
       key: _formKey,
       child: Column(
