@@ -85,7 +85,11 @@ class Singleton {
               );
 
               DreamerStorage().write(
-                  key: Constants.ACCESS_TOKEN, value: refreshResponse.data["access"]);
+                  key: Constants.ACCESS_TOKEN,
+                  value: refreshResponse.data["access_token"]);
+              DreamerStorage().write(
+                  key: Constants.REFRESH_TOKEN,
+                  value: refreshResponse.data["refresh_token"]);
             } on DioError catch (_) {
               debugPrint("Failed to acquire token $_");
             } finally {

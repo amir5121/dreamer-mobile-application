@@ -111,6 +111,7 @@ class AuthViewModel extends RequestNotifier {
     print("the fff is happening ${_login.accessToken}");
     if (_login.accessToken != null) {
       submitToken();
+      print("${_login.refreshToken} ---> ${_login.accessToken}");
       DreamerStorage().write(key: Constants.ACCESS_TOKEN, value: _login.accessToken);
       DreamerStorage().write(key: Constants.REFRESH_TOKEN, value: _login.refreshToken);
     }
