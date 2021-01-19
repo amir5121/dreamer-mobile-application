@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "939709448498",
-    "project_id": "dreamer-5b3f4",
-    "storage_bucket": "dreamer-5b3f4.appspot.com"
+    "project_number": "187981698935",
+    "project_id": "dreamer-994db",
+    "storage_bucket": "dreamer-994db.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:939709448498:android:8acbff8ef2a34a1e6dd72b",
+        "mobilesdk_app_id": "1:187981698935:android:d0ae79a309ba745aef7372",
         "android_client_info": {
           "package_name": "com.amir.dreamer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "939709448498-rctbb5v0ko8jlh101e4i7g9tapl1ri06.apps.googleusercontent.com",
+          "client_id": "187981698935-pg81v7s3rliemhpjqqu3juncmg073svs.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBF-PW9uKF2npOSDR7qxIR79DPzVgHEjjY"
+          "current_key": "AIzaSyAf9680M9GMvMliv3of2wTlOmaSe7nfjkM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "939709448498-rctbb5v0ko8jlh101e4i7g9tapl1ri06.apps.googleusercontent.com",
+              "client_id": "187981698935-pg81v7s3rliemhpjqqu3juncmg073svs.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
