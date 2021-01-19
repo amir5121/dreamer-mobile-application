@@ -8,13 +8,15 @@ class ConvertToken {
   final String clientSecret;
   final String token;
   final String backend;
+  final String grantType;
 
-  ConvertToken(
+  ConvertToken({
     this.clientId,
     this.clientSecret,
     this.token,
     this.backend,
-  );
+    this.grantType = "convert_token",
+  });
 
   factory ConvertToken.fromJson(Map<String, dynamic> json) =>
       _$ConvertTokenFromJson(json);

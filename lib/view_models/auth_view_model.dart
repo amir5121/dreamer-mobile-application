@@ -82,10 +82,10 @@ class AuthViewModel extends RequestNotifier {
     _login = await makeRequest<AuthTokens>(
       () => Singleton().client.convertToken(
             ConvertToken(
-              Constants.CLIENT_ID,
-              Constants.CLIENT_SECRET,
-              googleAuth.accessToken,
-              "google",
+              clientId: Constants.CLIENT_ID,
+              clientSecret: Constants.CLIENT_SECRET,
+              token: googleAuth.accessToken,
+              backend: "google-oauth2",
             ),
           ),
     );
