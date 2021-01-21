@@ -38,12 +38,14 @@ class AuthViewModel extends RequestNotifier {
     return this;
   }
 
-  void signUpWithPassword(String email, String password, String rePassword) async {
+  Future<AuthViewModel> signUpWithPassword(
+      String email, String password, String rePassword) async {
     await makeRequest<IgnoreData>(
       () => Singleton().client.signUpWithPassword(
             SignUpCredentials(email, password, rePassword),
           ),
     );
+    return this;
   }
 
   Future<void> updateSelf(UpdateUser user) async {

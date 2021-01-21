@@ -4,7 +4,6 @@ import 'package:dreamer/common/widgets/dreamer_text_field.dart';
 import 'package:dreamer/common/widgets/let_scroll.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -27,26 +26,10 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    AuthViewModel auth = context.watch<AuthViewModel>();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (auth.isLoading == false &&
-          auth.hasError == false &&
-          auth.madeSuccessfulRequest) {
-        auth.reset();
-        Navigator.pushReplacementNamed(context, '/login');
-        Scaffold.of(context).showSnackBar(
-          SnackBar(
-            duration: Duration(seconds: 10),
-            content: Text(
-              "Sign up successful. You can login now.",
-              style: TextStyle(
-                color: Colors.lightGreen,
-              ),
-            ),
-          ),
-        );
-      }
-    });
+    // AuthViewModel auth = context.watch<AuthViewModel>();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //
+    // });
     return DreamerScaffold(
       body: LetScroll(
         child: Container(
@@ -97,11 +80,37 @@ class _SignUpState extends State<SignUp> {
                               ? null
                               : () {
                                   if (_formKey.currentState.validate()) {
-                                    auth.signUpWithPassword(
+                                    auth
+                                        .signUpWithPassword(
                                       usernameController.text,
                                       passwordController.text,
                                       passwordReController.text,
-                                    );
+                                    )
+                                        .then((AuthViewModel auth) {
+                                      if (auth.isLoading == false &&
+                                          auth.hasError == false &&
+                                          auth.madeSuccessfulRequest) {
+                                        auth.reset();
+                                        Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                            duration: Duration(seconds: 10),
+                                            content: Text(
+                                              "Sign up successful. You can login now.",
+                                              style: TextStyle(
+                                                color: Colors.lightGreen,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                        Future<Null>.delayed(
+                                          Duration(seconds: 2),
+                                          () {
+                                            Navigator.pushReplacementNamed(
+                                                context, '/login');
+                                          },
+                                        );
+                                      }
+                                    });
                                   }
                                 },
                         ),
