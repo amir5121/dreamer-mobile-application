@@ -41,10 +41,10 @@ dependencies:
   charts_flutter:
   flutter_svg:
   sentry_flutter:
+  flutter_facebook_login:
   google_sign_in:
   firebase_messaging:
   firebase_analytics:
-#  flutter_facebook_auth:
 
 dev_dependencies:
   json_serializable:

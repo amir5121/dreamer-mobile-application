@@ -134,7 +134,16 @@ class _LoginState extends State<Login> {
                 ),
               ],
             ),
-            onPressed: () {},
+            onPressed: auth.isLoading
+                ? null
+                : () {
+                    auth.signInWithFacebook().then(
+                          (AuthViewModel auth) => __successfulLogin(
+                            auth,
+                            configurationsViewModel,
+                          ),
+                        );
+                  },
           ),
         ),
       ],

@@ -117,7 +117,7 @@ class _LandingState extends State<Landing> {
               BottomNavigationBarItem(
                 icon: SVGIcon(
                   color: Constants.accentColor,
-                  assetAddress: 'assets/images/statics_b.svg',
+                  assetAddress: 'assets/images/statics.svg',
                 ),
                 activeIcon: SVGIcon(
                   color: Constants.tertiaryColor,
@@ -129,7 +129,7 @@ class _LandingState extends State<Landing> {
               BottomNavigationBarItem(
                 icon: SVGIcon(
                   color: Constants.accentColor,
-                  assetAddress: 'assets/images/notification_b.svg',
+                  assetAddress: 'assets/images/notification.svg',
                 ),
                 activeIcon: SVGIcon(
                   color: Constants.tertiaryColor,

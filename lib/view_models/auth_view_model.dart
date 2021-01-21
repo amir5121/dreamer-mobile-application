@@ -10,6 +10,7 @@ import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/auth/update_user.dart';
 import 'package:dreamer/models/ignore_data.dart';
 import 'package:dreamer/models/notification/notification_register.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthViewModel extends RequestNotifier {
@@ -73,14 +74,11 @@ class AuthViewModel extends RequestNotifier {
   }
 
   Future<AuthViewModel> signInWithGoogle() async {
-    print("AAAAAAAAAAAADDWEEEoooo");
     // Trigger the authentication flow
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    print("AAAAAAAAAAAADDWEEE $googleAuth");
-    print("AAAAAAAAAAAADDWEEE ${googleAuth.accessToken}");
     _login = await makeRequest<AuthTokens>(
       () => Singleton().client.convertToken(
             ConvertToken(
@@ -92,14 +90,33 @@ class AuthViewModel extends RequestNotifier {
           ),
     );
     saveLoginInfo();
-    // Create a new credential
-    // final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-    //   accessToken: googleAuth.accessToken,
-    //   idToken: googleAuth.idToken,
-    // );
+    return this;
+  }
 
-    // Once signed in, return the UserCredential
-    // return await FirebaseAuth.instance.signInWithCredential(credential);
+  Future<AuthViewModel> signInWithFacebook() async {
+    final facebookLogin = FacebookLogin();
+    final result = await facebookLogin.logIn(['email']);
+    FacebookAccessToken facebookAccessToken;
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        facebookAccessToken = result.accessToken;
+        _login = await makeRequest<AuthTokens>(
+          () => Singleton().client.convertToken(
+                ConvertToken(
+                  clientId: Constants.CLIENT_ID,
+                  clientSecret: Constants.CLIENT_SECRET,
+                  token: facebookAccessToken.token,
+                  backend: "facebook",
+                ),
+              ),
+        );
+        saveLoginInfo();
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        break;
+      case FacebookLoginStatus.error:
+        break;
+    }
     return this;
   }
 
