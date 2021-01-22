@@ -43,8 +43,6 @@ class WaveformSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(_wave.length);
-    print(_progress * _wave.length);
     return Expanded(
       child: LayoutBuilder(
         builder: (context, constraints) {
