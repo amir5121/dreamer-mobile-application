@@ -34,7 +34,7 @@ dependencies:
   timeago:
   flutter_phoenix:
   package_info:
-  flutter_sound:
+  flutter_sound_lite:
   permission_handler:
   universal_html:
   path_provider:

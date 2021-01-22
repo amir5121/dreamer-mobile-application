@@ -251,6 +251,26 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<IgnoreData> uploadFile(uploadFile) async {
+    ArgumentError.checkNotNull(uploadFile, 'uploadFile');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(uploadFile?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('/utils/upload/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = IgnoreData.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<AnalyticsResponse> getAnalytics(duration) async {
     ArgumentError.checkNotNull(duration, 'duration');
     const _extra = <String, dynamic>{};

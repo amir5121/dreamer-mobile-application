@@ -1,33 +1,39 @@
 import 'dart:io';
 
+import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/widgets/svg_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../constants.dart';
 
 class Recorder extends StatefulWidget {
   @override
   _RecorderState createState() => _RecorderState();
 }
 
+enum SoundStatus {
+  none,
+  working,
+  done,
+  loading,
+  paused,
+}
+
 class _RecorderState extends State<Recorder> {
-  bool _hasRecorded = false;
-  bool _isRecording = false;
-  Duration _recordingDuration;
-  final FlutterSoundRecorder _soundRecorder = new FlutterSoundRecorder();
+  SoundStatus _recordingStatus = SoundStatus.none;
+  SoundStatus _playbackStatus = SoundStatus.none;
+  Duration _workDuration;
+
   final FlutterSoundPlayer _soundPlayer = new FlutterSoundPlayer();
+  final FlutterSoundRecorder _soundRecorder = FlutterSoundRecorder();
 
   String tempPath;
 
   @override
   void dispose() {
-    // Be careful : you must `close` the audio session when you have finished with it.
     _soundRecorder.closeAudioSession();
     _soundPlayer.closeAudioSession();
-    // _mPlayerIsInitiated = false;
     super.dispose();
   }
 
@@ -39,49 +45,50 @@ class _RecorderState extends State<Recorder> {
   @override
   void initState() {
     asyncSetUp();
-    _soundRecorder.openAudioSession().then((value) {
-      // setState(() {
-      //   _mPlayerIsInitiated = true;
-      // });
-    });
-    _soundRecorder.onProgress.listen((RecordingDisposition e) {
-      Duration maxDuration = e.duration;
-      // double decibels = e.decibels;
-      print("bbbbbbbbbbbb ${e.decibels} ${e.duration}");
-
-      if (maxDuration.inMilliseconds % 10 == 0) {
-        setState(() {
-          _recordingDuration = maxDuration;
-        });
-      }
-    });
-    _soundPlayer
-        .openAudioSession()
-        .then((value) => _soundPlayer.onProgress.listen((PlaybackDisposition e) {
-              print("AAAAAAAAAAAAAAAA ${e.position} ${e.duration}");
-            }));
-
     super.initState();
   }
 
   Future<Null> _recordAudio() async {
     if (await Permission.microphone.request().isGranted) {
       if (_soundRecorder.isStopped) {
-        _soundRecorder.startRecorder(
-          toFile: tempPath,
-          codec: Codec.aacMP4,
-        );
-
         setState(() {
-          _isRecording = true;
-          _hasRecorded = false;
+          _recordingStatus = SoundStatus.loading;
+        });
+        _soundRecorder.openAudioSession().then((FlutterSoundRecorder soundRecorder) {
+          setState(() {
+            _workDuration = Duration();
+          });
+          soundRecorder.setSubscriptionDuration(Duration(milliseconds: 100));
+          soundRecorder
+              .startRecorder(
+                toFile: tempPath,
+                codec: Codec.aacMP4,
+              )
+              .then((_) => setState(() {
+                    _recordingStatus = SoundStatus.working;
+                  }));
+
+          soundRecorder.onProgress.listen((RecordingDisposition e) {
+            Duration maxDuration = e.duration;
+            // double decibels = e.decibels;
+            // print("bbbbbbbbbbbb ${e.decibels} ${e.duration}");
+            setState(() {
+              _workDuration = maxDuration;
+            });
+          });
         });
       } else {
         setState(() {
-          _isRecording = false;
-          _hasRecorded = true;
+          _recordingStatus = SoundStatus.loading;
+          _workDuration = Duration();
         });
-        _soundRecorder.stopRecorder();
+        _soundRecorder.stopRecorder().then(
+              (_) => _soundRecorder.closeAudioSession().then(
+                    (_) => setState(() {
+                      _recordingStatus = SoundStatus.done;
+                    }),
+                  ),
+            );
       }
     } else if (await Permission.microphone.isPermanentlyDenied) {
       Scaffold.of(context).showSnackBar(
@@ -105,9 +112,10 @@ class _RecorderState extends State<Recorder> {
 
   @override
   Widget build(BuildContext context) {
+    final bool _isRecording = _recordingStatus == SoundStatus.working;
     return Column(
       children: [
-        if (_hasRecorded) ...[
+        if (_recordingStatus == SoundStatus.done) ...[
           SizedBox(
             height: 8,
           ),
@@ -124,18 +132,14 @@ class _RecorderState extends State<Recorder> {
                   child: Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.play_arrow),
+                        icon: Icon(_playbackStatus == SoundStatus.working
+                            ? Icons.pause
+                            : Icons.play_arrow),
                         onPressed: () {
-                          _soundPlayer.startPlayer(
-                            fromURI: tempPath,
-                            codec: Codec.aacMP4,
-                            whenFinished: () {
-                              print('I hope you enjoyed listening to this song');
-                            },
-                          );
+                          _playbackAudio();
                         },
                       ),
-                      Text("..."),
+                      Text(_workDuration.toString()),
                     ],
                   ),
                 ),
@@ -144,7 +148,7 @@ class _RecorderState extends State<Recorder> {
                 icon: Icon(Icons.close),
                 onPressed: () {
                   setState(() {
-                    _hasRecorded = false;
+                    _recordingStatus = SoundStatus.none;
                   });
                 },
               ),
@@ -156,7 +160,7 @@ class _RecorderState extends State<Recorder> {
         ),
         Row(
           mainAxisAlignment:
-              _isRecording ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
+          _isRecording ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
           children: [
             if (_isRecording)
               Row(
@@ -170,11 +174,12 @@ class _RecorderState extends State<Recorder> {
                     ),
                   ),
                   SizedBox(width: 8),
-                  Text(_recordingDuration.toString()),
+                  Text(_workDuration.toString()),
                 ],
               ),
             if (_isRecording) Text("Select to cancel $_isRecording"),
-            if (!_hasRecorded)
+            if (_recordingStatus == SoundStatus.none ||
+                _recordingStatus == SoundStatus.working)
               Container(
                 decoration: BoxDecoration(
                   color: Constants.deepPurple[500],
@@ -195,5 +200,59 @@ class _RecorderState extends State<Recorder> {
         ),
       ],
     );
+  }
+
+  void _playbackAudio() {
+    if (_playbackStatus == SoundStatus.none || _playbackStatus == SoundStatus.done) {
+      setState(() {
+        _playbackStatus = SoundStatus.loading;
+      });
+      _soundPlayer.openAudioSession().then((FlutterSoundPlayer soundPlayer) {
+        setState(() {
+          _workDuration = Duration();
+        });
+        soundPlayer.setSubscriptionDuration(Duration(milliseconds: 100));
+        soundPlayer.onProgress.listen((PlaybackDisposition e) {
+          Duration maxDuration = e.position;
+          // double decibels = e.decibels;
+          // print("bbbbbbbbbbbb ${e.decibels} ${e.duration}");
+          setState(() {
+            _workDuration = maxDuration;
+          });
+          print("AAAAAAAAAAAAAAAA ${e.position} ${e.duration}");
+        });
+        soundPlayer
+            .startPlayer(
+              fromURI: tempPath,
+              codec: Codec.aacMP4,
+              whenFinished: () {
+                setState(() {
+                  _playbackStatus = SoundStatus.loading;
+                });
+                _soundPlayer.closeAudioSession().then((_) => setState(() {
+                      _playbackStatus = SoundStatus.done;
+                      _workDuration = Duration();
+                    }));
+              },
+            )
+            .then((_) => setState(() {
+                  _playbackStatus = SoundStatus.working;
+                }));
+      });
+    } else if (_playbackStatus == SoundStatus.working) {
+      setState(() {
+        _playbackStatus = SoundStatus.loading;
+      });
+      _soundPlayer.pausePlayer().then((_) => setState(() {
+            _playbackStatus = SoundStatus.paused;
+          }));
+    } else if (_playbackStatus == SoundStatus.paused) {
+      setState(() {
+        _playbackStatus = SoundStatus.loading;
+      });
+      _soundPlayer.resumePlayer().then((_) => setState(() {
+            _playbackStatus = SoundStatus.working;
+          }));
+    }
   }
 }

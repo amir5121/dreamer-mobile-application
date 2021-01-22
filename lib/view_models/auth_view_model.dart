@@ -8,8 +8,8 @@ import 'package:dreamer/models/auth/login_credentials.dart';
 import 'package:dreamer/models/auth/logout_credentials.dart';
 import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/auth/update_user.dart';
-import 'package:dreamer/models/ignore_data.dart';
 import 'package:dreamer/models/notification/notification_register.dart';
+import 'package:dreamer/models/utils/ignore_data.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

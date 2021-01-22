@@ -10,10 +10,11 @@ import 'package:dreamer/models/configurations/configurations_response.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
 import 'package:dreamer/models/dream/dream_retrieve.dart';
-import 'package:dreamer/models/ignore_data.dart';
 import 'package:dreamer/models/notification/notification_register.dart';
 import 'package:dreamer/models/post/post_response.dart';
 import 'package:dreamer/models/post/post_retrieve.dart';
+import 'package:dreamer/models/utils/ignore_data.dart';
+import 'package:dreamer/models/utils/upload_file.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'rest_client.g.dart';
@@ -69,6 +70,11 @@ abstract class RestClient {
   @POST("/devices/")
   Future<IgnoreData> registerToken(
     @Body() NotificationRegister user,
+  );
+
+  @POST("/utils/upload/")
+  Future<IgnoreData> uploadFile(
+    @Body() UploadFile uploadFile,
   );
 
   @GET("/post/analytics/")

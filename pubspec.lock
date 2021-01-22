@@ -321,20 +321,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.5"
-  flutter_sound:
+  flutter_sound_lite:
     dependency: "direct main"
     description:
-      name: flutter_sound
+      name: flutter_sound_lite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.3.1+1"
+    version: "7.5.3+1"
   flutter_sound_platform_interface:
     dependency: transitive
     description:
       name: flutter_sound_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.3.1+1"
+    version: "7.5.3+1"
+  flutter_sound_web:
+    dependency: transitive
+    description:
+      name: flutter_sound_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.5.3+1"
   flutter_spinkit:
     dependency: transitive
     description:
@@ -477,7 +484,7 @@ packages:
       name: logger
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0+2"
+    version: "0.9.4"
   logging:
     dependency: transitive
     description:
