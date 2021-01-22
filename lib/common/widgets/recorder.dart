@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/widgets/svg_icon.dart';
+import 'package:dreamer/common/widgets/waveform_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
@@ -24,8 +25,10 @@ class _RecorderState extends State<Recorder> {
   SoundStatus _recordingStatus = SoundStatus.none;
   SoundStatus _playbackStatus = SoundStatus.none;
   Duration _workDuration;
+  Duration _recordingLength;
+  List<double> wave = [];
 
-  final FlutterSoundPlayer _soundPlayer = new FlutterSoundPlayer();
+  final FlutterSoundPlayer _soundPlayer = FlutterSoundPlayer();
   final FlutterSoundRecorder _soundRecorder = FlutterSoundRecorder();
 
   String tempPath;
@@ -61,17 +64,21 @@ class _RecorderState extends State<Recorder> {
           soundRecorder.setSubscriptionDuration(Duration(milliseconds: 100));
           soundRecorder
               .startRecorder(
-                toFile: tempPath,
-                codec: Codec.aacMP4,
-              )
-              .then((_) => setState(() {
-                    _recordingStatus = SoundStatus.working;
-                  }));
+            toFile: tempPath,
+            codec: Codec.aacMP4,
+          )
+              .then((_) {
+            setState(() {
+              _recordingStatus = SoundStatus.working;
+            });
+            wave = [];
+          });
 
           soundRecorder.onProgress.listen((RecordingDisposition e) {
             Duration maxDuration = e.duration;
-            // double decibels = e.decibels;
-            // print("bbbbbbbbbbbb ${e.decibels} ${e.duration}");
+            wave.add(e.decibels);
+            _recordingLength = maxDuration;
+
             setState(() {
               _workDuration = maxDuration;
             });
@@ -139,7 +146,11 @@ class _RecorderState extends State<Recorder> {
                           _playbackAudio();
                         },
                       ),
-                      Text(_workDuration.toString()),
+                      WaveformSlider(
+                          wave: wave,
+                          progress: _workDuration.inMilliseconds /
+                              _recordingLength.inMilliseconds),
+                      SizedBox(width: 8)
                     ],
                   ),
                 ),
@@ -160,7 +171,7 @@ class _RecorderState extends State<Recorder> {
         ),
         Row(
           mainAxisAlignment:
-          _isRecording ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
+              _isRecording ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
           children: [
             if (_isRecording)
               Row(
@@ -219,7 +230,7 @@ class _RecorderState extends State<Recorder> {
           setState(() {
             _workDuration = maxDuration;
           });
-          print("AAAAAAAAAAAAAAAA ${e.position} ${e.duration}");
+          // print("AAAAAAAAAAAAAAAA ${e.position} ${e.duration}");
         });
         soundPlayer
             .startPlayer(
