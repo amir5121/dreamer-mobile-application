@@ -18,6 +18,7 @@ class WaveformSlider extends StatelessWidget {
     double widgetLength;
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
+        tapCallback(details.localPosition.distance / widgetLength);
         print(
             "dragggg ${details.localPosition}, ${details.delta}, ${details.globalPosition}, ${details.primaryDelta}");
       },
