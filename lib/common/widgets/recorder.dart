@@ -146,10 +146,20 @@ class _RecorderState extends State<Recorder> {
                           _playbackAudio();
                         },
                       ),
-                      WaveformSlider(
+                      Expanded(
+                        child: WaveformSlider(
                           wave: wave,
                           progress: _workDuration.inMilliseconds /
-                              _recordingLength.inMilliseconds),
+                              _recordingLength.inMilliseconds,
+                          tapCallback: (double seekProgress) => _soundPlayer.seekToPlayer(
+                            Duration(
+                              milliseconds:
+                                  (_recordingLength.inMilliseconds * seekProgress)
+                                      .toInt(),
+                            ),
+                          ),
+                        ),
+                      ),
                       SizedBox(width: 8)
                     ],
                   ),
@@ -158,9 +168,18 @@ class _RecorderState extends State<Recorder> {
               IconButton(
                 icon: Icon(Icons.close),
                 onPressed: () {
-                  setState(() {
-                    _recordingStatus = SoundStatus.none;
-                  });
+                  if (_playbackStatus == SoundStatus.working) {
+                    setState(() {
+                      _playbackStatus = SoundStatus.loading;
+                    });
+                    _soundPlayer.stopPlayer().then((_) => setState(() {
+                          _playbackStatus = SoundStatus.none;
+                        }));
+                  } else {
+                    setState(() {
+                      _recordingStatus = SoundStatus.none;
+                    });
+                  }
                 },
               ),
             ],
