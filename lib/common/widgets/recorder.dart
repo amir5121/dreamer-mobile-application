@@ -9,6 +9,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Recorder extends StatefulWidget {
+  final Function setRecordingDirectory;
+  final String previousRecording;
+
+  const Recorder({Key key, @required this.setRecordingDirectory, this.previousRecording})
+      : super(key: key);
+
   @override
   _RecorderState createState() => _RecorderState();
 }
@@ -48,6 +54,9 @@ class _RecorderState extends State<Recorder> {
   @override
   void initState() {
     asyncSetUp();
+    if (widget.previousRecording != null) {
+      _recordingStatus = SoundStatus.done;
+    }
     super.initState();
   }
 
@@ -91,10 +100,13 @@ class _RecorderState extends State<Recorder> {
         });
         _soundRecorder.stopRecorder().then(
               (_) => _soundRecorder.closeAudioSession().then(
-                    (_) => setState(() {
-                      _recordingStatus = SoundStatus.done;
-                    }),
-                  ),
+                (_) {
+                  widget.setRecordingDirectory(tempPath);
+                  setState(() {
+                    _recordingStatus = SoundStatus.done;
+                  });
+                },
+              ),
             );
       }
     } else if (await Permission.microphone.isPermanentlyDenied) {
@@ -139,9 +151,11 @@ class _RecorderState extends State<Recorder> {
                   child: Row(
                     children: [
                       IconButton(
-                        icon: Icon(_playbackStatus == SoundStatus.working
-                            ? Icons.pause
-                            : Icons.play_arrow),
+                        icon: Icon(
+                          _playbackStatus == SoundStatus.working
+                              ? Icons.pause
+                              : Icons.play_arrow,
+                        ),
                         onPressed: () {
                           _playbackAudio();
                         },

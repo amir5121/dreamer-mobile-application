@@ -3,6 +3,8 @@ import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
 import 'package:dreamer/models/dream/dream_retrieve.dart';
+import 'package:dreamer/models/utils/upload_file.dart';
+import 'package:dreamer/models/utils/upload_response.dart';
 
 class DreamViewModel extends RequestNotifier {
   DreamResponse _dreams;
@@ -24,6 +26,11 @@ class DreamViewModel extends RequestNotifier {
   }
 
   Future<DreamViewModel> submitDream(Dream dream) async {
+    if (dream.voice != null) {
+      await makeRequest<UploadResponse>(
+        () async => await Singleton().client.uploadFile(UploadFile(dream.voice)),
+      ).then((UploadResponse value) => dream.voice = value.data.filePath);
+    }
     await makeRequest(
       () => Singleton().client.submitDream(dream: dream),
     );

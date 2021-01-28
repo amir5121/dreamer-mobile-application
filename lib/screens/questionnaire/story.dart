@@ -69,6 +69,7 @@ class _StoryState extends State<Story> {
   @override
   Widget build(BuildContext context) {
     final DreamViewModel dreamViewModel = DreamViewModel();
+    print("$_current ${_journalLogger.length}");
     final bool isLastItem = _current == _journalLogger.length - 1;
     if (isLastItem) {
       dreamViewModel.submitDream(dream).then(
@@ -84,34 +85,49 @@ class _StoryState extends State<Story> {
         },
       );
     }
+
+    Future<bool> _onWillPop() async {
+      if (_current == 0) {
+        Navigator.of(context).pop(false);
+        return true;
+      }
+      setState(() {
+        _current--;
+      });
+      return false;
+    }
+
     return ChangeNotifierProvider(
       create: (context) {
         return dreamViewModel;
       },
       child: DreamConsumer<DreamViewModel>(
         builder: (context, journalViewModel, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Dots(
-                count: _journalLogger.length,
-                selected: _current,
-              ),
-              elevation: 0,
-              centerTitle: true,
-              actions: [
-                FlatButton(
-                  child: Text(isLastItem ? "Finish" : "Next"),
-                  onPressed: journalViewModel.isLoading
-                      ? null
-                      : () {
-                          if (_journalLogger[_current].next()) {
-                            goToNext();
-                          }
-                        },
+          return WillPopScope(
+            onWillPop: _onWillPop,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Dots(
+                  count: _journalLogger.length,
+                  selected: _current,
                 ),
-              ],
+                elevation: 0,
+                centerTitle: true,
+                actions: [
+                  FlatButton(
+                    child: Text(isLastItem ? "Finish" : "Next"),
+                    onPressed: journalViewModel.isLoading
+                        ? null
+                        : () {
+                            if (_journalLogger[_current].next()) {
+                              goToNext();
+                            }
+                          },
+                  ),
+                ],
+              ),
+              body: _journalLogger[_current],
             ),
-            body: _journalLogger[_current],
           );
         },
       ),
@@ -119,10 +135,10 @@ class _StoryState extends State<Story> {
   }
 
   void goToNext() {
-    setState(() {
-      if (_current < _journalLogger.length - 1) {
+    if (_current < _journalLogger.length - 1) {
+      setState(() {
         _current++;
-      }
-    });
+      });
+    }
   }
 }

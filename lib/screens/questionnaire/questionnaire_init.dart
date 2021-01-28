@@ -3,20 +3,20 @@ import 'package:dreamer/common/widgets/dreamer_fake_text_field.dart';
 import 'package:dreamer/common/widgets/dreamer_text_field.dart';
 import 'package:dreamer/common/widgets/let_scroll.dart';
 import 'package:dreamer/common/widgets/recorder.dart';
+import 'package:dreamer/models/dream/dream.dart';
+import 'package:dreamer/screens/questionnaire/questionnaire_step_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import 'questionnaire_step_widget.dart';
 
 class QuestionnaireInit extends QuestionnaireStepWidget {
   QuestionnaireInit({Key key, dream, goToNext})
       : super(key: key, dream: dream, goToNext: goToNext);
 
-  final _questionnaireInitState = _QuestionnaireInitState();
+  _QuestionnaireInitState _questionnaireInitState = _QuestionnaireInitState();
 
   @override
   _QuestionnaireInitState createState() {
-    return _questionnaireInitState;
+    return this._questionnaireInitState = _QuestionnaireInitState();
   }
 
   @override
@@ -33,6 +33,20 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forwar
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   DateTime now = DateTime.now();
+  Dream widgetDream;
+
+  @override
+  void initState() {
+    widgetDream = widget.dream;
+    if (widgetDream.text != null) {
+      titleController.text = widgetDream.title;
+      descriptionController.text = widgetDream.text;
+      selectedTime = TimeOfDay(
+          hour: widgetDream.dreamDate.hour, minute: widgetDream.dreamDate.minute);
+      selectedDate = widgetDream.dreamDate;
+    }
+    return super.initState();
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -124,6 +138,7 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forwar
                     label: "Description",
                     controller: descriptionController,
                     maxLines: 8,
+                    shouldValidate: false,
                   ),
                   SizedBox(
                     height: 16,
@@ -132,7 +147,10 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forwar
                     width: double.infinity,
                     child: Text("Voice"),
                   ),
-                  Recorder()
+                  Recorder(
+                      previousRecording: widgetDream.voice,
+                      setRecordingDirectory: (String directory) =>
+                          widgetDream.voice = directory)
                 ],
               ),
             ),
@@ -145,15 +163,16 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forwar
   @override
   bool next() {
     if (_formKey.currentState.validate()) {
-      widget.dream.title = titleController.text;
-      widget.dream.text = descriptionController.text;
-      widget.dream.dreamDate = DateTime(
-        selectedDate.year,
-        selectedDate.month,
-        selectedDate.day,
-        selectedTime.hour,
-        selectedTime.minute,
-      );
+      widgetDream
+        ..title = titleController.text
+        ..text = descriptionController.text
+        ..dreamDate = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          selectedTime.hour,
+          selectedTime.minute,
+        );
       return true;
     }
     return false;

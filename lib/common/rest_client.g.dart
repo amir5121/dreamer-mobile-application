@@ -251,7 +251,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<IgnoreData> uploadFile(uploadFile) async {
+  Future<UploadResponse> uploadFile(uploadFile) async {
     ArgumentError.checkNotNull(uploadFile, 'uploadFile');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -266,7 +266,7 @@ class _RestClient implements RestClient {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = IgnoreData.fromJson(_result.data);
+    final value = UploadResponse.fromJson(_result.data);
     return value;
   }
 

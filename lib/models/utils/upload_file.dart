@@ -1,14 +1,15 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:dio/dio.dart';
 
-part 'upload_file.g.dart';
-
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
 class UploadFile {
   final String file;
 
   UploadFile(this.file);
 
-  factory UploadFile.fromJson(Map<String, dynamic> json) => _$UploadFileFromJson(json);
+  // factory UploadFile.fromJson(Map<String, dynamic> json) => UploadFile(
+  //       json['file'] as String,
+  //     );
 
-  Map<String, dynamic> toJson() => _$UploadFileToJson(this);
+  Future<Map<String, dynamic>> toJson() async => <String, dynamic>{
+        'file': await MultipartFile.fromFile(this.file),
+      };
 }

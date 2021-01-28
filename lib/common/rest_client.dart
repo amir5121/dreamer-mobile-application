@@ -15,6 +15,7 @@ import 'package:dreamer/models/post/post_response.dart';
 import 'package:dreamer/models/post/post_retrieve.dart';
 import 'package:dreamer/models/utils/ignore_data.dart';
 import 'package:dreamer/models/utils/upload_file.dart';
+import 'package:dreamer/models/utils/upload_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'rest_client.g.dart';
@@ -73,7 +74,7 @@ abstract class RestClient {
   );
 
   @POST("/utils/upload/")
-  Future<IgnoreData> uploadFile(
+  Future<UploadResponse> uploadFile(
     @Body() UploadFile uploadFile,
   );
 
