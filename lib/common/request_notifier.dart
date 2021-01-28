@@ -30,11 +30,12 @@ class RequestNotifier extends ChangeNotifier {
       debugPrint("makeRequest result $result");
       return result;
     } on DioError catch (e) {
-      debugPrint("failed completely Grrrr $e");
+      debugPrint("failed completely Grrrr notify: $notify error: $e");
       setResponseError(e);
       if (notify) notifyListeners();
     } catch (e) {
       debugPrint("Caught error $e");
+      if (notify) notifyListeners();
       setError(
         errorMessage: "Something wen't wrong",
         errorCode: null,

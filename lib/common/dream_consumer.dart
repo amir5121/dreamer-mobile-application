@@ -20,6 +20,7 @@ class DreamConsumer<T extends RequestNotifier> extends Consumer {
   @override
   Widget buildWithChild(BuildContext context, Widget child) {
     T requestNotifier = Provider.of<T>(context);
+    print("LLLLLLLL ${requestNotifier.hasError}");
     if (requestNotifier.hasError && snackOnError) {
       Future<Null>.delayed(
         Duration(),

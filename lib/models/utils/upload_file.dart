@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class UploadFile {
-  final String file;
+  final MultipartFile file;
 
   UploadFile(this.file);
 
@@ -9,7 +9,7 @@ class UploadFile {
   //       json['file'] as String,
   //     );
 
-  Future<Map<String, dynamic>> toJson() async => <String, dynamic>{
-        'file': await MultipartFile.fromFile(this.file),
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'file': this.file,
       };
 }

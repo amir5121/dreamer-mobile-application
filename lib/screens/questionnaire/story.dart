@@ -23,6 +23,7 @@ class _StoryState extends State<Story> {
   int _current = 0;
   final Dream dream = Dream();
   final List<QuestionnaireStepWidget> _journalLogger = [];
+  final DreamViewModel dreamViewModel = DreamViewModel();
 
   @override
   void initState() {
@@ -66,70 +67,68 @@ class _StoryState extends State<Story> {
     super.initState();
   }
 
+  Future<bool> _onWillPop() async {
+    if (_current == 0) {
+      Navigator.of(context).pop(false);
+      return true;
+    }
+    setState(() {
+      _current--;
+    });
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final DreamViewModel dreamViewModel = DreamViewModel();
-    print("$_current ${_journalLogger.length}");
     final bool isLastItem = _current == _journalLogger.length - 1;
-    if (isLastItem) {
-      dreamViewModel.submitDream(dream).then(
-        (DreamViewModel journalResponse) {
-          if (!journalResponse.hasError) {
-            Navigator.pop(context);
-            Navigator.popAndPushNamed(
-              context,
-              '/home',
-              arguments: Landing.journal,
-            );
-          }
-        },
-      );
-    }
-
-    Future<bool> _onWillPop() async {
-      if (_current == 0) {
-        Navigator.of(context).pop(false);
-        return true;
-      }
-      setState(() {
-        _current--;
-      });
-      return false;
-    }
 
     return ChangeNotifierProvider(
       create: (context) {
         return dreamViewModel;
       },
-      child: DreamConsumer<DreamViewModel>(
-        builder: (context, journalViewModel, child) {
-          return WillPopScope(
-            onWillPop: _onWillPop,
-            child: Scaffold(
-              appBar: AppBar(
-                title: Dots(
-                  count: _journalLogger.length,
-                  selected: _current,
-                ),
-                elevation: 0,
-                centerTitle: true,
-                actions: [
-                  FlatButton(
+      child: WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Dots(
+              count: _journalLogger.length,
+              selected: _current,
+            ),
+            elevation: 0,
+            centerTitle: true,
+            actions: [
+              DreamConsumer<DreamViewModel>(
+                builder: (context, journalViewModel, child) {
+                  return FlatButton(
                     child: Text(isLastItem ? "Finish" : "Next"),
                     onPressed: journalViewModel.isLoading
                         ? null
                         : () {
                             if (_journalLogger[_current].next()) {
                               goToNext();
+                              if (isLastItem) {
+                                dreamViewModel.submitDream(dream).then(
+                                  (DreamViewModel journalResponse) {
+                                    if (!journalResponse.hasError) {
+                                      Navigator.pop(context);
+                                      Navigator.popAndPushNamed(
+                                        context,
+                                        '/home',
+                                        arguments: Landing.journal,
+                                      );
+                                    }
+                                  },
+                                );
+                              }
                             }
                           },
-                  ),
-                ],
+                  );
+                },
               ),
-              body: _journalLogger[_current],
-            ),
-          );
-        },
+            ],
+          ),
+          body: _journalLogger[_current],
+        ),
       ),
     );
   }

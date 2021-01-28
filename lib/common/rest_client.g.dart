@@ -264,6 +264,7 @@ class _RestClient implements RestClient {
             method: 'POST',
             headers: <String, dynamic>{},
             extra: _extra,
+            contentType: 'application/x-www-form-urlencoded',
             baseUrl: baseUrl),
         data: _data);
     final value = UploadResponse.fromJson(_result.data);

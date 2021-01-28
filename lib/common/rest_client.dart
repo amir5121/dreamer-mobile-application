@@ -74,6 +74,7 @@ abstract class RestClient {
   );
 
   @POST("/utils/upload/")
+  @FormUrlEncoded()
   Future<UploadResponse> uploadFile(
     @Body() UploadFile uploadFile,
   );

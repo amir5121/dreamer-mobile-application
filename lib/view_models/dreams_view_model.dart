@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/dream/dream.dart';
@@ -12,7 +13,7 @@ class DreamViewModel extends RequestNotifier {
 
   Future<DreamViewModel> loadMyJournal(page) async {
     _dreams = await makeRequest(
-      () => Singleton().client.getDreams(page: page),
+          () => Singleton().client.getDreams(page: page),
       notify: false,
     );
     return this;
@@ -20,20 +21,31 @@ class DreamViewModel extends RequestNotifier {
 
   Future<DreamViewModel> loadDream(String identifier) async {
     _dream = await makeRequest(
-      () => Singleton().client.getDream(identifier: identifier),
+          () => Singleton().client.getDream(identifier: identifier),
     );
     return this;
   }
 
   Future<DreamViewModel> submitDream(Dream dream) async {
     if (dream.voice != null) {
+      print(dream.voice);
       await makeRequest<UploadResponse>(
-        () async => await Singleton().client.uploadFile(UploadFile(dream.voice)),
-      ).then((UploadResponse value) => dream.voice = value.data.filePath);
+        () async => await Singleton().client.uploadFile(
+              UploadFile(
+                await MultipartFile.fromFile(dream.voice, filename: "dreamer.acc"),
+              ),
+            ),
+      ).then((UploadResponse value) {
+        if (!this.hasError) {
+          dream.voice = value.data.filePath;
+        }
+      });
     }
-    await makeRequest(
-      () => Singleton().client.submitDream(dream: dream),
-    );
+    if (!this.hasError) {
+      await makeRequest(
+        () => Singleton().client.submitDream(dream: dream),
+      );
+    }
     return this;
   }
 
