@@ -7,13 +7,12 @@ import 'package:dreamer/models/auth/update_user.dart';
 import 'package:dreamer/models/configurations/configurations.dart';
 import 'package:dreamer/models/user/gender.dart';
 import 'package:dreamer/models/user/user.dart';
+import 'package:dreamer/screens/journal/profile_header.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
-import 'journal/profile_header.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -102,7 +101,7 @@ class _EditProfileState extends State<EditProfile> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverPersistentHeader(
-            delegate: ProfileHeader(inProfileEdit: false),
+            delegate: ProfileHeader(inProfileEdit: true),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(

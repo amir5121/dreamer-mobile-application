@@ -28,7 +28,6 @@ class DreamViewModel extends RequestNotifier {
 
   Future<DreamViewModel> submitDream(Dream dream) async {
     if (dream.voice != null) {
-      print(dream.voice);
       await makeRequest<UploadResponse>(
         () async => await Singleton().client.uploadFile(
               UploadFile(

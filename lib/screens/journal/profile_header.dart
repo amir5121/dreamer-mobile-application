@@ -8,7 +8,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
   int index = 0;
   final bool inProfileEdit;
 
-  ProfileHeader({this.inProfileEdit = true});
+  ProfileHeader({this.inProfileEdit = false});
 
   Widget _journalHeader(context, constraints, User user) {
     final double percentage =
@@ -20,9 +20,9 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
       children: [
         Column(
           mainAxisAlignment:
-              inProfileEdit ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
+              inProfileEdit ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
           children: [
-            if (inProfileEdit)
+            if (!inProfileEdit)
               Align(
                 alignment: Alignment.topLeft,
                 child: RawMaterialButton(
@@ -36,7 +36,11 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
               ),
             if (!opacity.isNegative)
               inProfileEdit
-                  ? Opacity(
+                  ? Container(
+                      color: Constants.deepPurple[900],
+                      height: 75 * opacity,
+                    )
+                  : Opacity(
                       opacity: opacity,
                       child: Container(
                         decoration: BoxDecoration(
@@ -99,10 +103,6 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                           ),
                         ),
                       ),
-                    )
-                  : Container(
-                      color: Constants.deepPurple[900],
-                      height: 75 * opacity,
                     ),
           ],
         ),
@@ -177,7 +177,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate _) => true;
 
   @override
-  double get maxExtent => inProfileEdit ? 230.0 : 150;
+  double get maxExtent => inProfileEdit ? 150 : 230.0;
 
   @override
   double get minExtent => 80.0;
