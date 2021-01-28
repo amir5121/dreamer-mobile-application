@@ -1,10 +1,10 @@
-import 'package:dio/dio.dart';
+import 'dart:io';
+
 import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
 import 'package:dreamer/models/dream/dream_retrieve.dart';
-import 'package:dreamer/models/utils/upload_file.dart';
 import 'package:dreamer/models/utils/upload_response.dart';
 
 class DreamViewModel extends RequestNotifier {
@@ -30,9 +30,7 @@ class DreamViewModel extends RequestNotifier {
     if (dream.voice != null) {
       await makeRequest<UploadResponse>(
         () async => await Singleton().client.uploadFile(
-              UploadFile(
-                await MultipartFile.fromFile(dream.voice, filename: "dreamer.acc"),
-              ),
+          File(dream.voice),
             ),
       ).then((UploadResponse value) {
         if (!this.hasError) {

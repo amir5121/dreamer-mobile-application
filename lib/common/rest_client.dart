@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:dreamer/models/analytics/analytics_response.dart';
 import 'package:dreamer/models/auth/auth_tokens.dart';
@@ -14,7 +16,6 @@ import 'package:dreamer/models/notification/notification_register.dart';
 import 'package:dreamer/models/post/post_response.dart';
 import 'package:dreamer/models/post/post_retrieve.dart';
 import 'package:dreamer/models/utils/ignore_data.dart';
-import 'package:dreamer/models/utils/upload_file.dart';
 import 'package:dreamer/models/utils/upload_response.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -41,8 +42,7 @@ abstract class RestClient {
 
   @GET("/configuration/initial/")
   Future<ConfigurationsResponse> getConfigurations(
-    @Query("build_number") String buildNumber,
-  );
+      @Query("build_number") String buildNumber,);
 
   @GET("/post/timeline/")
   Future<PostResponse> getTimeline({
@@ -69,18 +69,13 @@ abstract class RestClient {
   Future<IgnoreData> submitDream({@Body() Dream dream});
 
   @POST("/devices/")
-  Future<IgnoreData> registerToken(
-    @Body() NotificationRegister user,
-  );
+  Future<IgnoreData> registerToken(@Body() NotificationRegister user,);
 
   @POST("/utils/upload/")
-  @FormUrlEncoded()
   Future<UploadResponse> uploadFile(
-    @Body() UploadFile uploadFile,
+    @Part(name: "file") File uploadFile,
   );
 
   @GET("/post/analytics/")
-  Future<AnalyticsResponse> getAnalytics(
-    @Query("duration") int duration,
-  );
+  Future<AnalyticsResponse> getAnalytics(@Query("duration") int duration,);
 }

@@ -255,16 +255,17 @@ class _RestClient implements RestClient {
     ArgumentError.checkNotNull(uploadFile, 'uploadFile');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(uploadFile?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    _data.files.add(MapEntry(
+        'file',
+        MultipartFile.fromFileSync(uploadFile.path,
+            filename: uploadFile.path.split(Platform.pathSeparator).last)));
     final _result = await _dio.request<Map<String, dynamic>>('/utils/upload/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
             headers: <String, dynamic>{},
             extra: _extra,
-            contentType: 'application/x-www-form-urlencoded',
             baseUrl: baseUrl),
         data: _data);
     final value = UploadResponse.fromJson(_result.data);

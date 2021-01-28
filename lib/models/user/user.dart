@@ -13,7 +13,7 @@ class User {
   final String genderDisplay;
   final String email;
   final String identifier;
-  final String avatarImage;
+  String avatar;
   final String fullName;
 
   User(
@@ -23,7 +23,7 @@ class User {
       this.dateJoined,
       this.email,
       this.identifier,
-      this.avatarImage,
+      this.avatar,
       this.fullName,
       this.birthDate,
       this.gender,

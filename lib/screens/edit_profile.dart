@@ -11,7 +11,9 @@ import 'package:dreamer/screens/journal/profile_header.dart';
 import 'package:dreamer/view_models/auth_view_model.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
@@ -25,6 +27,7 @@ class _EditProfileState extends State<EditProfile> {
   final passwordController = TextEditingController();
   final genderController = TextEditingController();
   String selectedGender;
+  String imagePath;
 
   DateTime selectedDate;
   DateTime now = DateTime.now();
@@ -43,6 +46,41 @@ class _EditProfileState extends State<EditProfile> {
     nameController.text = user.fullName;
     selectedDate = user.birthDate;
     super.initState();
+  }
+
+  Future<String> pickImage() async {
+    final picker = ImagePicker();
+
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (await Permission.storage.request().isGranted) {
+      setState(() {
+        if (pickedFile != null) {
+          imagePath = pickedFile.path;
+          return imagePath;
+        } else {
+          print('No image selected.');
+        }
+      });
+    } else if (await Permission.storage.isPermanentlyDenied) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          duration: Duration(seconds: 6),
+          action: SnackBarAction(
+            label: 'Open settings',
+            onPressed: () {
+              openAppSettings();
+            },
+          ),
+          content: Text(
+            "Permission has been permanently denied. Grant permission from settings",
+          ),
+        ),
+      );
+    } else {
+      // await Permission.microphone.request().then((value) => _recordAudio());
+    }
+    return null;
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -75,6 +113,7 @@ class _EditProfileState extends State<EditProfile> {
                           nameController.text,
                           selectedGender,
                           selectedDate,
+                          imagePath,
                         ),
                       )
                           .then((_) {
@@ -101,7 +140,7 @@ class _EditProfileState extends State<EditProfile> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverPersistentHeader(
-            delegate: ProfileHeader(inProfileEdit: true),
+            delegate: ProfileHeader(inProfileEdit: true, pickImage: pickImage),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -131,6 +170,9 @@ class _EditProfileState extends State<EditProfile> {
           DreamConsumer<ConfigurationsViewModel>(
             builder: (context, configurations, child) {
               User user = configurations.configurations.data.self;
+              if (imagePath != null) {
+                user.avatar = imagePath;
+              }
               return Form(
                 key: _formKey,
                 child: Column(

@@ -7,10 +7,11 @@ part 'update_user.g.dart';
 class UpdateUser {
   final String lastName;
   final String gender;
+  String avatar;
   final DateTime birthDate;
   final _dateFormatter = new DateFormat('yyyy-M-dd');
 
-  UpdateUser(this.lastName, this.gender, this.birthDate);
+  UpdateUser(this.lastName, this.gender, this.birthDate, this.avatar);
 
   factory UpdateUser.fromJson(Map<String, dynamic> json) => _$UpdateUserFromJson(json);
 

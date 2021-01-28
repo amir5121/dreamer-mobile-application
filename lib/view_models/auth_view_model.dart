@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/request_notifier.dart';
 import 'package:dreamer/common/singleton.dart';
@@ -10,6 +12,7 @@ import 'package:dreamer/models/auth/sign_up_credentials.dart';
 import 'package:dreamer/models/auth/update_user.dart';
 import 'package:dreamer/models/notification/notification_register.dart';
 import 'package:dreamer/models/utils/ignore_data.dart';
+import 'package:dreamer/models/utils/upload_response.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -19,15 +22,15 @@ class AuthViewModel extends RequestNotifier {
 
   Future<AuthViewModel> logout() async {
     await makeRequest<void>(
-      () async => Singleton()
+          () async => Singleton()
           .client
           .logout(
-            LogoutCredentials(
-              await DreamerStorage().read(key: Constants.ACCESS_TOKEN),
-              Constants.CLIENT_ID,
-              Constants.CLIENT_SECRET,
-            ),
-          )
+        LogoutCredentials(
+          await DreamerStorage().read(key: Constants.ACCESS_TOKEN),
+          Constants.CLIENT_ID,
+          Constants.CLIENT_SECRET,
+        ),
+      )
           .then((_) {
         DreamerStorage().delete(key: Constants.ACCESS_TOKEN);
         DreamerStorage().delete(key: Constants.REFRESH_TOKEN);
@@ -39,35 +42,46 @@ class AuthViewModel extends RequestNotifier {
     return this;
   }
 
-  Future<AuthViewModel> signUpWithPassword(
-      String email, String password, String rePassword) async {
+  Future<AuthViewModel> signUpWithPassword(String email, String password, String rePassword) async {
     await makeRequest<IgnoreData>(
-      () => Singleton().client.signUpWithPassword(
-            SignUpCredentials(email, password, rePassword),
-          ),
+          () => Singleton().client.signUpWithPassword(
+        SignUpCredentials(email, password, rePassword),
+      ),
     );
     return this;
   }
 
   Future<void> updateSelf(UpdateUser user) async {
-    return await makeRequest<IgnoreData>(
-      () => Singleton().client.updateSelf(
-            user,
-          ),
-    );
+    if (user.avatar != null) {
+      await makeRequest<UploadResponse>(
+        () async => await Singleton().client.uploadFile(
+              File(user.avatar),
+            ),
+      ).then((UploadResponse value) {
+        if (!this.hasError) {
+          user.avatar = value.data.filePath;
+        }
+      });
+    }
+    if (!this.hasError)
+      return await makeRequest<IgnoreData>(
+        () => Singleton().client.updateSelf(
+              user,
+            ),
+      );
   }
 
   Future<AuthViewModel> loginWithPassword(String email, String password) async {
     _login = await makeRequest<AuthTokens>(
-      () => Singleton().client.loginWithPassword(
-            LoginCredentials(
-              email,
-              password,
-              Constants.CLIENT_ID,
-              Constants.CLIENT_SECRET,
-              "password",
-            ),
-          ),
+          () => Singleton().client.loginWithPassword(
+        LoginCredentials(
+          email,
+          password,
+          Constants.CLIENT_ID,
+          Constants.CLIENT_SECRET,
+          "password",
+        ),
+      ),
     );
     saveLoginInfo();
     return this;
@@ -80,14 +94,14 @@ class AuthViewModel extends RequestNotifier {
     // Obtain the auth details from the request
     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     _login = await makeRequest<AuthTokens>(
-      () => Singleton().client.convertToken(
-            ConvertToken(
-              clientId: Constants.CLIENT_ID,
-              clientSecret: Constants.CLIENT_SECRET,
-              token: googleAuth.accessToken,
-              backend: "google-oauth2",
-            ),
-          ),
+          () => Singleton().client.convertToken(
+        ConvertToken(
+          clientId: Constants.CLIENT_ID,
+          clientSecret: Constants.CLIENT_SECRET,
+          token: googleAuth.accessToken,
+          backend: "google-oauth2",
+        ),
+      ),
     );
     saveLoginInfo();
     return this;
@@ -101,14 +115,14 @@ class AuthViewModel extends RequestNotifier {
       case FacebookLoginStatus.loggedIn:
         facebookAccessToken = result.accessToken;
         _login = await makeRequest<AuthTokens>(
-          () => Singleton().client.convertToken(
-                ConvertToken(
-                  clientId: Constants.CLIENT_ID,
-                  clientSecret: Constants.CLIENT_SECRET,
-                  token: facebookAccessToken.token,
-                  backend: "facebook",
-                ),
-              ),
+              () => Singleton().client.convertToken(
+            ConvertToken(
+              clientId: Constants.CLIENT_ID,
+              clientSecret: Constants.CLIENT_SECRET,
+              token: facebookAccessToken.token,
+              backend: "facebook",
+            ),
+          ),
         );
         saveLoginInfo();
         break;
@@ -146,11 +160,11 @@ class AuthViewModel extends RequestNotifier {
       assert(token != null);
       print("Push Messaging token: $token");
       await makeRequest(() => Singleton().client.registerToken(
-            NotificationRegister(
-              token,
-              Constants.platform,
-            ),
-          ));
+        NotificationRegister(
+          token,
+          Constants.platform,
+        ),
+      ));
     });
   }
 }

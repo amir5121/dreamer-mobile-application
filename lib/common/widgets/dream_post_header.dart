@@ -23,7 +23,7 @@ class DreamPostHeader extends StatelessWidget {
                     // child: Text("Dreamer"),
                     radius: 24,
                     backgroundImage: NetworkImage(
-                      dream.user.avatarImage,
+                      dream.user.avatar,
                     ),
                   ),
                   Padding(

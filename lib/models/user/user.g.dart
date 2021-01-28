@@ -11,22 +11,19 @@ User _$UserFromJson(Map<String, dynamic> json) {
     json['username'] as String,
     json['first_name'] as String,
     json['last_name'] as String,
-    json['date_joined'] == null
-        ? null
-        : DateTime.parse(json['date_joined'] as String),
+    json['date_joined'] == null ? null : DateTime.parse(json['date_joined'] as String),
     json['email'] as String,
     json['identifier'] as String,
-    json['avatar_image'] as String,
+    json['avatar'] as String,
     json['full_name'] as String,
-    json['birth_date'] == null
-        ? null
-        : DateTime.parse(json['birth_date'] as String),
+    json['birth_date'] == null ? null : DateTime.parse(json['birth_date'] as String),
     json['gender'] as String,
     json['gender_display'] as String,
   );
 }
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$UserToJson(User instance) =>
+    <String, dynamic>{
       'username': instance.username,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
@@ -36,6 +33,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'gender_display': instance.genderDisplay,
       'email': instance.email,
       'identifier': instance.identifier,
-      'avatar_image': instance.avatarImage,
+      'avatar': instance.avatar,
       'full_name': instance.fullName,
     };

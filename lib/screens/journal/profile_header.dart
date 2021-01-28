@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/models/user/user.dart';
@@ -7,8 +9,9 @@ import 'package:flutter/material.dart';
 class ProfileHeader extends SliverPersistentHeaderDelegate {
   int index = 0;
   final bool inProfileEdit;
+  final Function pickImage;
 
-  ProfileHeader({this.inProfileEdit = false});
+  ProfileHeader({this.pickImage, this.inProfileEdit = false});
 
   Widget _journalHeader(context, constraints, User user) {
     final double percentage =
@@ -20,7 +23,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
       children: [
         Column(
           mainAxisAlignment:
-              inProfileEdit ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
+          inProfileEdit ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
           children: [
             if (!inProfileEdit)
               Align(
@@ -37,73 +40,73 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
             if (!opacity.isNegative)
               inProfileEdit
                   ? Container(
-                      color: Constants.deepPurple[900],
-                      height: 75 * opacity,
-                    )
+                color: Constants.deepPurple[900],
+                height: 75 * opacity,
+              )
                   : Opacity(
-                      opacity: opacity,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          border: Border(
-                            bottom: BorderSide(width: 1, color: Constants.accentColor),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 8.0,
-                            left: 8,
-                            right: 8,
-                            bottom: 16,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ButtonTheme(
-                                    minWidth: 0,
-                                    child: OutlineButton(
-                                      child: Icon(Icons.settings),
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/settings');
-                                      },
-                                      shape: CircleBorder(
-                                        side: BorderSide(),
-                                      ),
-                                    ),
-                                  ),
-                                  OutlineButton(
-                                    padding: EdgeInsets.symmetric(horizontal: 32),
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, '/edit-profile');
-                                    },
-                                    child: Text(
-                                      "Edit profile",
-                                      style: Theme.of(context).textTheme.bodyText2,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    user.fullName,
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                  Text(
-                                    user.email,
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                opacity: opacity,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    border: Border(
+                      bottom: BorderSide(width: 1, color: Constants.accentColor),
                     ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8.0,
+                      left: 8,
+                      right: 8,
+                      bottom: 16,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ButtonTheme(
+                              minWidth: 0,
+                              child: OutlineButton(
+                                child: Icon(Icons.settings),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/settings');
+                                },
+                                shape: CircleBorder(
+                                  side: BorderSide(),
+                                ),
+                              ),
+                            ),
+                            OutlineButton(
+                              padding: EdgeInsets.symmetric(horizontal: 32),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/edit-profile');
+                              },
+                              child: Text(
+                                "Edit profile",
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.fullName,
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                            Text(
+                              user.email,
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
         AnimatedAlign(
@@ -113,24 +116,28 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
             margin: EdgeInsets.only(left: 16, right: 8, top: 4),
             child: GestureDetector(
               onTap: () {
-                showDialog(
-                  barrierDismissible: true,
-                  context: context,
-                  builder: (_) => Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.network(user.avatarImage, fit: BoxFit.fitWidth),
-                    ],
-                  ),
-                );
+                inProfileEdit
+                    ? pickImage()
+                    : showDialog(
+                        barrierDismissible: true,
+                        context: context,
+                        builder: (_) => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.network(user.avatar, fit: BoxFit.fitWidth),
+                          ],
+                        ),
+                      );
               },
               child: CircleAvatar(
                 // child: Text("Dreamer"),
                 radius: opacity > 0.5 ? 34 : 24,
-                backgroundImage: NetworkImage(
-                  user.avatarImage,
-                ),
+                backgroundImage: user.avatar.contains("http")
+                    ? NetworkImage(
+                        user.avatar,
+                      )
+                    : FileImage(File(user.avatar)),
               ),
             ),
           ),
