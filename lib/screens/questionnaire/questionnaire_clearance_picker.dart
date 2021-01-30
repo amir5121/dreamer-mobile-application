@@ -1,6 +1,7 @@
 import 'package:dreamer/common/extensions/string_extension.dart';
 import 'package:dreamer/common/forward_interface.dart';
 import 'package:dreamer/common/widgets/toggle_button.dart';
+import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_clearance.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_step_widget.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
@@ -8,14 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class QuestionnaireClearancePicker extends QuestionnaireStepWidget {
-  final _questionnaireClearancePickerState = _QuestionnaireClearancePickerState();
+  _QuestionnaireClearancePickerState _questionnaireClearancePickerState =
+      _QuestionnaireClearancePickerState();
 
   QuestionnaireClearancePicker({Key key, dream, goToNext})
       : super(key: key, dream: dream, goToNext: goToNext);
 
   @override
   _QuestionnaireClearancePickerState createState() {
-    return _questionnaireClearancePickerState;
+    return _questionnaireClearancePickerState = _QuestionnaireClearancePickerState();
   }
 
   @override
@@ -27,6 +29,14 @@ class QuestionnaireClearancePicker extends QuestionnaireStepWidget {
 class _QuestionnaireClearancePickerState extends State<QuestionnaireClearancePicker>
     implements Forward {
   int pickedOutFeeling;
+  Dream widgetDream;
+
+  @override
+  void initState() {
+    widgetDream = widget.dream;
+    pickedOutFeeling = widgetDream.dreamClearance;
+    return super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

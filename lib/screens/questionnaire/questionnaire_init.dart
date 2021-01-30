@@ -16,7 +16,7 @@ class QuestionnaireInit extends QuestionnaireStepWidget {
 
   @override
   _QuestionnaireInitState createState() {
-    return this._questionnaireInitState = _QuestionnaireInitState();
+    return _questionnaireInitState = _QuestionnaireInitState();
   }
 
   @override

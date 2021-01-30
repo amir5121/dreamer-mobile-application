@@ -10,11 +10,12 @@ class QuestionnaireOverallFeelings extends QuestionnaireStepWidget {
   QuestionnaireOverallFeelings({Key key, dream, goToNext})
       : super(key: key, dream: dream, goToNext: goToNext);
 
-  final _questionnaireOverallFeelingState = _QuestionnaireOverallFeelingState();
+  _QuestionnaireOverallFeelingState _questionnaireOverallFeelingState =
+      _QuestionnaireOverallFeelingState();
 
   @override
   _QuestionnaireOverallFeelingState createState() {
-    return _questionnaireOverallFeelingState;
+    return _questionnaireOverallFeelingState = _QuestionnaireOverallFeelingState();
   }
 
   @override
@@ -65,7 +66,6 @@ class _QuestionnaireOverallFeelingState extends State<QuestionnaireOverallFeelin
       );
       return false;
     }
-    widget.dream.feelings.removeWhere((Feeling feeling) => feeling.rate == 0);
     return true;
   }
 }

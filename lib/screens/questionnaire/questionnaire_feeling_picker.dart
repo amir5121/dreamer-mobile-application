@@ -9,14 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class QuestionnaireFeelingPicker extends QuestionnaireStepWidget {
-  final _questionnaireFeelingPickerState = _QuestionnaireFeelingPickerState();
+  _QuestionnaireFeelingPickerState _questionnaireFeelingPickerState =
+      _QuestionnaireFeelingPickerState();
 
   QuestionnaireFeelingPicker({Key key, dream, goToNext})
       : super(key: key, dream: dream, goToNext: goToNext);
 
   @override
   _QuestionnaireFeelingPickerState createState() {
-    return _questionnaireFeelingPickerState;
+    return _questionnaireFeelingPickerState = _QuestionnaireFeelingPickerState();
   }
 
   @override
@@ -36,7 +37,11 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
       (ConfigurationsViewModel configurationsViewModel) => configurationsViewModel
           .configurations.data.feelings
           .where((FeelingDetail element) =>
-              widget.dream.feelings[_current].feelingParent == element.parentType)
+              widget.dream.feelings
+                  .where((Feeling feeling) => feeling.rate != 0)
+                  .toList()[_current]
+                  .feelingParent ==
+              element.parentType)
           .toList(),
     );
     return Padding(
@@ -54,6 +59,11 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
               itemBuilder: (context, index) {
                 if (index < choices.length) {
                   FeelingDetail choice = choices[index];
+                  print("OOOOOO ${choice.detailedType}");
+                  pickedOutFeeling = widget.dream.feelings
+                      .singleWhere((Feeling element) =>
+                          choice.detailedType.split("_")[0] == element.feelingParent)
+                      .feeling;
                   return ToggleButton(
                     active: pickedOutFeeling == choice.detailedType,
                     label: choice.detailedType.split("_")[1].capitalize(),
@@ -81,7 +91,12 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
             (Feeling element) => pickedOutFeeling.split("_")[0] == element.feelingParent)
         .feeling = pickedOutFeeling;
 
-    if (_current < widget.dream.feelings.length - 1) {
+    if (_current <
+        widget.dream.feelings
+                .where((Feeling feeling) => feeling.rate != 0)
+                .toList()
+                .length -
+            1) {
       setState(() {
         pickedOutFeeling = null;
         _current++;

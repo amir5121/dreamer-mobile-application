@@ -13,7 +13,7 @@ class QuestionnaireElement extends QuestionnaireStepWidget {
 
   QuestionnaireElement({Key key, dream, goToNext})
       : super(key: key, dream: dream, goToNext: goToNext);
-  final questionnaireElementState = _QuestionnaireElementState();
+  _QuestionnaireElementState questionnaireElementState = _QuestionnaireElementState();
   final List<ElementCreator> elementCreators = [
     ElementCreator(label: "Place"),
     ElementCreator(label: "Character"),
@@ -22,7 +22,7 @@ class QuestionnaireElement extends QuestionnaireStepWidget {
 
   @override
   _QuestionnaireElementState createState() {
-    return questionnaireElementState;
+    return questionnaireElementState = _QuestionnaireElementState();
   }
 
   @override

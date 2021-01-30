@@ -5,6 +5,7 @@ import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
 import 'package:dreamer/models/dream/dream_retrieve.dart';
+import 'package:dreamer/models/dream/feeling.dart';
 import 'package:dreamer/models/utils/upload_response.dart';
 
 class DreamViewModel extends RequestNotifier {
@@ -40,7 +41,10 @@ class DreamViewModel extends RequestNotifier {
     }
     if (!this.hasError) {
       await makeRequest(
-        () => Singleton().client.submitDream(dream: dream),
+        () {
+          dream.feelings.removeWhere((Feeling feeling) => feeling.rate == 0);
+          Singleton().client.submitDream(dream: dream);
+        },
       );
     }
     return this;
