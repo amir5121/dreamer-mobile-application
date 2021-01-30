@@ -51,9 +51,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     analytics = FirebaseAnalytics();
-    configurationsViewModel.loadBuildData().then(
-          (value) => configurationsViewModel.loadConfigurations(context),
-        );
+    configurationsViewModel.loadConfigurations(context);
     super.initState();
   }
 

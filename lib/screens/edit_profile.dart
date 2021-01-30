@@ -48,20 +48,17 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
   }
 
-  Future<String> pickImage() async {
+  void pickImage() async {
     final picker = ImagePicker();
-
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
     if (await Permission.storage.request().isGranted) {
-      setState(() {
-        if (pickedFile != null) {
+      if (pickedFile != null) {
+        setState(() {
           imagePath = pickedFile.path;
-          return imagePath;
-        } else {
-          print('No image selected.');
-        }
-      });
+        });
+      } else {
+        print('No image selected.');
+      }
     } else if (await Permission.storage.isPermanentlyDenied) {
       Scaffold.of(context).showSnackBar(
         SnackBar(
@@ -100,8 +97,8 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext buildContext) {
     return DreamerScaffold(
       actions: [
-        DreamConsumer<AuthViewModel>(
-          builder: (context, auth, child) => FlatButton(
+        DreamConsumer2<AuthViewModel, ConfigurationsViewModel>(
+          builder: (context, auth, configurations, child) => FlatButton(
             child: Text('Save'),
             onPressed: auth.isLoading
                 ? null
@@ -113,13 +110,11 @@ class _EditProfileState extends State<EditProfile> {
                           nameController.text,
                           selectedGender,
                           selectedDate,
-                          imagePath,
+                          configurations.authenticatedUser.avatar,
                         ),
                       )
                           .then((_) {
-                        buildContext
-                            .read<ConfigurationsViewModel>()
-                            .loadConfigurations(context);
+                      configurations.loadConfigurations(context);
                         Scaffold.of(context).showSnackBar(
                           SnackBar(
                             duration: Duration(milliseconds: 500),
@@ -169,9 +164,9 @@ class _EditProfileState extends State<EditProfile> {
         children: [
           DreamConsumer<ConfigurationsViewModel>(
             builder: (context, configurations, child) {
-              User user = configurations.configurations.data.self;
               if (imagePath != null) {
-                user.avatar = imagePath;
+                configurations.authenticatedUser.avatar = imagePath;
+                imagePath = null;
               }
               return Form(
                 key: _formKey,
@@ -196,7 +191,7 @@ class _EditProfileState extends State<EditProfile> {
                     SizedBox(
                       height: 16,
                     ),
-                    genderBox(user, context, configurations.configurations.data),
+                    genderBox(context, configurations.configurations.data),
                   ],
                 ),
               );
@@ -207,7 +202,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Column genderBox(User user, context, Configurations configurations) {
+  Column genderBox(BuildContext context, Configurations configurations) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -228,8 +223,8 @@ class _EditProfileState extends State<EditProfile> {
                         .singleWhere((Gender gender) => gender.value == selectedGender)
                         .label,
                   )
-                : user.gender != null
-                    ? Text(user.genderDisplay)
+                : configurations.self.gender != null
+                    ? Text(configurations.self.genderDisplay)
                     : null,
             onPressed: () {
               showDreamDialog(

@@ -53,7 +53,6 @@ class Singleton {
           .listen((IosNotificationSettings settings) {
         print("Settings registered: $settings");
       });
-      debugPrint("thisisisisisi shouldd happen onnncceeee");
     }
 
     Dio refreshDio = Dio();

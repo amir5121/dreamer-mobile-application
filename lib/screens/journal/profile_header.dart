@@ -23,7 +23,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
       children: [
         Column(
           mainAxisAlignment:
-          inProfileEdit ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
+              inProfileEdit ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
           children: [
             if (!inProfileEdit)
               Align(
@@ -40,73 +40,73 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
             if (!opacity.isNegative)
               inProfileEdit
                   ? Container(
-                color: Constants.deepPurple[900],
-                height: 75 * opacity,
-              )
+                      color: Constants.deepPurple[900],
+                      height: 75 * opacity,
+                    )
                   : Opacity(
-                opacity: opacity,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    border: Border(
-                      bottom: BorderSide(width: 1, color: Constants.accentColor),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8.0,
-                      left: 8,
-                      right: 8,
-                      bottom: 16,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            ButtonTheme(
-                              minWidth: 0,
-                              child: OutlineButton(
-                                child: Icon(Icons.settings),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/settings');
-                                },
-                                shape: CircleBorder(
-                                  side: BorderSide(),
-                                ),
-                              ),
-                            ),
-                            OutlineButton(
-                              padding: EdgeInsets.symmetric(horizontal: 32),
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/edit-profile');
-                              },
-                              child: Text(
-                                "Edit profile",
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                            ),
-                          ],
+                      opacity: opacity,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          border: Border(
+                            bottom: BorderSide(width: 1, color: Constants.accentColor),
+                          ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              user.fullName,
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                            Text(
-                              user.email,
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8.0,
+                            left: 8,
+                            right: 8,
+                            bottom: 16,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ButtonTheme(
+                                    minWidth: 0,
+                                    child: OutlineButton(
+                                      child: Icon(Icons.settings),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/settings');
+                                      },
+                                      shape: CircleBorder(
+                                        side: BorderSide(),
+                                      ),
+                                    ),
+                                  ),
+                                  OutlineButton(
+                                    padding: EdgeInsets.symmetric(horizontal: 32),
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, '/edit-profile');
+                                    },
+                                    child: Text(
+                                      "Edit profile",
+                                      style: Theme.of(context).textTheme.bodyText2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    user.fullName,
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                  Text(
+                                    user.email,
+                                    style: Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
           ],
         ),
         AnimatedAlign(
@@ -168,7 +168,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                     child: _journalHeader(
                       context,
                       constraints,
-                      configurations.configurations.data.self,
+                      configurations.authenticatedUser,
                     ),
                   ),
                 ),
