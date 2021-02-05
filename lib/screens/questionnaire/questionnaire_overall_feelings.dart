@@ -22,10 +22,15 @@ class QuestionnaireOverallFeelings extends QuestionnaireStepWidget {
   bool next() {
     return _questionnaireOverallFeelingState.next();
   }
+
+  @override
+  bool previous() {
+    return _questionnaireOverallFeelingState.previous();
+  }
 }
 
 class _QuestionnaireOverallFeelingState extends State<QuestionnaireOverallFeelings>
-    implements Forward {
+    implements Seekable {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,6 +71,11 @@ class _QuestionnaireOverallFeelingState extends State<QuestionnaireOverallFeelin
       );
       return false;
     }
+    return true;
+  }
+
+  @override
+  bool previous() {
     return true;
   }
 }

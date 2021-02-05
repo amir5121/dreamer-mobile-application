@@ -29,9 +29,14 @@ class QuestionnaireElement extends QuestionnaireStepWidget {
   bool next() {
     return questionnaireElementState.next();
   }
+
+  @override
+  bool previous() {
+    return questionnaireElementState.previous();
+  }
 }
 
-class _QuestionnaireElementState extends State<QuestionnaireElement> implements Forward {
+class _QuestionnaireElementState extends State<QuestionnaireElement> implements Seekable {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -107,5 +112,10 @@ class _QuestionnaireElementState extends State<QuestionnaireElement> implements 
       ),
     );
     return false;
+  }
+
+  @override
+  bool previous() {
+    return true;
   }
 }

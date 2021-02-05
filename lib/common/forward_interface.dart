@@ -1,3 +1,5 @@
-abstract class Forward {
+abstract class Seekable {
   bool next();
+
+  bool previous();
 }

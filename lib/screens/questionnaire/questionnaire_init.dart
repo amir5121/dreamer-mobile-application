@@ -23,9 +23,14 @@ class QuestionnaireInit extends QuestionnaireStepWidget {
   bool next() {
     return _questionnaireInitState.next();
   }
+
+  @override
+  bool previous() {
+    return _questionnaireInitState.previous();
+  }
 }
 
-class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forward {
+class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekable {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -176,5 +181,10 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Forwar
       return true;
     }
     return false;
+  }
+
+  @override
+  bool previous() {
+    return true;
   }
 }

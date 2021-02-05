@@ -72,9 +72,11 @@ class _StoryState extends State<Story> {
       Navigator.of(context).pop(false);
       return true;
     }
-    setState(() {
-      _current--;
-    });
+    if (_journalLogger[_current].previous()) {
+      setState(() {
+        _current--;
+      });
+    }
     return false;
   }
 

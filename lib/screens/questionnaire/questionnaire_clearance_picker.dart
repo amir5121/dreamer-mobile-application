@@ -24,10 +24,15 @@ class QuestionnaireClearancePicker extends QuestionnaireStepWidget {
   bool next() {
     return _questionnaireClearancePickerState.next();
   }
+
+  @override
+  bool previous() {
+    return _questionnaireClearancePickerState.previous();
+  }
 }
 
 class _QuestionnaireClearancePickerState extends State<QuestionnaireClearancePicker>
-    implements Forward {
+    implements Seekable {
   int pickedOutFeeling;
   Dream widgetDream;
 
@@ -84,6 +89,11 @@ class _QuestionnaireClearancePickerState extends State<QuestionnaireClearancePic
     }
     widget.dream.dreamClearance = pickedOutFeeling;
     widget.goToNext();
+    return true;
+  }
+
+  @override
+  bool previous() {
     return true;
   }
 }
