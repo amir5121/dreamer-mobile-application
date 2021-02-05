@@ -1,6 +1,7 @@
 import 'package:dreamer/common/dream_consumer.dart';
 import 'package:dreamer/common/widgets/dots.dart';
 import 'package:dreamer/models/dream/dream.dart';
+import 'package:dreamer/models/dream/feeling.dart';
 import 'package:dreamer/models/dream/feeling_detail.dart';
 import 'package:dreamer/screens/landing.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_clearance_picker.dart';
@@ -32,7 +33,11 @@ class _StoryState extends State<Story> {
         .configurations
         .data
         .mainFeelings
-        .map((FeelingDetail e) => e.convertToFeeling())
+        .map((FeelingDetail e) => Feeling(
+              rate: 0,
+              feeling: e.detailedType,
+              feelingParent: e.parentType,
+            ))
         .toList();
     _journalLogger.add(
       QuestionnaireInit(

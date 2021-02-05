@@ -1,7 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'feeling.dart';
-
 part 'feeling_detail.g.dart';
 
 @JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
@@ -17,6 +15,4 @@ class FeelingDetail {
 
   Map<String, dynamic> toJson() => _$FeelingDetailToJson(this);
 
-  Feeling convertToFeeling() =>
-      Feeling(rate: 0, feeling: detailedType, feelingParent: parentType);
 }
