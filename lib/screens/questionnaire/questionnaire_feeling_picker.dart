@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:dreamer/common/extensions/string_extension.dart';
 import 'package:dreamer/common/forward_interface.dart';
@@ -11,15 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class QuestionnaireFeelingPicker extends QuestionnaireStepWidget {
-  _QuestionnaireFeelingPickerState _questionnaireFeelingPickerState =
-  _QuestionnaireFeelingPickerState();
+  final _QuestionnaireFeelingPickerState _questionnaireFeelingPickerState =
+      _QuestionnaireFeelingPickerState();
 
-  QuestionnaireFeelingPicker({Key key, dream, goToNext})
-      : super(key: key, dream: dream, goToNext: goToNext);
+  QuestionnaireFeelingPicker({Key key, dream, goToNext, isGoingForward})
+      : super(key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
 
   @override
   _QuestionnaireFeelingPickerState createState() {
-    return _questionnaireFeelingPickerState = _QuestionnaireFeelingPickerState();
+    return _questionnaireFeelingPickerState;
   }
 
   @override
@@ -40,20 +39,23 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
 
   @override
   void initState() {
-    _current = max(
-        0,
-        widget.dream.feelings
-                .where((Feeling feeling) => feeling.feeling != null)
-                .toList()
-                .length -
-            1);
+    if (widget.isGoingForward) {
+      _current = 0;
+    } else {
+      _current = widget.dream.feelings
+              .where((Feeling feeling) => feeling.feeling != null)
+              .toList()
+              .length -
+          1;
+    }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     List<FeelingDetail> choices = context.select(
-      (ConfigurationsViewModel configurationsViewModel) => configurationsViewModel
+          (ConfigurationsViewModel configurationsViewModel) => configurationsViewModel
           .configurations.data.feelings
           .where((FeelingDetail element) =>
               widget.dream.feelings
@@ -61,7 +63,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
                   .toList()[_current]
                   .feelingParent ==
               element.parentType)
-              .toList(),
+          .toList(),
     );
     return Padding(
       padding: EdgeInsets.only(top: 36.0, left: 36.0, right: 36.0),
@@ -80,7 +82,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
                   FeelingDetail choice = choices[index];
                   pickedOutFeeling = widget.dream.feelings
                       .singleWhere((Feeling element) =>
-                  choice.detailedType.split("_")[0] == element.feelingParent)
+                          choice.detailedType.split("_")[0] == element.feelingParent)
                       .feeling;
                   return ToggleButton(
                     active: pickedOutFeeling == choice.detailedType,
@@ -111,7 +113,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
 
     if (_current <
         widget.dream.feelings
-            .where((Feeling feeling) => feeling.rate != 0)
+                .where((Feeling feeling) => feeling.rate != 0)
                 .toList()
                 .length -
             1) {

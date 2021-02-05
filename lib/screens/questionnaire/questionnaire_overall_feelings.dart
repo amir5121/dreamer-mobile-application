@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 import 'questionnaire_step_widget.dart';
 
 class QuestionnaireOverallFeelings extends QuestionnaireStepWidget {
-  QuestionnaireOverallFeelings({Key key, dream, goToNext})
-      : super(key: key, dream: dream, goToNext: goToNext);
+  QuestionnaireOverallFeelings({Key key, dream, goToNext, isGoingForward})
+      : super(key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
 
-  _QuestionnaireOverallFeelingState _questionnaireOverallFeelingState =
+  final _QuestionnaireOverallFeelingState _questionnaireOverallFeelingState =
       _QuestionnaireOverallFeelingState();
 
   @override
   _QuestionnaireOverallFeelingState createState() {
-    return _questionnaireOverallFeelingState = _QuestionnaireOverallFeelingState();
+    return _questionnaireOverallFeelingState;
   }
 
   @override

@@ -9,15 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class QuestionnaireClearancePicker extends QuestionnaireStepWidget {
-  _QuestionnaireClearancePickerState _questionnaireClearancePickerState =
+  final _QuestionnaireClearancePickerState _questionnaireClearancePickerState =
       _QuestionnaireClearancePickerState();
 
-  QuestionnaireClearancePicker({Key key, dream, goToNext})
-      : super(key: key, dream: dream, goToNext: goToNext);
+  QuestionnaireClearancePicker({Key key, dream, goToNext, isGoingForward})
+      : super(key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
 
   @override
   _QuestionnaireClearancePickerState createState() {
-    return _questionnaireClearancePickerState = _QuestionnaireClearancePickerState();
+    return _questionnaireClearancePickerState;
   }
 
   @override

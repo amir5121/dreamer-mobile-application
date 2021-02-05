@@ -10,19 +10,21 @@ class QuestionnaireElement extends QuestionnaireStepWidget {
   static const placeIndex = 0;
   static const characterIndex = 1;
   static const objectIndex = 2;
+  final _QuestionnaireElementState questionnaireElementState =
+      _QuestionnaireElementState();
 
-  QuestionnaireElement({Key key, dream, goToNext})
-      : super(key: key, dream: dream, goToNext: goToNext);
-  _QuestionnaireElementState questionnaireElementState = _QuestionnaireElementState();
   final List<ElementCreator> elementCreators = [
     ElementCreator(label: "Place"),
     ElementCreator(label: "Character"),
     ElementCreator(label: "Object")
   ];
 
+  QuestionnaireElement({Key key, dream, goToNext, isGoingForward})
+      : super(key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
+
   @override
   _QuestionnaireElementState createState() {
-    return questionnaireElementState = _QuestionnaireElementState();
+    return questionnaireElementState;
   }
 
   @override

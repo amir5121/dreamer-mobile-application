@@ -22,9 +22,37 @@ class Story extends StatefulWidget {
 
 class _StoryState extends State<Story> {
   int _current = 0;
+  bool _goingForward = true;
   final Dream dream = Dream();
-  final List<QuestionnaireStepWidget> _journalLogger = [];
+  QuestionnaireStepWidget _currentStep;
   final DreamViewModel dreamViewModel = DreamViewModel();
+  final List<Function> _loggers = [
+    (dream, goToNext, isGoingForward) => QuestionnaireInit(
+          dream: dream,
+          goToNext: goToNext,
+          isGoingForward: isGoingForward,
+        ),
+    (dream, goToNext, isGoingForward) => QuestionnaireClearancePicker(
+          dream: dream,
+          goToNext: goToNext,
+          isGoingForward: isGoingForward,
+        ),
+    (dream, goToNext, isGoingForward) => QuestionnaireOverallFeelings(
+          dream: dream,
+          goToNext: goToNext,
+          isGoingForward: isGoingForward,
+        ),
+    (dream, goToNext, isGoingForward) => QuestionnaireFeelingPicker(
+          dream: dream,
+          goToNext: goToNext,
+          isGoingForward: isGoingForward,
+        ),
+    (dream, goToNext, isGoingForward) => QuestionnaireElement(
+          dream: dream,
+          goToNext: goToNext,
+          isGoingForward: isGoingForward,
+        ),
+  ];
 
   @override
   void initState() {
@@ -39,36 +67,6 @@ class _StoryState extends State<Story> {
               feelingParent: e.parentType,
             ))
         .toList();
-    _journalLogger.add(
-      QuestionnaireInit(
-        dream: dream,
-        goToNext: goToNext,
-      ),
-    );
-    _journalLogger.add(
-      QuestionnaireClearancePicker(
-        dream: dream,
-        goToNext: goToNext,
-      ),
-    );
-    _journalLogger.add(
-      QuestionnaireOverallFeelings(
-        dream: dream,
-        goToNext: goToNext,
-      ),
-    );
-    _journalLogger.add(
-      QuestionnaireFeelingPicker(
-        dream: dream,
-        goToNext: goToNext,
-      ),
-    );
-    _journalLogger.add(
-      QuestionnaireElement(
-        dream: dream,
-        goToNext: goToNext,
-      ),
-    );
     super.initState();
   }
 
@@ -77,8 +75,9 @@ class _StoryState extends State<Story> {
       Navigator.of(context).pop(false);
       return true;
     }
-    if (_journalLogger[_current].previous()) {
+    if (_currentStep.previous()) {
       setState(() {
+        _goingForward = false;
         _current--;
       });
     }
@@ -87,8 +86,8 @@ class _StoryState extends State<Story> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLastItem = _current == _journalLogger.length - 1;
-
+    final bool isLastItem = _current == _loggers.length - 1;
+    _currentStep = _loggers[_current](dream, goToNext, _goingForward);
     return ChangeNotifierProvider(
       create: (context) {
         return dreamViewModel;
@@ -98,7 +97,7 @@ class _StoryState extends State<Story> {
         child: Scaffold(
           appBar: AppBar(
             title: Dots(
-              count: _journalLogger.length,
+              count: _loggers.length,
               selected: _current,
             ),
             elevation: 0,
@@ -111,7 +110,7 @@ class _StoryState extends State<Story> {
                     onPressed: journalViewModel.isLoading
                         ? null
                         : () {
-                            if (_journalLogger[_current].next()) {
+                      if (_currentStep.next()) {
                               goToNext();
                               if (isLastItem) {
                                 dreamViewModel.submitDream(dream).then(
@@ -134,15 +133,16 @@ class _StoryState extends State<Story> {
               ),
             ],
           ),
-          body: _journalLogger[_current],
+          body: _currentStep,
         ),
       ),
     );
   }
 
   void goToNext() {
-    if (_current < _journalLogger.length - 1) {
+    if (_current < _loggers.length - 1) {
       setState(() {
+        _goingForward = true;
         _current++;
       });
     }

@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class QuestionnaireInit extends QuestionnaireStepWidget {
-  QuestionnaireInit({Key key, dream, goToNext})
-      : super(key: key, dream: dream, goToNext: goToNext);
+  final _QuestionnaireInitState _questionnaireInitState = _QuestionnaireInitState();
 
-  _QuestionnaireInitState _questionnaireInitState = _QuestionnaireInitState();
+  QuestionnaireInit({Key key, dream, goToNext, isGoingForward})
+      : super(key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
 
   @override
   _QuestionnaireInitState createState() {
-    return _questionnaireInitState = _QuestionnaireInitState();
+    return _questionnaireInitState;
   }
 
   @override
