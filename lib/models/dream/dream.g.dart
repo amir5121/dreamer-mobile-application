@@ -25,6 +25,8 @@ Dream _$DreamFromJson(Map<String, dynamic> json) {
     elements: (json['elements'] as List)
         ?.map((e) => e == null ? null : DreamElement.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    voiceWave: (json['voice_wave'] as List)?.map((e) => (e as num)?.toDouble())?.toList(),
+    voiceDuration: (json['voice_duration'] as num)?.toDouble(),
     feelings: (json['feelings'] as List)
         ?.map((e) => e == null ? null : Feeling.fromJson(e as Map<String, dynamic>))
         ?.toList(),
@@ -41,8 +43,10 @@ Map<String, dynamic> _$DreamToJson(Dream instance) => <String, dynamic>{
       'publication_status': instance.publicationStatus,
       'dream_clearance': instance.dreamClearance,
       'dream_clearance_display': instance.dreamClearanceDisplay,
-      'voice': instance.voice,
       'dream_date': instance.dreamDate?.toIso8601String(),
       'elements': instance.elements,
       'feelings': instance.feelings,
+      'voice': instance.voice,
+      'voice_duration': instance.voiceDuration,
+      'voice_wave': instance.voiceWave,
     };

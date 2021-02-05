@@ -70,6 +70,7 @@ class _QuestionnaireClearancePickerState extends State<QuestionnaireClearancePic
                         pickedOutFeeling = choice.value;
                       });
                       this.next();
+                      widget.goToNext();
                     },
                   );
                 }
@@ -88,7 +89,6 @@ class _QuestionnaireClearancePickerState extends State<QuestionnaireClearancePic
       return false;
     }
     widget.dream.dreamClearance = pickedOutFeeling;
-    widget.goToNext();
     return true;
   }
 

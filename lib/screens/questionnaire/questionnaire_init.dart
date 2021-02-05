@@ -153,9 +153,16 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekab
                     child: Text("Voice"),
                   ),
                   Recorder(
-                      previousRecording: widgetDream.voice,
-                      setRecordingDirectory: (String directory) =>
-                          widgetDream.voice = directory)
+                    previousRecording: widgetDream.voice,
+                    setRecordingDirectory:
+                        (String directory, List<double> wave, double recordingLength) {
+                      widgetDream.voice = directory;
+                      widgetDream.voiceWave = wave;
+                      widgetDream.voiceDuration = recordingLength;
+                    },
+                    recordingLengthInMilliSeconds: widgetDream.voiceDuration,
+                    recordingWave: widgetDream.voiceWave,
+                  )
                 ],
               ),
             ),

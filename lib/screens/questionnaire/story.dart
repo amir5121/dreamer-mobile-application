@@ -76,6 +76,7 @@ class _StoryState extends State<Story> {
       return true;
     }
     if (_currentStep.previous()) {
+      print("AAAASDDDDPPP $_current");
       setState(() {
         _goingForward = false;
         _current--;
@@ -87,6 +88,7 @@ class _StoryState extends State<Story> {
   @override
   Widget build(BuildContext context) {
     final bool isLastItem = _current == _loggers.length - 1;
+    print("AAcccccDPPP $_current");
     _currentStep = _loggers[_current](dream, goToNext, _goingForward);
     return ChangeNotifierProvider(
       create: (context) {
@@ -111,6 +113,7 @@ class _StoryState extends State<Story> {
                         ? null
                         : () {
                       if (_currentStep.next()) {
+                        print("AAAASDDDD $_current");
                               goToNext();
                               if (isLastItem) {
                                 dreamViewModel.submitDream(dream).then(
@@ -122,10 +125,10 @@ class _StoryState extends State<Story> {
                                         '/home',
                                         arguments: Landing.journal,
                                       );
-                                    }
-                                  },
-                                );
                               }
+                            },
+                          );
+                        }
                             }
                           },
                   );
@@ -140,6 +143,7 @@ class _StoryState extends State<Story> {
   }
 
   void goToNext() {
+    print("goToNext");
     if (_current < _loggers.length - 1) {
       setState(() {
         _goingForward = true;

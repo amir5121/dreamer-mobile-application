@@ -11,8 +11,15 @@ import 'package:permission_handler/permission_handler.dart';
 class Recorder extends StatefulWidget {
   final Function setRecordingDirectory;
   final String previousRecording;
+  final double recordingLengthInMilliSeconds;
+  final List<double> recordingWave;
 
-  const Recorder({Key key, @required this.setRecordingDirectory, this.previousRecording})
+  const Recorder(
+      {Key key,
+      @required this.setRecordingDirectory,
+      @required this.previousRecording,
+      @required this.recordingLengthInMilliSeconds,
+      @required this.recordingWave})
       : super(key: key);
 
   @override
@@ -30,9 +37,9 @@ enum SoundStatus {
 class _RecorderState extends State<Recorder> {
   SoundStatus _recordingStatus = SoundStatus.none;
   SoundStatus _playbackStatus = SoundStatus.none;
-  Duration _workDuration;
+  Duration _workDuration = Duration();
   Duration _recordingLength;
-  List<double> wave = [];
+  List<double> _wave = [];
 
   final FlutterSoundPlayer _soundPlayer = FlutterSoundPlayer();
   final FlutterSoundRecorder _soundRecorder = FlutterSoundRecorder();
@@ -48,7 +55,7 @@ class _RecorderState extends State<Recorder> {
 
   void asyncSetUp() async {
     Directory tempDir = await getTemporaryDirectory();
-    tempPath = "${tempDir.path}/dreamer.acc";
+    tempPath = "${tempDir.path}/dreamer.aac";
   }
 
   @override
@@ -56,6 +63,9 @@ class _RecorderState extends State<Recorder> {
     asyncSetUp();
     if (widget.previousRecording != null) {
       _recordingStatus = SoundStatus.done;
+      _recordingLength =
+          Duration(milliseconds: widget.recordingLengthInMilliSeconds.toInt());
+      _wave = widget.recordingWave;
     }
     super.initState();
   }
@@ -80,12 +90,12 @@ class _RecorderState extends State<Recorder> {
             setState(() {
               _recordingStatus = SoundStatus.working;
             });
-            wave = [];
+            _wave = [];
           });
 
           soundRecorder.onProgress.listen((RecordingDisposition e) {
             Duration maxDuration = e.duration;
-            wave.add(e.decibels);
+            _wave.add(e.decibels);
             _recordingLength = maxDuration;
 
             setState(() {
@@ -101,7 +111,8 @@ class _RecorderState extends State<Recorder> {
         _soundRecorder.stopRecorder().then(
               (_) => _soundRecorder.closeAudioSession().then(
                 (_) {
-                  widget.setRecordingDirectory(tempPath);
+                  widget.setRecordingDirectory(
+                      tempPath, _wave, _recordingLength.inMilliseconds.toDouble());
                   setState(() {
                     _recordingStatus = SoundStatus.done;
                   });
@@ -162,7 +173,7 @@ class _RecorderState extends State<Recorder> {
                       ),
                       Expanded(
                         child: WaveformSlider(
-                          wave: wave,
+                          wave: _wave,
                           progress: _workDuration.inMilliseconds /
                               _recordingLength.inMilliseconds,
                           tapCallback: (double seekProgress) => _soundPlayer.seekToPlayer(

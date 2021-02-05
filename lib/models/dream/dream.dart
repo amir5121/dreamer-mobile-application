@@ -17,10 +17,12 @@ class Dream {
   String publicationStatus;
   int dreamClearance;
   String dreamClearanceDisplay;
-  String voice;
   DateTime dreamDate;
   List<DreamElement> elements;
   List<Feeling> feelings;
+  String voice;
+  double voiceDuration;
+  List<double> voiceWave;
 
   Dream(
       {this.created,
@@ -35,6 +37,8 @@ class Dream {
       this.dreamClearanceDisplay,
       this.voice,
       this.elements,
+      this.voiceWave,
+      this.voiceDuration,
       this.feelings});
 
   factory Dream.fromJson(Map<String, dynamic> json) => _$DreamFromJson(json);

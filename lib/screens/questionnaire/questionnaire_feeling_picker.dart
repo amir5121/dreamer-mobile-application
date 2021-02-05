@@ -1,4 +1,3 @@
-
 import 'package:dreamer/common/extensions/string_extension.dart';
 import 'package:dreamer/common/forward_interface.dart';
 import 'package:dreamer/common/widgets/toggle_button.dart';
@@ -43,7 +42,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
       _current = 0;
     } else {
       _current = widget.dream.feelings
-              .where((Feeling feeling) => feeling.feeling != null)
+              .where((Feeling feeling) => feeling.feeling != null && feeling.rate != 0)
               .toList()
               .length -
           1;
