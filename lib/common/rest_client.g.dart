@@ -201,12 +201,29 @@ class _RestClient implements RestClient {
         '/post/dreams/$identifier/',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    final value = DreamRetrieve.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<IgnoreData> updateDream({identifier, dream}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(dream?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('/post/dreams/$identifier/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PATCH',
             headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = DreamRetrieve.fromJson(_result.data);
+    final value = IgnoreData.fromJson(_result.data);
     return value;
   }
 

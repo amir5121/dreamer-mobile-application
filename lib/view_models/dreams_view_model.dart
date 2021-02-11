@@ -14,7 +14,7 @@ class DreamViewModel extends RequestNotifier {
 
   Future<DreamViewModel> loadMyJournal(page) async {
     _dreams = await makeRequest(
-          () => Singleton().client.getDreams(page: page),
+      () => Singleton().client.getDreams(page: page),
       notify: false,
     );
     return this;
@@ -28,10 +28,10 @@ class DreamViewModel extends RequestNotifier {
   }
 
   Future<DreamViewModel> submitDream(Dream dream) async {
-    if (dream.voice != null) {
+    if (dream.voice != null && !dream.voice.contains('http')) {
       await makeRequest<UploadResponse>(
         () async => await Singleton().client.uploadFile(
-          File(dream.voice),
+              File(dream.voice),
             ),
       ).then((UploadResponse value) {
         if (!this.hasError) {
@@ -43,7 +43,11 @@ class DreamViewModel extends RequestNotifier {
       await makeRequest(
         () {
           dream.feelings.removeWhere((Feeling feeling) => feeling.rate == 0);
-          Singleton().client.submitDream(dream: dream);
+          if (dream.identifier != null) {
+            Singleton().client.updateDream(identifier: dream.identifier, dream: dream);
+          } else {
+            Singleton().client.submitDream(dream: dream);
+          }
         },
       );
     }

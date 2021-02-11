@@ -56,6 +56,10 @@ class Constants {
   static const String NOT_FOUND = "not_found";
   static const String CONNECTION_FAILURE = "connection_failure";
 
+  static const String ELEMENT_PLACE = 'place';
+  static const String ELEMENT_OBJECT = 'object';
+  static const String ELEMENT_CHARACTER = 'character';
+
   static const String ACCESS_TOKEN = 'accessToken';
   static const String REFRESH_TOKEN = 'refreshToken';
   static const String CLIENT_ID = 'gm57SXQ1djmgk12Rs32EnDzc2AQMpsJbGHQ8CJpT';

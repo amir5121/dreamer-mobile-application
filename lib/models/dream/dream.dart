@@ -43,7 +43,13 @@ class Dream {
 
   factory Dream.fromJson(Map<String, dynamic> json) => _$DreamFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DreamToJson(this);
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> jsonResult = _$DreamToJson(this);
+    if (this.voice != null && this.voice.contains('http')) {
+      jsonResult.remove('voice');
+    }
+    return jsonResult;
+  }
 
   String get createdFormatted {
     return timeago.format(created, locale: 'en');

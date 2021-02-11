@@ -40,19 +40,6 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekab
   DateTime now = DateTime.now();
   Dream widgetDream;
 
-  @override
-  void initState() {
-    widgetDream = widget.dream;
-    if (widgetDream.text != null) {
-      titleController.text = widgetDream.title;
-      descriptionController.text = widgetDream.text;
-      selectedTime = TimeOfDay(
-          hour: widgetDream.dreamDate.hour, minute: widgetDream.dreamDate.minute);
-      selectedDate = widgetDream.dreamDate;
-    }
-    return super.initState();
-  }
-
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
@@ -81,12 +68,21 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekab
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    widgetDream = widget.dream;
+    if (widgetDream.text != null) {
+      titleController.text = widgetDream.title;
+      descriptionController.text = widgetDream.text;
+      selectedTime = TimeOfDay(
+        hour: widgetDream.dreamDate.hour,
+        minute: widgetDream.dreamDate.minute,
+      );
+      selectedDate = widgetDream.dreamDate;
+    }
     return LetScroll(
       child: Container(
         padding: EdgeInsets.all(36.0),
@@ -174,7 +170,7 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekab
 
   @override
   bool next() {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState != null && _formKey.currentState.validate()) {
       widgetDream
         ..title = titleController.text
         ..text = descriptionController.text

@@ -1,6 +1,8 @@
+import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/forward_interface.dart';
 import 'package:dreamer/common/widgets/element_creator.dart';
 import 'package:dreamer/common/widgets/let_scroll.dart';
+import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_element.dart';
 import 'package:dreamer/screens/questionnaire/questionnaire_step_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,14 +15,33 @@ class QuestionnaireElement extends QuestionnaireStepWidget {
   final _QuestionnaireElementState questionnaireElementState =
       _QuestionnaireElementState();
 
-  final List<ElementCreator> elementCreators = [
-    ElementCreator(label: "Place"),
-    ElementCreator(label: "Character"),
-    ElementCreator(label: "Object")
-  ];
+  final List<ElementCreator> elementCreators = [];
 
-  QuestionnaireElement({Key key, dream, goToNext, isGoingForward})
-      : super(key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
+  QuestionnaireElement({Key key, Dream dream, Function goToNext, bool isGoingForward})
+      : super(
+            key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward) {
+    elementCreators.add(ElementCreator(
+      label: "Character",
+      element: dream.elements?.firstWhere(
+        (DreamElement element) => element.type == Constants.ELEMENT_CHARACTER,
+        orElse: () => null,
+      ),
+    ));
+    elementCreators.add(ElementCreator(
+      label: "Place",
+      element: dream.elements?.firstWhere(
+        (DreamElement element) => element.type == Constants.ELEMENT_PLACE,
+        orElse: () => null,
+      ),
+    ));
+    elementCreators.add(ElementCreator(
+      label: "Object",
+      element: dream.elements?.firstWhere(
+        (DreamElement element) => element.type == Constants.ELEMENT_OBJECT,
+        orElse: () => null,
+      ),
+    ));
+  }
 
   @override
   _QuestionnaireElementState createState() {
@@ -72,19 +93,8 @@ class _QuestionnaireElementState extends State<QuestionnaireElement> implements 
   bool next() {
     List<DreamElement> elements = [];
     widget.elementCreators.asMap().forEach(
-      (int key, ElementCreator elementCreator) {
-        String type;
-        switch (key) {
-          case QuestionnaireElement.placeIndex:
-            type = 'place';
-            break;
-          case QuestionnaireElement.objectIndex:
-            type = 'object';
-            break;
-          case QuestionnaireElement.characterIndex:
-            type = 'character';
-            break;
-        }
+          (int key, ElementCreator elementCreator) {
+        String type = _getTypeByIndex(key);
         final elementTexts = elementCreator.controllers
             .where((TextEditingController controller) => controller.text.length > 0)
             .map<String>(
@@ -110,10 +120,22 @@ class _QuestionnaireElementState extends State<QuestionnaireElement> implements 
       SnackBar(
         duration: Duration(seconds: 3),
         content: Text(
-            "Tags are empty. please set some tags so we could give you a better data."),
+            "Tags are empty. please set some tags so we could give you a better feedback."),
       ),
     );
     return false;
+  }
+
+  String _getTypeByIndex(int key) {
+    switch (key) {
+      case QuestionnaireElement.placeIndex:
+        return Constants.ELEMENT_PLACE;
+      case QuestionnaireElement.objectIndex:
+        return Constants.ELEMENT_OBJECT;
+      case QuestionnaireElement.characterIndex:
+        return Constants.ELEMENT_CHARACTER;
+    }
+    throw Error();
   }
 
   @override

@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
             case '/story':
               return MaterialPageRoute(
                 settings: settings,
-                builder: (context) => Story(),
+                builder: (context) => Story(identifier: arguments),
               );
             case '/dream':
               return MaterialPageRoute(

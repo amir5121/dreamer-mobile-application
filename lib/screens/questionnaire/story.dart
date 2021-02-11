@@ -16,6 +16,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Story extends StatefulWidget {
+  final String identifier;
+
+  const Story({Key key, this.identifier}) : super(key: key);
+
   @override
   _StoryState createState() => _StoryState();
 }
@@ -23,7 +27,7 @@ class Story extends StatefulWidget {
 class _StoryState extends State<Story> {
   int _current = 0;
   bool _goingForward = true;
-  final Dream dream = Dream();
+  Dream dream;
   QuestionnaireStepWidget _currentStep;
   final DreamViewModel dreamViewModel = DreamViewModel();
   final List<Function> _loggers = [
@@ -54,29 +58,12 @@ class _StoryState extends State<Story> {
         ),
   ];
 
-  @override
-  void initState() {
-    dream.feelings = context
-        .read<ConfigurationsViewModel>()
-        .configurations
-        .data
-        .mainFeelings
-        .map((FeelingDetail e) => Feeling(
-              rate: 0,
-              feeling: e.detailedType,
-              feelingParent: e.parentType,
-            ))
-        .toList();
-    super.initState();
-  }
-
   Future<bool> _onWillPop() async {
     if (_current == 0) {
       Navigator.of(context).pop(false);
       return true;
     }
     if (_currentStep.previous()) {
-      print("AAAASDDDDPPP $_current");
       setState(() {
         _goingForward = false;
         _current--;
@@ -85,13 +72,51 @@ class _StoryState extends State<Story> {
     return false;
   }
 
+  void _setFeeling() {
+    if (dream != null)
+      dream.feelings = context
+          .read<ConfigurationsViewModel>()
+          .configurations
+          .data
+          .mainFeelings
+          .map((FeelingDetail e) {
+        Feeling previousFeeling;
+        if (dream.feelings != null)
+          previousFeeling = dream.feelings.singleWhere(
+            (Feeling feeling) {
+              return feeling.feelingParent == e.parentType;
+            },
+            orElse: () => null,
+          );
+        return Feeling(
+          rate: previousFeeling?.rate ?? 0,
+          feeling: previousFeeling?.feeling,
+          feelingParent: e.parentType,
+        );
+      }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isLastItem = _current == _loggers.length - 1;
-    print("AAcccccDPPP $_current");
-    _currentStep = _loggers[_current](dream, goToNext, _goingForward);
+    if (dream != null) _currentStep = _loggers[_current](dream, goToNext, _goingForward);
     return ChangeNotifierProvider(
       create: (context) {
+        if (widget.identifier != null) {
+          dreamViewModel.loadDream(widget.identifier).then((DreamViewModel value) {
+            setState(() {
+              dream = value.dream.data;
+              _setFeeling();
+            });
+          });
+        } else {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            setState(() {
+              dream = Dream();
+            });
+            _setFeeling();
+          });
+        }
         return dreamViewModel;
       },
       child: WillPopScope(
@@ -113,7 +138,6 @@ class _StoryState extends State<Story> {
                         ? null
                         : () {
                       if (_currentStep.next()) {
-                        print("AAAASDDDD $_current");
                               goToNext();
                               if (isLastItem) {
                                 dreamViewModel.submitDream(dream).then(
@@ -125,10 +149,10 @@ class _StoryState extends State<Story> {
                                         '/home',
                                         arguments: Landing.journal,
                                       );
+                                    }
+                                  },
+                                );
                               }
-                            },
-                          );
-                        }
                             }
                           },
                   );
@@ -136,14 +160,13 @@ class _StoryState extends State<Story> {
               ),
             ],
           ),
-          body: _currentStep,
+          body: _currentStep != null ? _currentStep : Text("Loading"),
         ),
       ),
     );
   }
 
   void goToNext() {
-    print("goToNext");
     if (_current < _loggers.length - 1) {
       setState(() {
         _goingForward = true;

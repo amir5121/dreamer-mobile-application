@@ -55,13 +55,19 @@ class DreamPostHeader extends StatelessWidget {
                         FlatButton(
                           child: Text("Edit Dream"),
                           onPressed: () {
-                            print("edddddditttt");
+                            Navigator.pop(context);
+                            Navigator.pushNamed(
+                              context,
+                              '/story',
+                              arguments: dream.identifier,
+                            );
                           },
                         ),
                         FlatButton(
                           child: Text("Delete Dream"),
                           onPressed: () {
                             print("deleeeeteeee");
+                            Navigator.pop(context);
                           },
                         ),
                       ],

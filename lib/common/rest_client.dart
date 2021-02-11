@@ -42,7 +42,8 @@ abstract class RestClient {
 
   @GET("/configuration/initial/")
   Future<ConfigurationsResponse> getConfigurations(
-      @Query("build_number") String buildNumber,);
+    @Query("build_number") String buildNumber,
+  );
 
   @GET("/post/timeline/")
   Future<PostResponse> getTimeline({
@@ -65,11 +66,17 @@ abstract class RestClient {
     @Path("identifier") String identifier,
   });
 
+  @PATCH("/post/dreams/{identifier}/")
+  Future<IgnoreData> updateDream(
+      {@Path("identifier") String identifier, @Body() Dream dream});
+
   @POST("/post/dreams/")
   Future<IgnoreData> submitDream({@Body() Dream dream});
 
   @POST("/devices/")
-  Future<IgnoreData> registerToken(@Body() NotificationRegister user,);
+  Future<IgnoreData> registerToken(
+    @Body() NotificationRegister user,
+  );
 
   @POST("/utils/upload/")
   Future<UploadResponse> uploadFile(
@@ -77,5 +84,7 @@ abstract class RestClient {
   );
 
   @GET("/post/analytics/")
-  Future<AnalyticsResponse> getAnalytics(@Query("duration") int duration,);
+  Future<AnalyticsResponse> getAnalytics(
+    @Query("duration") int duration,
+  );
 }
