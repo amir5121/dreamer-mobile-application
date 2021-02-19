@@ -66,6 +66,11 @@ abstract class RestClient {
     @Path("identifier") String identifier,
   });
 
+  @DELETE("/post/dreams/{identifier}/")
+  Future<IgnoreData> deleteDream({
+    @Path("identifier") String identifier,
+  });
+
   @PATCH("/post/dreams/{identifier}/")
   Future<IgnoreData> updateDream(
       {@Path("identifier") String identifier, @Body() Dream dream});

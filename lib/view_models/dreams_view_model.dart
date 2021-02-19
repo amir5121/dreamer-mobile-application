@@ -22,7 +22,14 @@ class DreamViewModel extends RequestNotifier {
 
   Future<DreamViewModel> loadDream(String identifier) async {
     _dream = await makeRequest(
-          () => Singleton().client.getDream(identifier: identifier),
+      () => Singleton().client.getDream(identifier: identifier),
+    );
+    return this;
+  }
+
+  Future<DreamViewModel> deleteDream(String identifier) async {
+    await makeRequest(
+      () => Singleton().client.deleteDream(identifier: identifier),
     );
     return this;
   }

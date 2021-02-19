@@ -22,7 +22,6 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(loginCredentials?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('/auth/token/',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -42,7 +41,6 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(loginCredentials?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('/auth/convert-token/',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -62,7 +60,6 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(loginCredentials?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     await _dio.request<void>('/auth/revoke-token/',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -81,7 +78,6 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(signUpCredentials?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('/auth/users/',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -101,7 +97,6 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(user?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('/auth/users/me/',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -208,13 +203,30 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<IgnoreData> deleteDream({identifier}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>('/post/dreams/$identifier/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = IgnoreData.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<IgnoreData> updateDream({identifier, dream}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(dream?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('/post/dreams/$identifier/',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -234,7 +246,6 @@ class _RestClient implements RestClient {
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(dream?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('/post/dreams/',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -254,7 +265,6 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(user?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('/devices/',
         queryParameters: queryParameters,
         options: RequestOptions(
