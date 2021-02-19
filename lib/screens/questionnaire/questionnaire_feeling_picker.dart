@@ -54,7 +54,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
   @override
   Widget build(BuildContext context) {
     List<FeelingDetail> choices = context.select(
-          (ConfigurationsViewModel configurationsViewModel) => configurationsViewModel
+      (ConfigurationsViewModel configurationsViewModel) => configurationsViewModel
           .configurations.data.feelings
           .where((FeelingDetail element) =>
               widget.dream.feelings
@@ -86,6 +86,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
                   return ToggleButton(
                     active: pickedOutFeeling == choice.detailedType,
                     label: choice.detailedType.split("_")[1].capitalize(),
+                    description: choice.description,
                     onPressed: () {
                       setState(() {
                         pickedOutFeeling = choice.detailedType;
