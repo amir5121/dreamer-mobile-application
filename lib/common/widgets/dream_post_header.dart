@@ -68,8 +68,9 @@ class DreamPostHeader extends StatelessWidget {
                         FlatButton(
                           child: Text("Delete Dream"),
                           onPressed: () {
-                            context
-                                .read<DreamViewModel>()
+                            DreamViewModel dreamViewModel =
+                                context.read<DreamViewModel>();
+                            dreamViewModel
                                 .deleteDream(dream.identifier)
                                 .then((DreamViewModel value) {
                               if (!value.hasError) {

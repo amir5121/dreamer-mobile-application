@@ -6,9 +6,8 @@ part 'ignore_data.g.dart';
 class IgnoreData {
   final String messageCode;
   final String message;
-  final int code;
 
-  IgnoreData(this.messageCode, this.message, this.code);
+  IgnoreData(this.messageCode, this.message);
 
   factory IgnoreData.fromJson(Map<String, dynamic> json) => _$IgnoreDataFromJson(json);
 

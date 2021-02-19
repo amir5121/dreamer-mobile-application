@@ -18,7 +18,7 @@ class RequestNotifier extends ChangeNotifier {
       _isLoading = true;
       if (notify) notifyListeners();
       T result = await Singleton().retry.retry(() => f(), retryIf: (e) {
-        debugPrint("MakeRequest Retry! $e");
+        debugPrint("MakeRequest Retry! $this, $e");
         return e is DioError &&
             (e.response == null ||
                 e.response.statusCode == 401 &&
