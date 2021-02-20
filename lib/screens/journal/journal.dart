@@ -43,6 +43,7 @@ class _JournalState extends State<Journal> {
 
   @override
   Widget build(BuildContext context) {
+    _pagingController.refresh();
     return Scaffold(
       body: Container(
         child: CustomScrollView(
@@ -55,7 +56,11 @@ class _JournalState extends State<Journal> {
             PagedSliverList<int, Dream>(
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<Dream>(
-                itemBuilder: (context, item, index) => dreamItem(item, context),
+                itemBuilder: (context, item, index) => dreamItem(
+                  item,
+                  context,
+                  () => _pagingController.refresh(),
+                ),
                 noItemsFoundIndicatorBuilder: (_) => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -67,8 +72,8 @@ class _JournalState extends State<Journal> {
                     Text(
                       "zzz time?",
                     ),
-                  ],
-                ),
+                      ],
+                    ),
               ),
             ),
           ],

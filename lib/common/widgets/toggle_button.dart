@@ -29,33 +29,35 @@ class ToggleButton extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
-                      onTap: () => showDreamDialog(
-                            context,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 32,
-                                bottom: 96,
-                                left: 32,
-                                right: 32,
-                              ),
-                              child: Container(
-                                width: double.infinity,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      label,
-                                      style: Theme.of(context).textTheme.headline4,
-                                    ),
-                                    SizedBox(height: 8),
-                                    Text(description,
-                                        style: Theme.of(context).textTheme.headline6),
-                                  ],
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: (dialogContext) => DreamDialog(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 32,
+                                  bottom: 96,
+                                  left: 32,
+                                  right: 32,
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        label,
+                                        style: Theme.of(context).textTheme.headline4,
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(description,
+                                          style: Theme.of(context).textTheme.headline6),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                      child: Icon(Icons.info)),
+                        child: Icon(Icons.info)),
+                  ),
                 )
               ],
             ),

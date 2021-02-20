@@ -36,7 +36,10 @@ class _DreamDetailState extends State<DreamDetail> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DreamPostHeader(dream: dream),
+                    DreamPostHeader(
+                      dream: dream,
+                      onDeleteCallback: () => Navigator.of(context).pop(false),
+                    ),
                     SizedBox(height: 16),
                     Text(dream.text),
                     SizedBox(height: 16),

@@ -7,8 +7,9 @@ import 'dreamer_dialog.dart';
 
 class DreamPostHeader extends StatelessWidget {
   final Dream dream;
+  final Function onDeleteCallback;
 
-  const DreamPostHeader({Key key, this.dream}) : super(key: key);
+  const DreamPostHeader({Key key, this.dream, this.onDeleteCallback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,36 +51,46 @@ class DreamPostHeader extends StatelessWidget {
                 icon: Icon(Icons.keyboard_arrow_down),
                 color: Theme.of(context).accentColor,
                 onPressed: () {
-                  showDreamDialog(
-                    context,
-                    child: Column(
-                      children: [
-                        FlatButton(
-                          child: Text("Edit Dream"),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.pushNamed(
-                              context,
-                              '/story',
-                              arguments: dream.identifier,
-                            );
-                          },
-                        ),
-                        FlatButton(
-                          child: Text("Delete Dream"),
-                          onPressed: () {
-                            DreamViewModel dreamViewModel =
-                                context.read<DreamViewModel>();
-                            dreamViewModel
-                                .deleteDream(dream.identifier)
-                                .then((DreamViewModel value) {
-                              if (!value.hasError) {
-                                Navigator.pop(context);
-                              }
-                            });
-                          },
-                        ),
-                      ],
+                  showDialog(
+                    context: context,
+                    builder: (dialogContext) => DreamDialog(
+                      child: Column(
+                        children: [
+                          FlatButton(
+                            child: Text("Edit Dream"),
+                            onPressed: () {
+                              Navigator.pop(dialogContext);
+                              Navigator.pushNamed(
+                                context,
+                                '/story',
+                                arguments: dream.identifier,
+                              );
+                            },
+                          ),
+                          FlatButton(
+                            child: Text("Delete Dream"),
+                            onPressed: () {
+                              DreamViewModel dreamViewModel =
+                                  context.read<DreamViewModel>();
+                              dreamViewModel
+                                  .deleteDream(dream.identifier)
+                                  .then((DreamViewModel value) {
+                                if (!value.hasError) {
+                                  // Navigator.pop(context);
+                                  Navigator.pop(dialogContext);
+                                  if (onDeleteCallback != null) onDeleteCallback();
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      duration: Duration(seconds: 6),
+                                      content: Text("Dream was removed."),
+                                    ),
+                                  );
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

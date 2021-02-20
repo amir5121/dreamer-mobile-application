@@ -1,14 +1,17 @@
 import 'package:dreamer/common/constants.dart';
 import 'package:flutter/material.dart';
 
-void showDreamDialog(BuildContext context, {@required Widget child}) {
-  showDialog(
-    context: context,
-    builder: (_) => Column(
+class DreamDialog extends StatelessWidget {
+  final Widget child;
+
+  const DreamDialog({Key key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          // A simplified version of dialog.
           width: double.infinity,
           color: Theme.of(context).primaryColor,
           child: Column(
@@ -36,6 +39,6 @@ void showDreamDialog(BuildContext context, {@required Widget child}) {
           ),
         ),
       ],
-    ),
-  );
+    );
+  }
 }

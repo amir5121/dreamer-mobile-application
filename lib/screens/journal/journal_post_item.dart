@@ -3,7 +3,7 @@ import 'package:dreamer/common/widgets/dream_post_header.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:flutter/material.dart';
 
-Widget dreamItem(Dream dream, context) {
+Widget dreamItem(Dream dream, context, onDeleteCallback) {
   return GestureDetector(
     onTap: () {
       Navigator.pushNamed(
@@ -22,7 +22,10 @@ Widget dreamItem(Dream dream, context) {
       padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
       child: Column(
         children: [
-          DreamPostHeader(dream: dream),
+          DreamPostHeader(
+            dream: dream,
+            onDeleteCallback: onDeleteCallback,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

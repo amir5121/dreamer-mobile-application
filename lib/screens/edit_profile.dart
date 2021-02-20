@@ -114,7 +114,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       )
                           .then((_) {
-                      configurations.loadConfigurations(context);
+                        configurations.loadConfigurations(context);
                         Scaffold.of(context).showSnackBar(
                           SnackBar(
                             duration: Duration(milliseconds: 500),
@@ -227,24 +227,26 @@ class _EditProfileState extends State<EditProfile> {
                     ? Text(configurations.self.genderDisplay)
                     : null,
             onPressed: () {
-              showDreamDialog(
-                context,
-                child: Column(
-                  children: [
-                    ...configurations.genderChoices
-                        .map<Widget>(
-                          (Gender gender) => FlatButton(
-                            child: Text(gender.label),
-                            onPressed: () {
-                              setState(() {
-                                this.selectedGender = gender.value;
-                              });
-                              Navigator.pop(context);
-                            },
-                          ),
-                        )
-                        .toList()
-                  ],
+              showDialog(
+                context: context,
+                builder: (dialogContext) => DreamDialog(
+                  child: Column(
+                    children: [
+                      ...configurations.genderChoices
+                          .map<Widget>(
+                            (Gender gender) => FlatButton(
+                              child: Text(gender.label),
+                              onPressed: () {
+                                setState(() {
+                                  this.selectedGender = gender.value;
+                                });
+                                Navigator.pop(context);
+                              },
+                            ),
+                          )
+                          .toList()
+                    ],
+                  ),
                 ),
               );
             },
