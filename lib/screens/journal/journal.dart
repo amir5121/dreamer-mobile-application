@@ -43,7 +43,6 @@ class _JournalState extends State<Journal> {
 
   @override
   Widget build(BuildContext context) {
-    _pagingController.refresh();
     return Scaffold(
       body: Container(
         child: CustomScrollView(
@@ -69,11 +68,9 @@ class _JournalState extends State<Journal> {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     SizedBox(height: 16),
-                    Text(
-                      "zzz time?",
-                    ),
-                      ],
-                    ),
+                    Text("zzz time?"),
+                  ],
+                ),
               ),
             ),
           ],

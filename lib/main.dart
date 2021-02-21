@@ -4,6 +4,7 @@ import 'package:dreamer/screens/dream_detail.dart';
 import 'package:dreamer/screens/edit_profile.dart';
 import 'package:dreamer/screens/landing.dart';
 import 'package:dreamer/screens/login.dart';
+import 'package:dreamer/screens/notifications/notifications_screen.dart';
 import 'package:dreamer/screens/post_detail.dart';
 import 'package:dreamer/screens/questionnaire/story.dart';
 import 'package:dreamer/screens/settings.dart';
@@ -91,6 +92,11 @@ class _MyAppState extends State<MyApp> {
               return MaterialPageRoute(
                 settings: settings,
                 builder: (context) => SignUp(),
+              );
+            case '/notifications':
+              return MaterialPageRoute(
+                settings: settings,
+                builder: (context) => NotificationsScreen(),
               );
             case '/settings':
               return MaterialPageRoute(

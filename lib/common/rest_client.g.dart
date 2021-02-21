@@ -177,12 +177,25 @@ class _RestClient implements RestClient {
     final _result = await _dio.request<Map<String, dynamic>>('/post/dreams/',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = DreamResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<NotificationResponse> getNotifications({page}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        '/notification/notifications/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    final value = NotificationResponse.fromJson(_result.data);
     return value;
   }
 
@@ -192,8 +205,7 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '/post/dreams/$identifier/',
+    final _result = await _dio.request<Map<String, dynamic>>('/post/dreams/$identifier/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),

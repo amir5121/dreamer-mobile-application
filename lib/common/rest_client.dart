@@ -12,6 +12,7 @@ import 'package:dreamer/models/configurations/configurations_response.dart';
 import 'package:dreamer/models/dream/dream.dart';
 import 'package:dreamer/models/dream/dream_response.dart';
 import 'package:dreamer/models/dream/dream_retrieve.dart';
+import 'package:dreamer/models/dream/notifications_response.dart';
 import 'package:dreamer/models/notification/notification_register.dart';
 import 'package:dreamer/models/post/post_response.dart';
 import 'package:dreamer/models/post/post_retrieve.dart';
@@ -58,6 +59,11 @@ abstract class RestClient {
 
   @GET("/post/dreams/")
   Future<DreamResponse> getDreams({
+    @Query("page") int page,
+  });
+
+  @GET("/notification/notifications/")
+  Future<NotificationResponse> getNotifications({
     @Query("page") int page,
   });
 

@@ -2,8 +2,10 @@ import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
 import 'package:dreamer/common/widgets/svg_icon.dart';
 import 'package:dreamer/screens/home/home.dart';
+import 'package:dreamer/screens/notifications/notifications_screen.dart';
 import 'package:dreamer/screens/statics/statics.dart';
 import 'package:dreamer/view_models/dreams_view_model.dart';
+import 'package:dreamer/view_models/notifications_view_model.dart';
 import 'package:dreamer/view_models/posts_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,16 +28,11 @@ class _LandingState extends State<Landing> {
   int _selectedIndex = 0;
   PostViewModel postViewModel = PostViewModel();
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
     Journal(),
     Statics(),
-    Text(
-      'Index 3: Bitch please',
-      style: optionStyle,
-    ),
+    NotificationsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -63,6 +60,11 @@ class _LandingState extends State<Landing> {
         ChangeNotifierProvider(
           create: (context) {
             return DreamViewModel();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return NotificationsViewModel();
           },
         ),
       ],
