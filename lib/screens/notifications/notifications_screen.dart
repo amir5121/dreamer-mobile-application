@@ -60,7 +60,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Icon(Icons.notifications),
-                              SizedBox(width: 16),
+                              SizedBox(width: 8),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

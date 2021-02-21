@@ -21,6 +21,6 @@ class DreamerNotification {
   Map<String, dynamic> toJson() => _$DreamerNotificationToJson(this);
 
   String get createdFormatted {
-    return timeago.format(created, locale: 'en');
+    return timeago.format(created, locale: 'en_short');
   }
 }
