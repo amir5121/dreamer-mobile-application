@@ -116,7 +116,7 @@ class _QuestionnaireElementState extends State<QuestionnaireElement> implements 
       return true;
     }
 
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: Duration(seconds: 3),
         content: Text(

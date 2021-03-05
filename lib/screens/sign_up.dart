@@ -74,7 +74,7 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       width: double.infinity,
                       child: DreamConsumer<AuthViewModel>(
-                        builder: (context, auth, child) => RaisedButton(
+                        builder: (context, auth, child) => ElevatedButton(
                           child: Text('Sign up'),
                           onPressed: auth.isLoading
                               ? null
@@ -91,7 +91,7 @@ class _SignUpState extends State<SignUp> {
                                           auth.hasError == false &&
                                           auth.madeSuccessfulRequest) {
                                         auth.reset();
-                                        Scaffold.of(context).showSnackBar(
+                                        ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
                                             duration: Duration(seconds: 10),
                                             content: Text(

@@ -60,7 +60,7 @@ class _EditProfileState extends State<EditProfile> {
         print('No image selected.');
       }
     } else if (await Permission.storage.isPermanentlyDenied) {
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: Duration(seconds: 6),
           action: SnackBarAction(
@@ -98,7 +98,7 @@ class _EditProfileState extends State<EditProfile> {
     return DreamerScaffold(
       actions: [
         DreamConsumer2<AuthViewModel, ConfigurationsViewModel>(
-          builder: (context, auth, configurations, child) => FlatButton(
+          builder: (context, auth, configurations, child) => TextButton(
             child: Text('Save'),
             onPressed: auth.isLoading
                 ? null
@@ -115,7 +115,7 @@ class _EditProfileState extends State<EditProfile> {
                       )
                           .then((_) {
                         configurations.loadConfigurations(context);
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             duration: Duration(milliseconds: 500),
                             content: Text(
@@ -215,8 +215,7 @@ class _EditProfileState extends State<EditProfile> {
         ),
         SizedBox(
           width: double.infinity,
-          child: OutlineButton(
-            padding: EdgeInsets.symmetric(vertical: 12),
+          child: OutlinedButton(
             child: selectedGender != null
                 ? Text(
                     configurations.genderChoices
@@ -234,7 +233,7 @@ class _EditProfileState extends State<EditProfile> {
                     children: [
                       ...configurations.genderChoices
                           .map<Widget>(
-                            (Gender gender) => FlatButton(
+                            (Gender gender) => TextButton(
                               child: Text(gender.label),
                               onPressed: () {
                                 setState(() {

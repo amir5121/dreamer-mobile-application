@@ -34,7 +34,7 @@ dependencies:
   timeago:
   flutter_phoenix:
   package_info:
-  flutter_sound_lite:
+  flutter_sound_lite: ^7.7.0+1
   permission_handler:
   universal_html:
   path_provider:
@@ -43,6 +43,7 @@ dependencies:
   sentry_flutter:
   flutter_facebook_login:
   google_sign_in:
+  firebase_core:
   firebase_messaging:
   firebase_analytics:
   image_picker:

@@ -24,7 +24,7 @@ class DreamConsumer<T extends RequestNotifier> extends Consumer {
       Future<Null>.delayed(
         Duration(),
         () {
-          Scaffold.of(context).showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               duration: Duration(seconds: 6),
               content: Text(requestNotifier.errorMessage),
@@ -79,7 +79,7 @@ class DreamConsumer2<A extends RequestNotifier, B extends RequestNotifier>
     B requestNotifier2 = Provider.of<B>(context);
     if ((requestNotifier.hasError || requestNotifier2.hasError) && snackOnError) {
       Future<Null>.delayed(Duration(), () {
-        Scaffold.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: Duration(seconds: 6),
             content: Text(

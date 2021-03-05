@@ -29,32 +29,29 @@ class _PostDetailState extends State<PostDetail> {
           loadingBuilder: (context, lastRetrievedPost, child) => Text("Loading"),
           builder: (context, retrievedPost, child) {
             Post post = retrievedPost.lastRetrievedPost.data;
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  postTextCarousel(post),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.mood),
-                            onPressed: () {},
-                          ),
-                          Text("123 Likes")
-                        ],
-                      ),
-                      Dots(
-                        count: post.text.length,
-                        selected: _current,
-                      ),
-                    ],
-                  )
-                ],
-              ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                postTextCarousel(post),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.mood),
+                          onPressed: () {},
+                        ),
+                        Text("123 Likes")
+                      ],
+                    ),
+                    Dots(
+                      count: post.text.length,
+                      selected: _current,
+                    ),
+                  ],
+                )
+              ],
             );
           },
         ),
@@ -86,13 +83,10 @@ class _PostDetailState extends State<PostDetail> {
                 children: [
                   Container(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32),
                       child: Text(
                         text,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodyText1,
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                   ),

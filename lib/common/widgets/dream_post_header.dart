@@ -56,7 +56,7 @@ class DreamPostHeader extends StatelessWidget {
                     builder: (dialogContext) => DreamDialog(
                       child: Column(
                         children: [
-                          FlatButton(
+                          TextButton(
                             child: Text("Edit Dream"),
                             onPressed: () {
                               Navigator.pop(dialogContext);
@@ -67,7 +67,7 @@ class DreamPostHeader extends StatelessWidget {
                               );
                             },
                           ),
-                          FlatButton(
+                          TextButton(
                             child: Text("Delete Dream"),
                             onPressed: () {
                               DreamViewModel dreamViewModel =
@@ -79,7 +79,7 @@ class DreamPostHeader extends StatelessWidget {
                                   // Navigator.pop(context);
                                   Navigator.pop(dialogContext);
                                   if (onDeleteCallback != null) onDeleteCallback();
-                                  Scaffold.of(context).showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       duration: Duration(seconds: 6),
                                       content: Text("Dream was removed."),
