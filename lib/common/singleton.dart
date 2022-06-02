@@ -14,7 +14,7 @@ class Singleton {
 
   final Dio _dio;
   final RetryOptions _retry;
-  RestClient _client;
+  late RestClient _client;
 
   factory Singleton() {
     return _singleton;
@@ -30,11 +30,13 @@ class Singleton {
       : this._dio = Dio()
           ..options.baseUrl = Constants.baseUrl
           ..options.followRedirects = false
-          ..options.validateStatus = ((status) => status < 300),
+          ..options.validateStatus = ((status) => status! < 300),
         _retry = RetryOptions(maxAttempts: 8) {
     this._client = RestClient(this._dio);
     Firebase.initializeApp().whenComplete(() {
-      FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage message) {
+      FirebaseMessaging.instance
+          .getInitialMessage()
+          .then((RemoteMessage? message) {
         print("getInitialMessage: $message");
       });
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -74,15 +76,17 @@ class Singleton {
 
     _dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (Options options) async {
-          String accessToken = await DreamerStorage().read(key: Constants.ACCESS_TOKEN);
-          if (accessToken == null) return options;
+        onRequest:
+            (RequestOptions options, RequestInterceptorHandler handler) async {
+          String? accessToken =
+              await DreamerStorage().read(key: Constants.ACCESS_TOKEN);
+          if (accessToken == null) return handler.next(options);
           String authorizationToken = "Bearer $accessToken";
           options.headers["Authorization"] = authorizationToken;
-          return options;
+          return handler.next(options);
         },
-        onError: (DioError e) async {
-          if (e.response != null && e.response.statusCode == 401) {
+        onError: (DioError e, ErrorInterceptorHandler handler) async {
+          if (e.response != null && e.response?.statusCode == 401) {
             debugPrint("asking for refresh token... LOCKING");
             _dio.interceptors.requestLock.lock();
             try {
@@ -110,7 +114,7 @@ class Singleton {
               _dio.interceptors.requestLock.unlock();
             }
           }
-          return e;
+          return handler.next(e);
         },
       ),
     );

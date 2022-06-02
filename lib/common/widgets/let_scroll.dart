@@ -11,7 +11,7 @@ class _NoOverScrollAnimation extends ScrollBehavior {
 class LetScroll extends StatelessWidget {
   final Widget child;
 
-  const LetScroll({Key key, @required this.child}) : super(key: key);
+  const LetScroll({required this.child}) : super();
 
   @override
   Widget build(BuildContext context) {

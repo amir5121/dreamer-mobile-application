@@ -79,7 +79,8 @@ class _SignUpState extends State<SignUp> {
                           onPressed: auth.isLoading
                               ? null
                               : () {
-                                  if (_formKey.currentState.validate()) {
+                                  if (_formKey.currentState != null &&
+                                      _formKey.currentState!.validate()) {
                                     auth
                                         .signUpWithPassword(
                                       usernameController.text,
@@ -91,7 +92,8 @@ class _SignUpState extends State<SignUp> {
                                           auth.hasError == false &&
                                           auth.madeSuccessfulRequest) {
                                         auth.reset();
-                                        ScaffoldMessenger.of(context).showSnackBar(
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
                                           SnackBar(
                                             duration: Duration(seconds: 10),
                                             content: Text(

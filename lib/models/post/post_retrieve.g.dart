@@ -6,16 +6,12 @@ part of 'post_retrieve.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PostRetrieve _$PostRetrieveFromJson(Map<String, dynamic> json) {
-  return PostRetrieve(
-    json['messageCode'] as String,
-    json['message'] as String,
-    json['code'] as int,
-    json['data'] == null
-        ? null
-        : Post.fromJson(json['data'] as Map<String, dynamic>),
-  );
-}
+PostRetrieve _$PostRetrieveFromJson(Map<String, dynamic> json) => PostRetrieve(
+      json['messageCode'] as String,
+      json['message'] as String,
+      json['code'] as int,
+      Post.fromJson(json['data'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$PostRetrieveToJson(PostRetrieve instance) =>
     <String, dynamic>{

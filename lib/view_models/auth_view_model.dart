@@ -14,31 +14,33 @@ import 'package:dreamer/models/notification/notification_register.dart';
 import 'package:dreamer/models/utils/ignore_data.dart';
 import 'package:dreamer/models/utils/upload_response.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthViewModel extends RequestNotifier {
-  AuthTokens _login;
+  AuthTokens? _login;
   bool hasLoggedOut = false;
 
   Future<AuthViewModel> logout() async {
     await makeRequest<void>(
-          () async => Singleton()
-          .client
-          .logout(
-            LogoutCredentials(
-              await DreamerStorage().read(key: Constants.ACCESS_TOKEN),
-              Constants.CLIENT_ID,
-              Constants.CLIENT_SECRET,
-            ),
-          )
-          .then((_) {
+      () async {
+        String? accessToken =
+            await DreamerStorage().read(key: Constants.ACCESS_TOKEN);
+        if (accessToken != null)
+          await Singleton().client.logout(
+                LogoutCredentials(
+                  accessToken,
+                  Constants.CLIENT_ID,
+                  Constants.CLIENT_SECRET,
+                ),
+              );
         DreamerStorage().delete(key: Constants.ACCESS_TOKEN);
         DreamerStorage().delete(key: Constants.REFRESH_TOKEN);
         hasLoggedOut = true;
         _login = null;
         notifyListeners();
-      }),
+        return;
+      },
     );
     return this;
   }
@@ -53,15 +55,15 @@ class AuthViewModel extends RequestNotifier {
     return this;
   }
 
-  Future<void> updateSelf(UpdateUser user) async {
+  Future<IgnoreData?> updateSelf(UpdateUser user) async {
     if (user.avatar != null) {
       await makeRequest<UploadResponse>(
         () async => await Singleton().client.uploadFile(
-              File(user.avatar),
+              File(user.avatar!),
             ),
-      ).then((UploadResponse value) {
+      ).then((UploadResponse? value) {
         if (!this.hasError) {
-          user.avatar = value.data.filePath;
+          user.avatar = value?.data.filePath;
         }
       });
     }
@@ -89,46 +91,55 @@ class AuthViewModel extends RequestNotifier {
     return this;
   }
 
-  Future<AuthViewModel> signInWithGoogle() async {
+  Future<AuthViewModel?> signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    _login = await makeRequest<AuthTokens>(
-      () => Singleton().client.convertToken(
-            ConvertToken(
-              clientId: Constants.CLIENT_ID,
-              clientSecret: Constants.CLIENT_SECRET,
-              token: googleAuth.accessToken,
-              backend: "google-oauth2",
-            ),
-          ),
-    );
-    saveLoginInfo();
-    return this;
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    if (googleUser != null) {
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      _login = await makeRequest<AuthTokens>(
+        () => {
+          if (googleAuth.accessToken != null)
+            Singleton().client.convertToken(
+                  ConvertToken(
+                    clientId: Constants.CLIENT_ID,
+                    clientSecret: Constants.CLIENT_SECRET,
+                    token: googleAuth.accessToken!,
+                    backend: "google-oauth2",
+                  ),
+                )
+        },
+      );
+      saveLoginInfo();
+      return this;
+    }
   }
 
   Future<AuthViewModel> signInWithFacebook() async {
     final facebookLogin = FacebookLogin();
-    final result = await facebookLogin.logIn(['email']);
+    final result = await facebookLogin.logIn(permissions: [
+      FacebookPermission.email,
+    ]);
     FacebookAccessToken facebookAccessToken;
     switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
-        facebookAccessToken = result.accessToken;
-        _login = await makeRequest<AuthTokens>(
-          () => Singleton().client.convertToken(
-                ConvertToken(
-                  clientId: Constants.CLIENT_ID,
-                  clientSecret: Constants.CLIENT_SECRET,
-                  token: facebookAccessToken.token,
-                  backend: "facebook",
+      case FacebookLoginStatus.success:
+        if (result.accessToken != null) {
+          facebookAccessToken = result.accessToken!;
+          _login = await makeRequest<AuthTokens>(
+            () => Singleton().client.convertToken(
+                  ConvertToken(
+                    clientId: Constants.CLIENT_ID,
+                    clientSecret: Constants.CLIENT_SECRET,
+                    token: facebookAccessToken.token,
+                    backend: "facebook",
+                  ),
                 ),
-              ),
-        );
+          );
+        }
         saveLoginInfo();
         break;
-      case FacebookLoginStatus.cancelledByUser:
+      case FacebookLoginStatus.cancel:
         break;
       case FacebookLoginStatus.error:
         break;
@@ -143,30 +154,32 @@ class AuthViewModel extends RequestNotifier {
 
   void saveLoginInfo() {
     assert(_login != null);
-    print("the fff is happening ${_login.accessToken}");
-    if (_login.accessToken != null) {
+    if (_login != null && _login!.accessToken != null) {
       submitToken();
-      print("${_login.refreshToken} ---> ${_login.accessToken}");
-      DreamerStorage().write(key: Constants.ACCESS_TOKEN, value: _login.accessToken);
-      DreamerStorage().write(key: Constants.REFRESH_TOKEN, value: _login.refreshToken);
+      String? accessToken = _login?.accessToken;
+      if (accessToken != null)
+        DreamerStorage().write(key: Constants.ACCESS_TOKEN, value: accessToken);
+      String? refreshToken = _login?.refreshToken;
+      if (refreshToken != null)
+        DreamerStorage()
+            .write(key: Constants.REFRESH_TOKEN, value: refreshToken);
     }
   }
 
-  AuthTokens get login {
+  AuthTokens? get login {
     return _login;
   }
 
   void submitToken() async {
-    print("Push Messaging token 000000:");
-    FirebaseMessaging.instance.getToken().then((String token) async {
+    FirebaseMessaging.instance.getToken().then((String? token) async {
       assert(token != null);
-      print("Push Messaging token: $token");
-      await makeRequest(() => Singleton().client.registerToken(
-            NotificationRegister(
-              token,
-              Constants.platform,
-            ),
-          ));
+      if (token != null)
+        await makeRequest(() => Singleton().client.registerToken(
+              NotificationRegister(
+                token,
+                Constants.platform,
+              ),
+            ));
     });
   }
 }

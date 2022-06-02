@@ -18,7 +18,7 @@ class Landing extends StatefulWidget {
 
   final int selectedIndex;
 
-  const Landing({Key key, this.selectedIndex}) : super(key: key);
+  const Landing({required this.selectedIndex}) : super();
 
   @override
   _LandingState createState() => _LandingState();

@@ -5,7 +5,7 @@ import 'clearance_summarize.dart';
 
 part 'analytics.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Analytics {
   final String mainQuote;
   final String wordCloud;

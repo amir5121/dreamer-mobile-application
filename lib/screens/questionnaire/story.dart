@@ -16,9 +16,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Story extends StatefulWidget {
-  final String identifier;
+  final Object? identifier;
 
-  const Story({Key key, this.identifier}) : super(key: key);
+  const Story({this.identifier}) : super();
 
   @override
   _StoryState createState() => _StoryState();
@@ -27,8 +27,8 @@ class Story extends StatefulWidget {
 class _StoryState extends State<Story> {
   int _current = 0;
   bool _goingForward = true;
-  Dream dream;
-  QuestionnaireStepWidget _currentStep;
+  Dream? dream;
+  QuestionnaireStepWidget? _currentStep;
   final DreamViewModel dreamViewModel = DreamViewModel();
   final List<Function> _loggers = [
     (dream, goToNext, isGoingForward) => QuestionnaireInit(
@@ -63,7 +63,7 @@ class _StoryState extends State<Story> {
       Navigator.of(context).pop(false);
       return true;
     }
-    if (_currentStep.previous()) {
+    if (_currentStep != null && _currentStep!.previous()) {
       setState(() {
         _goingForward = false;
         _current--;
@@ -74,23 +74,23 @@ class _StoryState extends State<Story> {
 
   void _setFeeling() {
     if (dream != null)
-      dream.feelings = context
+      dream?.feelings = context
           .read<ConfigurationsViewModel>()
           .configurations
-          .data
+          ?.data
           .mainFeelings
           .map((FeelingDetail e) {
-        Feeling previousFeeling;
-        if (dream.feelings != null)
-          previousFeeling = dream.feelings.singleWhere(
+        Feeling? previousFeeling;
+        if (dream?.feelings != null)
+          previousFeeling = dream?.feelings!.singleWhere(
             (Feeling feeling) {
               return feeling.feelingParent == e.parentType;
             },
-            orElse: () => null,
+            // orElse: () => null,
           );
         return Feeling(
           rate: previousFeeling?.rate ?? 0,
-          feeling: previousFeeling?.feeling,
+          feeling: previousFeeling?.feeling ?? "N?A",
           feelingParent: e.parentType,
         );
       }).toList();
@@ -99,20 +99,23 @@ class _StoryState extends State<Story> {
   @override
   Widget build(BuildContext context) {
     final bool isLastItem = _current == _loggers.length - 1;
-    if (dream != null) _currentStep = _loggers[_current](dream, goToNext, _goingForward);
+    if (dream != null)
+      _currentStep = _loggers[_current](dream, goToNext, _goingForward);
     return ChangeNotifierProvider(
       create: (context) {
         if (widget.identifier != null) {
-          dreamViewModel.loadDream(widget.identifier).then((DreamViewModel value) {
+          dreamViewModel
+              .loadDream(widget.identifier! as String)
+              .then((DreamViewModel value) {
             setState(() {
-              dream = value.dream.data;
+              dream = value.dream?.data;
               _setFeeling();
             });
           });
         } else {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+          WidgetsBinding.instance?.addPostFrameCallback((_) {
             setState(() {
-              dream = Dream();
+              dream = null;
             });
             _setFeeling();
           });
@@ -137,10 +140,10 @@ class _StoryState extends State<Story> {
                     onPressed: journalViewModel.isLoading
                         ? null
                         : () {
-                      if (_currentStep.next()) {
+                      if (_currentStep != null && _currentStep!.next()) {
                               goToNext();
-                              if (isLastItem) {
-                                dreamViewModel.submitDream(dream).then(
+                              if (isLastItem && dream != null) {
+                                dreamViewModel.submitDream(dream!).then(
                                   (DreamViewModel journalResponse) {
                                     if (!journalResponse.hasError) {
                                       Navigator.pop(context);

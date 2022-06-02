@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class QuestionnaireInit extends QuestionnaireStepWidget {
-  final _QuestionnaireInitState _questionnaireInitState = _QuestionnaireInitState();
+  final _QuestionnaireInitState _questionnaireInitState =
+      _QuestionnaireInitState();
 
-  QuestionnaireInit({Key key, dream, goToNext, isGoingForward})
-      : super(key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
+  QuestionnaireInit({dream, goToNext, isGoingForward})
+      : super(dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
 
   @override
   _QuestionnaireInitState createState() {
@@ -30,7 +31,8 @@ class QuestionnaireInit extends QuestionnaireStepWidget {
   }
 }
 
-class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekable {
+class _QuestionnaireInitState extends State<QuestionnaireInit>
+    implements Seekable {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -38,10 +40,10 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekab
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   DateTime now = DateTime.now();
-  Dream widgetDream;
+  Dream? widgetDream;
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(2000, 8),
@@ -54,7 +56,7 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekab
   }
 
   Future<Null> _selectTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
     );
@@ -74,14 +76,16 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekab
   @override
   Widget build(BuildContext context) {
     widgetDream = widget.dream;
-    if (widgetDream.text != null) {
-      titleController.text = widgetDream.title;
-      descriptionController.text = widgetDream.text;
-      selectedTime = TimeOfDay(
-        hour: widgetDream.dreamDate.hour,
-        minute: widgetDream.dreamDate.minute,
-      );
-      selectedDate = widgetDream.dreamDate;
+    if (widgetDream != null) {
+      titleController.text = widgetDream!.title;
+      descriptionController.text = widgetDream!.text;
+      if (widgetDream?.dreamDate != null)
+        selectedTime = TimeOfDay(
+          hour: widgetDream!.dreamDate!.hour,
+          minute: widgetDream!.dreamDate!.minute,
+        );
+      if (widgetDream?.dreamDate != null)
+        selectedDate = widgetDream!.dreamDate!;
     }
     return LetScroll(
       child: Container(
@@ -149,15 +153,15 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekab
                     child: Text("Voice"),
                   ),
                   Recorder(
-                    previousRecording: widgetDream.voice,
-                    setRecordingDirectory:
-                        (String directory, List<double> wave, double recordingLength) {
-                      widgetDream.voice = directory;
-                      widgetDream.voiceWave = wave;
-                      widgetDream.voiceDuration = recordingLength;
+                    previousRecording: widgetDream?.voice,
+                    setRecordingDirectory: (String directory, List<double> wave,
+                        double recordingLength) {
+                      widgetDream?.voice = directory;
+                      widgetDream?.voiceWave = wave;
+                      widgetDream?.voiceDuration = recordingLength;
                     },
-                    recordingLengthInMilliSeconds: widgetDream.voiceDuration,
-                    recordingWave: widgetDream.voiceWave,
+                    recordingLengthInMilliSeconds: widgetDream?.voiceDuration,
+                    recordingWave: widgetDream?.voiceWave,
                   )
                 ],
               ),
@@ -170,9 +174,9 @@ class _QuestionnaireInitState extends State<QuestionnaireInit> implements Seekab
 
   @override
   bool next() {
-    if (_formKey.currentState != null && _formKey.currentState.validate()) {
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       widgetDream
-        ..title = titleController.text
+        ?..title = titleController.text
         ..text = descriptionController.text
         ..dreamDate = DateTime(
           selectedDate.year,

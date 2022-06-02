@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'analytics_response.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class AnalyticsResponse {
   final String messageCode;
   final String message;

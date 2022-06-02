@@ -5,7 +5,7 @@ class Dots extends StatelessWidget {
   final int count;
   final int selected;
 
-  const Dots({Key key, this.count, this.selected}) : super(key: key);
+  const Dots({required this.count, required this.selected}) : super();
 
   @override
   Widget build(BuildContext context) {

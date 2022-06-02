@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'dream_clearance.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class DreamClearance {
   final int value;
   final String label;

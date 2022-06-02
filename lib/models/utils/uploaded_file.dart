@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'uploaded_file.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class UploadedFile {
   final String filePath;
 

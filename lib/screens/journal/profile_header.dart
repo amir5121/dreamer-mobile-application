@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class ProfileHeader extends SliverPersistentHeaderDelegate {
   int index = 0;
   final bool inProfileEdit;
-  final Function pickImage;
+  final Function? pickImage;
 
   ProfileHeader({this.pickImage, this.inProfileEdit = false});
 
@@ -22,8 +22,9 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
     return Stack(
       children: [
         Column(
-          mainAxisAlignment:
-              inProfileEdit ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: inProfileEdit
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.spaceBetween,
           children: [
             if (!inProfileEdit)
               Align(
@@ -49,7 +50,8 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                         decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor,
                           border: Border(
-                            bottom: BorderSide(width: 1, color: Constants.accentColor),
+                            bottom: BorderSide(
+                                width: 1, color: Constants.accentColor),
                           ),
                         ),
                         child: Padding(
@@ -70,7 +72,8 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                                     child: OutlineButton(
                                       child: Icon(Icons.settings),
                                       onPressed: () {
-                                        Navigator.pushNamed(context, '/settings');
+                                        Navigator.pushNamed(
+                                            context, '/settings');
                                       },
                                       shape: CircleBorder(
                                         side: BorderSide(),
@@ -78,13 +81,16 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                                     ),
                                   ),
                                   OutlineButton(
-                                    padding: EdgeInsets.symmetric(horizontal: 32),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 32),
                                     onPressed: () {
-                                      Navigator.pushNamed(context, '/edit-profile');
+                                      Navigator.pushNamed(
+                                          context, '/edit-profile');
                                     },
                                     child: Text(
                                       "Edit profile",
-                                      style: Theme.of(context).textTheme.bodyText2,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
                                     ),
                                   ),
                                 ],
@@ -94,11 +100,13 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                                 children: [
                                   Text(
                                     user.fullName,
-                                    style: Theme.of(context).textTheme.bodyText1,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
                                   ),
                                   Text(
                                     user.email,
-                                    style: Theme.of(context).textTheme.bodyText1,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
                                   ),
                                 ],
                               ),
@@ -117,7 +125,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
             child: GestureDetector(
               onTap: () {
                 inProfileEdit
-                    ? pickImage()
+                    ? pickImage!()
                     : showDialog(
                         barrierDismissible: true,
                         context: context,
@@ -137,7 +145,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                     ? NetworkImage(
                         user.avatar,
                       )
-                    : FileImage(File(user.avatar)),
+                    : FileImage(File(user.avatar)) as ImageProvider?,
               ),
             ),
           ),
@@ -147,7 +155,8 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return LayoutBuilder(
       builder: (context, constraints) {
         return DreamConsumer<ConfigurationsViewModel>(

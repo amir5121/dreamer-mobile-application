@@ -6,13 +6,11 @@ part of 'feeling.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Feeling _$FeelingFromJson(Map<String, dynamic> json) {
-  return Feeling(
-    rate: json['rate'] as int,
-    feeling: json['feeling'] as String,
-    feelingParent: json['feeling_parent'] as String,
-  );
-}
+Feeling _$FeelingFromJson(Map<String, dynamic> json) => Feeling(
+      rate: json['rate'] as int,
+      feeling: json['feeling'] as String,
+      feelingParent: json['feeling_parent'] as String,
+    );
 
 Map<String, dynamic> _$FeelingToJson(Feeling instance) => <String, dynamic>{
       'rate': instance.rate,

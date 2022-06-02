@@ -5,7 +5,7 @@ class ElementCreator extends StatefulWidget {
   final String label;
   final List<TextEditingController> controllers = [];
 
-  ElementCreator({Key key, @required this.label, @required DreamElement element}) {
+  ElementCreator({required this.label, DreamElement? element}) {
     if (element != null) {
       element.elements.forEach((String text) {
         controllers.add(TextEditingController(text: text));
@@ -19,7 +19,7 @@ class ElementCreator extends StatefulWidget {
 }
 
 class _ElementCreatorState extends State<ElementCreator> {
-  FocusNode focusNode;
+  late FocusNode focusNode;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _ElementCreatorState extends State<ElementCreator> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       focusNode.requestFocus();
     });
     return Column(

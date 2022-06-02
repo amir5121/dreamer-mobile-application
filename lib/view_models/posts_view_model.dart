@@ -4,8 +4,8 @@ import 'package:dreamer/models/post/post_response.dart';
 import 'package:dreamer/models/post/post_retrieve.dart';
 
 class PostViewModel extends RequestNotifier {
-  PostResponse _posts;
-  PostRetrieve _lastRetrievedPost;
+  PostResponse? _posts;
+  PostRetrieve? _lastRetrievedPost;
 
   void loadDeeperPosts() async {
     _posts = await makeRequest(
@@ -27,11 +27,11 @@ class PostViewModel extends RequestNotifier {
     return this;
   }
 
-  PostResponse get posts {
+  PostResponse? get posts {
     return _posts;
   }
 
-  PostRetrieve get lastRetrievedPost {
+  PostRetrieve? get lastRetrievedPost {
     return _lastRetrievedPost;
   }
 }

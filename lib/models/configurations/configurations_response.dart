@@ -4,7 +4,7 @@ import 'configurations.dart';
 
 part 'configurations_response.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class ConfigurationsResponse {
   final String messageCode;
   final String message;

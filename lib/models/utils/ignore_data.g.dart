@@ -6,12 +6,10 @@ part of 'ignore_data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-IgnoreData _$IgnoreDataFromJson(Map<String, dynamic> json) {
-  return IgnoreData(
-    json['message_code'] as String,
-    json['message'] as String,
-  );
-}
+IgnoreData _$IgnoreDataFromJson(Map<String, dynamic> json) => IgnoreData(
+      json['message_code'] as String,
+      json['message'] as String,
+    );
 
 Map<String, dynamic> _$IgnoreDataToJson(IgnoreData instance) =>
     <String, dynamic>{

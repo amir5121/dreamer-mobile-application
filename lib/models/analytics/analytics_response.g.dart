@@ -6,14 +6,13 @@ part of 'analytics_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AnalyticsResponse _$AnalyticsResponseFromJson(Map<String, dynamic> json) {
-  return AnalyticsResponse(
-    json['message_code'] as String,
-    json['message'] as String,
-    json['code'] as int,
-    Analytics.fromJson(json['data'] as Map<String, dynamic>),
-  );
-}
+AnalyticsResponse _$AnalyticsResponseFromJson(Map<String, dynamic> json) =>
+    AnalyticsResponse(
+      json['message_code'] as String,
+      json['message'] as String,
+      json['code'] as int,
+      Analytics.fromJson(json['data'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$AnalyticsResponseToJson(AnalyticsResponse instance) =>
     <String, dynamic>{

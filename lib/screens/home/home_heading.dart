@@ -23,7 +23,7 @@ class _HomeHeadingState extends State<HomeHeading> {
         return Text("Loading");
       },
       errorBuilder: (context, timeline, configurations, child) {
-        return Text(timeline.errorMessage);
+        return Text(timeline.errorMessage ?? "N?A");
       },
       builder: (context, timeline, configurations, child) {
         return Column(
@@ -69,7 +69,7 @@ class _HomeHeadingState extends State<HomeHeading> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  post.text[0],
+                                  post.text?[0] ?? "N?A",
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ),

@@ -6,33 +6,33 @@ import 'package:timeago/timeago.dart' as timeago;
 
 part 'dream.g.dart';
 
-@JsonSerializable(nullable: true, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Dream {
   String text;
   String title;
   DateTime created;
   DateTime modified;
-  String identifier;
+  String? identifier;
   User user;
   String publicationStatus;
   int dreamClearance;
-  String dreamClearanceDisplay;
-  DateTime dreamDate;
-  List<DreamElement> elements;
-  List<Feeling> feelings;
-  String voice;
-  double voiceDuration;
-  List<double> voiceWave;
+  String? dreamClearanceDisplay;
+  DateTime? dreamDate;
+  List<DreamElement>? elements;
+  List<Feeling>? feelings;
+  String? voice;
+  double? voiceDuration;
+  List<double>? voiceWave;
 
   Dream(
-      {this.created,
-      this.modified,
-      this.identifier,
-      this.user,
-      this.publicationStatus,
-      this.dreamClearance,
-      this.text,
-      this.title,
+      {required this.created,
+      required this.modified,
+      required this.identifier,
+      required this.user,
+      required this.publicationStatus,
+      required this.dreamClearance,
+      required this.text,
+      required this.title,
       this.dreamDate,
       this.dreamClearanceDisplay,
       this.voice,
@@ -45,7 +45,7 @@ class Dream {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> jsonResult = _$DreamToJson(this);
-    if (this.voice != null && this.voice.contains('http')) {
+    if (this.voice != null && this.voice!.contains('http')) {
       jsonResult.remove('voice');
     }
     return jsonResult;

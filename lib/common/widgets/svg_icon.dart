@@ -7,8 +7,8 @@ class SVGIcon extends StatelessWidget {
   final double size;
 
   const SVGIcon(
-      {Key key, @required this.color, @required this.assetAddress, this.size = 24})
-      : super(key: key);
+      {required this.color, required this.assetAddress, this.size = 24})
+      : super();
 
   @override
   Widget build(BuildContext context) {

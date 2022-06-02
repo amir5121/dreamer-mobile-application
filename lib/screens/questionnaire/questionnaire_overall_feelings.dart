@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'questionnaire_step_widget.dart';
 
 class QuestionnaireOverallFeelings extends QuestionnaireStepWidget {
-  QuestionnaireOverallFeelings({Key key, dream, goToNext, isGoingForward})
-      : super(key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
+  QuestionnaireOverallFeelings({dream, goToNext, isGoingForward})
+      : super(dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
 
   final _QuestionnaireOverallFeelingState _questionnaireOverallFeelingState =
       _QuestionnaireOverallFeelingState();
@@ -29,8 +29,8 @@ class QuestionnaireOverallFeelings extends QuestionnaireStepWidget {
   }
 }
 
-class _QuestionnaireOverallFeelingState extends State<QuestionnaireOverallFeelings>
-    implements Seekable {
+class _QuestionnaireOverallFeelingState
+    extends State<QuestionnaireOverallFeelings> implements Seekable {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,18 +41,19 @@ class _QuestionnaireOverallFeelingState extends State<QuestionnaireOverallFeelin
             'What feelings did you experience in your dream?',
             style: Theme.of(context).textTheme.headline6,
           ),
-          ...widget.dream.feelings
-              .map<Widget>(
-                (Feeling feeling) => Container(
-                  margin: EdgeInsets.only(top: 8),
-                  child: FeelingSlider(
-                    label: feeling.feelingParent.capitalize(),
-                    setValue: (int value) => feeling.rate = value,
-                    initialValue: feeling.rate,
+          if (widget.dream.feelings != null)
+            ...widget.dream.feelings!
+                .map<Widget>(
+                  (Feeling feeling) => Container(
+                    margin: EdgeInsets.only(top: 8),
+                    child: FeelingSlider(
+                      label: feeling.feelingParent.capitalize(),
+                      setValue: (int value) => feeling.rate = value,
+                      initialValue: feeling.rate,
+                    ),
                   ),
-                ),
-              )
-              .toList(),
+                )
+                .toList(),
         ],
       ),
     );
@@ -61,7 +62,8 @@ class _QuestionnaireOverallFeelingState extends State<QuestionnaireOverallFeelin
   @override
   bool next() {
     int sumOfFeeling = 0;
-    widget.dream.feelings.forEach((Feeling element) => sumOfFeeling += element.rate);
+    widget.dream.feelings
+        ?.forEach((Feeling element) => sumOfFeeling += element.rate);
     if (sumOfFeeling < 1) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

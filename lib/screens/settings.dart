@@ -52,7 +52,7 @@ class Settings extends StatelessWidget {
               ),
             );
           }
-          return null;
+          return Container();
         },
       ),
     );

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'clearance_summarize.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class ClearanceSummarize {
   final double average;
   final DateTime day;

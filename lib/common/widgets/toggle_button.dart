@@ -5,16 +5,15 @@ import 'package:flutter/material.dart';
 class ToggleButton extends StatelessWidget {
   final bool active;
   final String label;
-  final String description;
-  final Function onPressed;
+  final String? description;
+  final Function()? onPressed;
 
   const ToggleButton(
-      {Key key,
-      @required this.active,
-      @required this.label,
-      @required this.onPressed,
+      {required this.active,
+      required this.label,
+      required this.onPressed,
       this.description})
-      : super(key: key);
+      : super();
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +49,9 @@ class ToggleButton extends StatelessWidget {
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                                 SizedBox(height: 8),
-                                Text(description,
-                                    style: Theme.of(context).textTheme.headline6),
+                                Text(description!,
+                                    style:
+                                        Theme.of(context).textTheme.headline6),
                               ],
                             ),
                           ),

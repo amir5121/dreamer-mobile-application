@@ -2,11 +2,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'post.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Post {
-  final int id;
-  final DateTime created;
-  final List<String> text;
+  final int? id;
+  final DateTime? created;
+  final List<String>? text;
 
   Post(this.created, this.text, this.id);
 

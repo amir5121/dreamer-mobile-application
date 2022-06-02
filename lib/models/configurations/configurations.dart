@@ -6,18 +6,17 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'configurations.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Configurations {
-  @JsonKey(nullable: true)
-  final User self;
+  final User? self;
   final String mainBackground;
   final List<FeelingDetail> feelings;
   final List<FeelingDetail> mainFeelings;
   final List<DreamClearance> clearanceChoices;
   final List<Gender> genderChoices;
 
-  Configurations(this.self, this.mainBackground, this.feelings, this.mainFeelings,
-      this.clearanceChoices, this.genderChoices);
+  Configurations(this.self, this.mainBackground, this.feelings,
+      this.mainFeelings, this.clearanceChoices, this.genderChoices);
 
   factory Configurations.fromJson(Map<String, dynamic> json) {
     return _$ConfigurationsFromJson(json);

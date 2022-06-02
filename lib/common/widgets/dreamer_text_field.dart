@@ -8,13 +8,12 @@ class DreamTextField extends StatelessWidget {
   final int maxLines;
 
   const DreamTextField(
-      {Key key,
-      @required this.label,
-      this.obscureText,
-      @required this.controller,
+      {required this.label,
+      this.obscureText = false,
+      required this.controller,
       this.maxLines = 1,
       this.shouldValidate = true})
-      : super(key: key);
+      : super();
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +28,11 @@ class DreamTextField extends StatelessWidget {
           height: 8,
         ),
         TextFormField(
-          obscureText: obscureText ?? false,
+          obscureText: obscureText,
           controller: controller,
           maxLines: maxLines,
           validator: (value) {
-            if (value.isEmpty && this.shouldValidate) {
+            if (value != null && value.isEmpty && this.shouldValidate) {
               return 'Please enter ${label.toLowerCase()}';
             }
             return null;

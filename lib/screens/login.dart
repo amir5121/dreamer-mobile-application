@@ -28,10 +28,8 @@ class _LoginState extends State<Login> {
     AuthViewModel auth,
     ConfigurationsViewModel configurationsViewModel,
   ) {
-    if (auth.login?.accessToken != null) {
-      configurationsViewModel.loadConfigurations(context);
-      Navigator.pushReplacementNamed(context, '/home');
-    }
+    configurationsViewModel.loadConfigurations(context);
+    Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override
@@ -107,10 +105,13 @@ class _LoginState extends State<Login> {
                 ? null
                 : () {
                     auth.signInWithGoogle().then(
-                          (AuthViewModel auth) => __successfulLogin(
-                            auth,
-                            configurationsViewModel,
-                          ),
+                          (AuthViewModel? auth) => {
+                            if (auth != null)
+                              __successfulLogin(
+                                auth,
+                                configurationsViewModel,
+                              )
+                          },
                         );
                   },
           ),
@@ -150,7 +151,8 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Form _loginForm(AuthViewModel auth, ConfigurationsViewModel configurationsViewModel) {
+  Form _loginForm(
+      AuthViewModel auth, ConfigurationsViewModel configurationsViewModel) {
     return Form(
       key: _formKey,
       child: Column(
@@ -189,7 +191,8 @@ class _LoginState extends State<Login> {
               onPressed: auth.isLoading
                   ? null
                   : () {
-                      if (_formKey.currentState.validate()) {
+                      if (_formKey.currentState != null &&
+                          _formKey.currentState!.validate()) {
                         auth
                             .loginWithPassword(
                               usernameController.text,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class DreamDialog extends StatelessWidget {
   final Widget child;
 
-  const DreamDialog({Key key, this.child}) : super(key: key);
+  const DreamDialog({required this.child}) : super();
 
   @override
   Widget build(BuildContext context) {

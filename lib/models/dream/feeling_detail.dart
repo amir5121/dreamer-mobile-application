@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'feeling_detail.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class FeelingDetail {
   final String description;
   final String detailedType;

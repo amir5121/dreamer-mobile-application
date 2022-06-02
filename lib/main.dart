@@ -47,11 +47,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ConfigurationsViewModel configurationsViewModel = ConfigurationsViewModel();
-  FirebaseAnalytics analytics;
+  late FirebaseAnalytics analytics;
 
   @override
   void initState() {
-    analytics = FirebaseAnalytics();
+    // analytics = FirebaseAnalytics();
     configurationsViewModel.loadConfigurations(context);
     super.initState();
   }

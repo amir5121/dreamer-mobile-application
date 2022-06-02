@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class StaticsPage extends StatefulWidget {
   final int duration;
 
-  const StaticsPage({Key key, @required this.duration}) : super(key: key);
+  const StaticsPage({required this.duration}) : super();
 
   @override
   _StaticsPageState createState() => _StaticsPageState();
@@ -24,7 +24,7 @@ TextFulDivider _dreamDivider(context, text) {
     startFlex: 0,
     text: Text(
       text,
-      style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 16),
+      style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 16),
     ),
     endFlex: 1,
   );
@@ -105,7 +105,7 @@ class _StaticsPageState extends State<StaticsPage> {
             gradient: LinearGradient(
               colors: [
                 Constants.secondaryColor,
-                Constants.deepPurple[900],
+                Constants.deepPurple[900]!,
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,

@@ -6,18 +6,18 @@ part of 'notification_pagination.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-NotificationPagination _$NotificationPaginationFromJson(Map<String, dynamic> json) {
-  return NotificationPagination(
-    json['next'] as String,
-    json['previous'] as String,
-    (json['results'] as List)
-        ?.map((e) =>
-            e == null ? null : DreamerNotification.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-  );
-}
+NotificationPagination _$NotificationPaginationFromJson(
+        Map<String, dynamic> json) =>
+    NotificationPagination(
+      json['next'] as String,
+      json['previous'] as String,
+      (json['results'] as List<dynamic>)
+          .map((e) => DreamerNotification.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
-Map<String, dynamic> _$NotificationPaginationToJson(NotificationPagination instance) =>
+Map<String, dynamic> _$NotificationPaginationToJson(
+        NotificationPagination instance) =>
     <String, dynamic>{
       'next': instance.next,
       'previous': instance.previous,

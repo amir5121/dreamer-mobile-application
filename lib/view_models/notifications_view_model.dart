@@ -3,7 +3,7 @@ import 'package:dreamer/common/singleton.dart';
 import 'package:dreamer/models/dream/notifications_response.dart';
 
 class NotificationsViewModel extends RequestNotifier {
-  NotificationResponse _notifications;
+  NotificationResponse? _notifications;
 
   Future<NotificationsViewModel> loadNotifications(page) async {
     _notifications = await makeRequest(
@@ -13,7 +13,7 @@ class NotificationsViewModel extends RequestNotifier {
     return this;
   }
 
-  NotificationResponse get notifications {
+  NotificationResponse? get notifications {
     return _notifications;
   }
 }

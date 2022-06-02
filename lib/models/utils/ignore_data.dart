@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'ignore_data.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class IgnoreData {
   final String messageCode;
   final String message;
