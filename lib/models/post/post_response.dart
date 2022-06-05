@@ -6,7 +6,7 @@ part 'post_response.g.dart';
 @JsonSerializable()
 class PostResponse {
   final String messageCode;
-  final String message;
+  final String? message;
   final int code;
   final PostPagination data;
 

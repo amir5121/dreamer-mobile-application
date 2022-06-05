@@ -78,6 +78,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
                 Expanded(
                   child: ListView.builder(
                     // shrinkWrap: true,
+                    itemCount: choices.length,
                     itemBuilder: (context, index) {
                       if (index < choices.length) {
                         FeelingDetail choice = choices[index];

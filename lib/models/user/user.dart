@@ -7,14 +7,14 @@ class User {
   final String username;
   final String? firstName;
   final String? lastName;
-  final DateTime dateJoined;
+  final DateTime? dateJoined;
   final DateTime? birthDate;
   final String? gender;
   final String? genderDisplay;
-  final String email;
-  final String identifier;
-  String avatar;
-  final String fullName;
+  final String? email;
+  final String? identifier;
+  String? avatar;
+  final String? fullName;
 
   User(
       this.username,

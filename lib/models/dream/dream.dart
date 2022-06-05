@@ -8,14 +8,14 @@ part 'dream.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Dream {
-  String text;
-  String title;
-  DateTime created;
-  DateTime modified;
+  String? text;
+  String? title;
+  DateTime? created;
+  DateTime? modified;
   String? identifier;
-  User user;
-  String publicationStatus;
-  int dreamClearance;
+  User? user;
+  String? publicationStatus;
+  int? dreamClearance;
   String? dreamClearanceDisplay;
   DateTime? dreamDate;
   List<DreamElement>? elements;
@@ -25,14 +25,14 @@ class Dream {
   List<double>? voiceWave;
 
   Dream(
-      {required this.created,
-      required this.modified,
-      required this.identifier,
-      required this.user,
-      required this.publicationStatus,
-      required this.dreamClearance,
-      required this.text,
-      required this.title,
+      {this.created,
+      this.modified,
+      this.identifier,
+      this.user,
+      this.publicationStatus,
+      this.dreamClearance,
+      this.text,
+      this.title,
       this.dreamDate,
       this.dreamClearanceDisplay,
       this.voice,
@@ -52,6 +52,6 @@ class Dream {
   }
 
   String get createdFormatted {
-    return timeago.format(created, locale: 'en');
+    return created == null ? "N?A" : timeago.format(created!, locale: 'en');
   }
 }

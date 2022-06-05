@@ -9,7 +9,7 @@ part of 'dream_retrieve.dart';
 DreamRetrieve _$DreamRetrieveFromJson(Map<String, dynamic> json) =>
     DreamRetrieve(
       json['messageCode'] as String,
-      json['message'] as String,
+      json['message'] as String?,
       json['code'] as int,
       Dream.fromJson(json['data'] as Map<String, dynamic>),
     );

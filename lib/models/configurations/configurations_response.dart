@@ -7,7 +7,7 @@ part 'configurations_response.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ConfigurationsResponse {
   final String messageCode;
-  final String message;
+  final String? message;
   final int code;
   final Configurations data;
 

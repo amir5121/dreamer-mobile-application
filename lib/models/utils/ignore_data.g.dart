@@ -8,7 +8,7 @@ part of 'ignore_data.dart';
 
 IgnoreData _$IgnoreDataFromJson(Map<String, dynamic> json) => IgnoreData(
       json['message_code'] as String,
-      json['message'] as String,
+      json['message'] as String?,
     );
 
 Map<String, dynamic> _$IgnoreDataToJson(IgnoreData instance) =>

@@ -10,7 +10,7 @@ NotificationResponse _$NotificationResponseFromJson(
         Map<String, dynamic> json) =>
     NotificationResponse(
       json['messageCode'] as String,
-      json['message'] as String,
+      json['message'] as String?,
       json['code'] as int,
       NotificationPagination.fromJson(json['data'] as Map<String, dynamic>),
     );

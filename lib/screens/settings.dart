@@ -29,6 +29,7 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return DreamerScaffold(
       body: ListView.builder(
+        itemCount: items.length,
         itemBuilder: (context, index) {
           if (index < items.length) {
             return Container(

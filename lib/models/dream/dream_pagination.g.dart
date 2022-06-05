@@ -8,8 +8,8 @@ part of 'dream_pagination.dart';
 
 DreamPagination _$DreamPaginationFromJson(Map<String, dynamic> json) =>
     DreamPagination(
-      json['next'] as String,
-      json['previous'] as String,
+      json['next'] as String?,
+      json['previous'] as String?,
       (json['results'] as List<dynamic>)
           .map((e) => Dream.fromJson(e as Map<String, dynamic>))
           .toList(),

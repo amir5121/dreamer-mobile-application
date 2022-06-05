@@ -8,7 +8,7 @@ part of 'post_retrieve.dart';
 
 PostRetrieve _$PostRetrieveFromJson(Map<String, dynamic> json) => PostRetrieve(
       json['messageCode'] as String,
-      json['message'] as String,
+      json['message'] as String?,
       json['code'] as int,
       Post.fromJson(json['data'] as Map<String, dynamic>),
     );

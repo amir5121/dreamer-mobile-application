@@ -42,7 +42,7 @@ class _DreamDetailState extends State<DreamDetail> {
                       onDeleteCallback: () => Navigator.of(context).pop(false),
                     ),
                     SizedBox(height: 16),
-                    Text(dream.text),
+                    Text(dream.text!),
                     SizedBox(height: 16),
                     _dreamDivider(context, "Elements"),
                     SizedBox(height: 8),
@@ -54,7 +54,7 @@ class _DreamDetailState extends State<DreamDetail> {
                     _dreamDivider(context, "Dream Transparency"),
                     SizedBox(height: 8),
                     _linearProgress(
-                      dream.dreamClearance + 1,
+                      (dream.dreamClearance ?? 0) + 1,
                       5,
                       dream.dreamClearanceDisplay ?? "N?A",
                     ),

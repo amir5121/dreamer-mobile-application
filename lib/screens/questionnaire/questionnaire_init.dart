@@ -12,8 +12,11 @@ class QuestionnaireInit extends QuestionnaireStepWidget {
   final _QuestionnaireInitState _questionnaireInitState =
       _QuestionnaireInitState();
 
-  QuestionnaireInit({dream, goToNext, isGoingForward})
-      : super(dream: dream, goToNext: goToNext, isGoingForward: isGoingForward);
+  QuestionnaireInit(
+      {super.key,
+      required super.dream,
+      required super.goToNext,
+      required super.isGoingForward});
 
   @override
   _QuestionnaireInitState createState() {
@@ -77,8 +80,8 @@ class _QuestionnaireInitState extends State<QuestionnaireInit>
   Widget build(BuildContext context) {
     widgetDream = widget.dream;
     if (widgetDream != null) {
-      titleController.text = widgetDream!.title;
-      descriptionController.text = widgetDream!.text;
+      titleController.text = widgetDream?.title ?? "";
+      descriptionController.text = widgetDream?.text ?? "";
       if (widgetDream?.dreamDate != null)
         selectedTime = TimeOfDay(
           hour: widgetDream!.dreamDate!.hour,

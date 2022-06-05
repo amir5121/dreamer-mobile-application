@@ -27,7 +27,7 @@ class DreamPostHeader extends StatelessWidget {
                     // child: Text("Dreamer"),
                     radius: 24,
                     backgroundImage: NetworkImage(
-                      dream.user.avatar,
+                      dream.user!.avatar!,
                     ),
                   ),
                   Padding(
@@ -36,11 +36,11 @@ class DreamPostHeader extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          dream.user.fullName,
+                          dream.user!.fullName!,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         Text(
-                          dream.user.email,
+                          dream.user!.email!,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
@@ -106,7 +106,7 @@ class DreamPostHeader extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                dream.title,
+                dream.title!,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),

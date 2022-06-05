@@ -99,12 +99,12 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    user.fullName,
+                                    user.fullName!,
                                     style:
                                         Theme.of(context).textTheme.bodyText1,
                                   ),
                                   Text(
-                                    user.email,
+                                    user.email!,
                                     style:
                                         Theme.of(context).textTheme.bodyText1,
                                   ),
@@ -133,7 +133,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Image.network(user.avatar, fit: BoxFit.fitWidth),
+                            Image.network(user.avatar!, fit: BoxFit.fitWidth),
                           ],
                         ),
                       );
@@ -141,11 +141,11 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
               child: CircleAvatar(
                 // child: Text("Dreamer"),
                 radius: opacity > 0.5 ? 34 : 24,
-                backgroundImage: user.avatar.contains("http")
+                backgroundImage: user.avatar!.contains("http")
                     ? NetworkImage(
-                        user.avatar,
+                        user.avatar!,
                       )
-                    : FileImage(File(user.avatar)) as ImageProvider?,
+                    : FileImage(File(user.avatar!)) as ImageProvider?,
               ),
             ),
           ),

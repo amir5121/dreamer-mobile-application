@@ -34,6 +34,7 @@ class RequestNotifier extends ChangeNotifier {
       if (notify) notifyListeners();
     } catch (e) {
       debugPrint("Caught error $e");
+      debugPrintStack();
       if (notify) notifyListeners();
       setError(
         errorMessage: "Something went wrong",
@@ -45,8 +46,6 @@ class RequestNotifier extends ChangeNotifier {
   }
 
   void setResponseError(DioError err) {
-    debugPrint(
-        "setResponseError ${err.response?.data}, ${err.response?.statusCode}");
     if (err.response == null) {
       setError(
         errorMessage: "Connection could not be made! ${err.error}",

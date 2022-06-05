@@ -9,7 +9,7 @@ part of 'analytics_response.dart';
 AnalyticsResponse _$AnalyticsResponseFromJson(Map<String, dynamic> json) =>
     AnalyticsResponse(
       json['message_code'] as String,
-      json['message'] as String,
+      json['message'] as String?,
       json['code'] as int,
       Analytics.fromJson(json['data'] as Map<String, dynamic>),
     );

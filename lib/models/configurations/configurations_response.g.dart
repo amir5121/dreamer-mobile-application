@@ -10,7 +10,7 @@ ConfigurationsResponse _$ConfigurationsResponseFromJson(
         Map<String, dynamic> json) =>
     ConfigurationsResponse(
       json['message_code'] as String,
-      json['message'] as String,
+      json['message'] as String?,
       json['code'] as int,
       Configurations.fromJson(json['data'] as Map<String, dynamic>),
     );

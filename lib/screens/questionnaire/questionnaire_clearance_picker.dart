@@ -62,6 +62,7 @@ class _QuestionnaireClearancePickerState
                 SizedBox(height: 16),
                 Expanded(
                   child: ListView.builder(
+                    itemCount: choices.length,
                     itemBuilder: (context, index) {
                       if (index < choices.length) {
                         DreamClearance choice = choices[index];

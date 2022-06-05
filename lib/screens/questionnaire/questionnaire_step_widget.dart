@@ -8,9 +8,9 @@ abstract class QuestionnaireStepWidget extends StatefulWidget
   final Function goToNext;
   final bool isGoingForward;
 
-  QuestionnaireStepWidget(
-      {required this.dream,
+  const QuestionnaireStepWidget(
+      {super.key,
+      required this.dream,
       required this.goToNext,
-      required this.isGoingForward})
-      : super();
+      required this.isGoingForward});
 }

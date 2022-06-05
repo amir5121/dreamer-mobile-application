@@ -16,17 +16,10 @@ bool get isInDebugMode {
 }
 
 class Constants {
-  // static const String baseUrl = "http://10.0.2.2:8000/api/v1";
-  // static const String baseUrl = "http://localhost:8000/api/v1";
-  // static const String baseUrl = "https://amir.jprq.live/api/v1";
-
   // adb reverse tcp:8000 tcp:8000
   static String baseUrl = isInDebugMode
       ? "http://localhost:8000/api/v1"
-      : "http://dreamer.wisl.in/api/v1";
-
-  // static String baseUrl =  "https://serious-cat-38.loca.lt/api/v1";
-  // static String baseUrl = "https://dreamer.stickergramapp.com/api/v1";
+      : "https://dreamer.wisl.in/api/v1";
 
   static const int _deepPurplePrimaryValue = 0xFF7837D9;
   static const int maxFeelingSlider = 10;
@@ -62,9 +55,9 @@ class Constants {
 
   static const String ACCESS_TOKEN = 'accessToken';
   static const String REFRESH_TOKEN = 'refreshToken';
-  static const String CLIENT_ID = 'qmyAFgBAFmHEhw2jtQqRy7CQJeVqntayLtXIf9AF';
+  static const String CLIENT_ID = 'NgVb5mLs2yXfSzg0lJtoWSai6LdtZRheUgC5sWhX';
   static const String CLIENT_SECRET =
-      'mS1g7vWPnmT0D34zauCIjNRrLxFwDTrjKQkVyHylVrU6dFUpy3hVFrnRxwfMTKVMNfSO6s0a9z4LuT7lkW0WUDdbDzBpmPnbEQE9wTitPoXDgVnd0bxvM5YTfHJI9GXq';
+      '1NnRa682BufFhBjSVyrPqm3ElErDpIGpj6fH7fynF1p7PzWd8R4g4jzhvODTcQqbxO3RwFnuEFIhBLaCA4ZMzxDUE11TyVRUFdYMKF7JK5kYpqojqyMvQ3mx10oBydBI';
 
   static String get platform {
     if (kIsWeb) {

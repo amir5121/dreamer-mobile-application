@@ -6,7 +6,7 @@ part 'post_retrieve.g.dart';
 @JsonSerializable()
 class PostRetrieve {
   final String messageCode;
-  final String message;
+  final String? message;
   final int code;
   final Post data;
 

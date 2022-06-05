@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 class Story extends StatefulWidget {
   final Object? identifier;
 
-  const Story({this.identifier}) : super();
+  const Story({super.key, this.identifier});
 
   @override
   _StoryState createState() => _StoryState();
@@ -115,7 +115,7 @@ class _StoryState extends State<Story> {
         } else {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             setState(() {
-              dream = null;
+              dream = Dream();
             });
             _setFeeling();
           });

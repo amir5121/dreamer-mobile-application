@@ -29,14 +29,11 @@ class ConfigurationsViewModel extends RequestNotifier {
       version = packageInfo.version;
       buildNumber = packageInfo.buildNumber;
     }
-    debugPrint("loadBuildData $appName $packageName $version $buildNumber");
     notifyListeners();
   }
 
   void loadConfigurations(BuildContext context) async {
     if (buildNumber == null) await loadBuildData();
-    debugPrint(
-        "loadConfigurations $appName $packageName $version $buildNumber");
     if (buildNumber != null)
       _configurations = await makeRequest(
         () => Singleton().client.getConfigurations(buildNumber!),
