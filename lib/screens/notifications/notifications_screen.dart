@@ -67,11 +67,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      item.title,
+                                      item.title ?? "N?A",
                                       style:
                                           Theme.of(context).textTheme.bodyText1,
                                     ),
-                                    Text(item.text),
+                                    Text(item.text ?? "N?A"),
                                   ],
                                 ),
                               ),

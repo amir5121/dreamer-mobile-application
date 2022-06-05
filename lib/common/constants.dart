@@ -18,7 +18,7 @@ bool get isInDebugMode {
 class Constants {
   // adb reverse tcp:8000 tcp:8000
   static String baseUrl = isInDebugMode
-      ? "http://localhost:8000/api/v1"
+      ? "https://dreamer.wisl.in/api/v1"
       : "https://dreamer.wisl.in/api/v1";
 
   static const int _deepPurplePrimaryValue = 0xFF7837D9;

@@ -68,7 +68,7 @@ class _QuestionnaireClearancePickerState
                         DreamClearance choice = choices[index];
                         return ToggleButton(
                           active: pickedOutFeeling == choice.value,
-                          label: choice.label.capitalize(),
+                          label: (choice.label?.capitalize() ?? "N?A"),
                           onPressed: () {
                             setState(() {
                               pickedOutFeeling = choice.value;

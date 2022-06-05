@@ -5,9 +5,9 @@ part 'notifications_response.g.dart';
 
 @JsonSerializable()
 class NotificationResponse {
-  final String messageCode;
+  final String? messageCode;
   final String? message;
-  final int code;
+  final int? code;
   final NotificationPagination data;
 
   NotificationResponse(this.messageCode, this.message, this.code, this.data);

@@ -7,8 +7,8 @@ part of 'gender.dart';
 // **************************************************************************
 
 Gender _$GenderFromJson(Map<String, dynamic> json) => Gender(
-      json['value'] as String,
-      json['label'] as String,
+      json['value'] as String?,
+      json['label'] as String?,
     );
 
 Map<String, dynamic> _$GenderToJson(Gender instance) => <String, dynamic>{

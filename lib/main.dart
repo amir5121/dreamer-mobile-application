@@ -1,4 +1,3 @@
-import 'package:dreamer/common/constants.dart';
 import 'package:dreamer/common/theme.dart';
 import 'package:dreamer/screens/dream_detail.dart';
 import 'package:dreamer/screens/edit_profile.dart';
@@ -15,19 +14,19 @@ import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<void> main() async {
-  isInDebugMode
-      ? runDreamerApp()
-      : await SentryFlutter.init(
-          (options) {
-            options.debug = isInDebugMode;
-            options.dsn =
-                'https://06f4ea19c399443889f37e1b87662903@sentry.stickergramapp.com//3';
-          },
-          appRunner: () => runDreamerApp(),
-        );
+  runDreamerApp();
+  // isInDebugMode
+  //     ? runDreamerApp()
+  //     : await SentryFlutter.init(
+  //         (options) {
+  //           options.debug = isInDebugMode;
+  //           options.dsn =
+  //               'https://06f4ea19c399443889f37e1b87662903@sentry.stickergramapp.com//3';
+  //         },
+  //         appRunner: () => runDreamerApp(),
+  //       );
 }
 
 void runDreamerApp() {

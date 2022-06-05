@@ -9,7 +9,7 @@ part of 'dream_clearance.dart';
 DreamClearance _$DreamClearanceFromJson(Map<String, dynamic> json) =>
     DreamClearance(
       json['value'] as int,
-      json['label'] as String,
+      json['label'] as String?,
     );
 
 Map<String, dynamic> _$DreamClearanceToJson(DreamClearance instance) =>

@@ -5,8 +5,8 @@ part 'post_pagination.g.dart';
 
 @JsonSerializable()
 class PostPagination {
-  final String next;
-  final String previous;
+  final String? next;
+  final String? previous;
   final List<Post> results;
 
   PostPagination(this.next, this.previous, this.results);

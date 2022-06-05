@@ -8,8 +8,8 @@ part of 'post_pagination.dart';
 
 PostPagination _$PostPaginationFromJson(Map<String, dynamic> json) =>
     PostPagination(
-      json['next'] as String,
-      json['previous'] as String,
+      json['next'] as String?,
+      json['previous'] as String?,
       (json['results'] as List<dynamic>)
           .map((e) => Post.fromJson(e as Map<String, dynamic>))
           .toList(),

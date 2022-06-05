@@ -9,8 +9,8 @@ part of 'notification_register.dart';
 NotificationRegister _$NotificationRegisterFromJson(
         Map<String, dynamic> json) =>
     NotificationRegister(
-      json['registration_id'] as String,
-      json['type'] as String,
+      json['registration_id'] as String?,
+      json['type'] as String?,
     );
 
 Map<String, dynamic> _$NotificationRegisterToJson(

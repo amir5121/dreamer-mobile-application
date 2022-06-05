@@ -9,9 +9,9 @@ part of 'configurations_response.dart';
 ConfigurationsResponse _$ConfigurationsResponseFromJson(
         Map<String, dynamic> json) =>
     ConfigurationsResponse(
-      json['message_code'] as String,
+      json['message_code'] as String?,
       json['message'] as String?,
-      json['code'] as int,
+      json['code'] as int?,
       Configurations.fromJson(json['data'] as Map<String, dynamic>),
     );
 

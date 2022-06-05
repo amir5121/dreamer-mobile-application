@@ -7,7 +7,7 @@ class ElementCreator extends StatefulWidget {
 
   ElementCreator({required this.label, DreamElement? element}) {
     if (element != null) {
-      element.elements.forEach((String text) {
+      element.elements!.forEach((String? text) {
         controllers.add(TextEditingController(text: text));
       });
     }

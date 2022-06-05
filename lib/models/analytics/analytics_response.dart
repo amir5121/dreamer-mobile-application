@@ -5,9 +5,9 @@ part 'analytics_response.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class AnalyticsResponse {
-  final String messageCode;
+  final String? messageCode;
   final String? message;
-  final int code;
+  final int? code;
   final Analytics data;
 
   AnalyticsResponse(this.messageCode, this.message, this.code, this.data);

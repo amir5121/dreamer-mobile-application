@@ -8,9 +8,9 @@ part of 'dream_response.dart';
 
 DreamResponse _$DreamResponseFromJson(Map<String, dynamic> json) =>
     DreamResponse(
-      json['messageCode'] as String,
+      json['messageCode'] as String?,
       json['message'] as String?,
-      json['code'] as int,
+      json['code'] as int?,
       DreamPagination.fromJson(json['data'] as Map<String, dynamic>),
     );
 

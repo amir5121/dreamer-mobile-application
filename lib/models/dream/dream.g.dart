@@ -7,14 +7,20 @@ part of 'dream.dart';
 // **************************************************************************
 
 Dream _$DreamFromJson(Map<String, dynamic> json) => Dream(
-      created: DateTime.parse(json['created'] as String),
-      modified: DateTime.parse(json['modified'] as String),
+      created: json['created'] == null
+          ? null
+          : DateTime.parse(json['created'] as String),
+      modified: json['modified'] == null
+          ? null
+          : DateTime.parse(json['modified'] as String),
       identifier: json['identifier'] as String?,
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
-      publicationStatus: json['publication_status'] as String,
-      dreamClearance: json['dream_clearance'] as int,
-      text: json['text'] as String,
-      title: json['title'] as String,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+      publicationStatus: json['publication_status'] as String?,
+      dreamClearance: json['dream_clearance'] as int?,
+      text: json['text'] as String?,
+      title: json['title'] as String?,
       dreamDate: json['dream_date'] == null
           ? null
           : DateTime.parse(json['dream_date'] as String),

@@ -9,7 +9,7 @@ part 'configurations.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Configurations {
   final User? self;
-  final String mainBackground;
+  final String? mainBackground;
   final List<FeelingDetail> feelings;
   final List<FeelingDetail> mainFeelings;
   final List<DreamClearance> clearanceChoices;

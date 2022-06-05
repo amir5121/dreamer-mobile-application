@@ -164,28 +164,30 @@ class _DreamDetailState extends State<DreamDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      element.type.capitalize(),
+                      element.type?.capitalize() ?? "N?A",
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     SizedBox(height: 8),
                     Wrap(
-                      children: [
-                        ...element.elements
-                            .map<Widget>(
-                              (String e) => Container(
-                                padding: EdgeInsets.all(8),
-                                margin: EdgeInsets.only(right: 8),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Constants.accentColor,
-                                  ),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
-                                  ),
-                                ),
-                                child: Text(e),
-                              ),
+                      children: element.elements == null
+                          ? []
+                          : [
+                              ...?element.elements
+                                  ?.map<Widget>(
+                                    (String? e) => Container(
+                                      padding: EdgeInsets.all(8),
+                                      margin: EdgeInsets.only(right: 8),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 1,
+                                          color: Constants.accentColor,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                      ),
+                                      child: Text(e ?? "N?A"),
+                                    ),
                             )
                             .toList()
                       ],

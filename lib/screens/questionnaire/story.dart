@@ -91,7 +91,7 @@ class _StoryState extends State<Story> {
         return Feeling(
           rate: previousFeeling?.rate ?? 0,
           feeling: previousFeeling?.feeling ?? "N?A",
-          feelingParent: e.parentType,
+          feelingParent: e.parentType ?? "N?A",
         );
       }).toList();
   }

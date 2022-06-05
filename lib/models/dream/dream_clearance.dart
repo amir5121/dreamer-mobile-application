@@ -5,7 +5,7 @@ part 'dream_clearance.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class DreamClearance {
   final int value;
-  final String label;
+  final String? label;
 
   DreamClearance(this.value, this.label);
 
@@ -13,5 +13,4 @@ class DreamClearance {
       _$DreamClearanceFromJson(json);
 
   Map<String, dynamic> toJson() => _$DreamClearanceToJson(this);
-
 }

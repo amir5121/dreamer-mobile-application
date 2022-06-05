@@ -4,8 +4,8 @@ part 'notification_register.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class NotificationRegister {
-  final String registrationId;
-  final String type;
+  final String? registrationId;
+  final String? type;
 
   NotificationRegister(this.registrationId, this.type);
 

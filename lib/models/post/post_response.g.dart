@@ -7,9 +7,9 @@ part of 'post_response.dart';
 // **************************************************************************
 
 PostResponse _$PostResponseFromJson(Map<String, dynamic> json) => PostResponse(
-      json['messageCode'] as String,
+      json['messageCode'] as String?,
       json['message'] as String?,
-      json['code'] as int,
+      json['code'] as int?,
       PostPagination.fromJson(json['data'] as Map<String, dynamic>),
     );
 

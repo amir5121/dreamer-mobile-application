@@ -71,7 +71,7 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
           : Column(
               children: [
                 Text(
-                  'In ${choices[1].parentType.capitalize()}, to which you were feeling closer?',
+                  'In ${choices[1].parentType?.capitalize() ?? "N?A"}, to which you were feeling closer?',
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 16),
@@ -84,12 +84,14 @@ class _QuestionnaireFeelingPickerState extends State<QuestionnaireFeelingPicker>
                         FeelingDetail choice = choices[index];
                         pickedOutFeeling = widget.dream.feelings
                             ?.singleWhere((Feeling element) =>
-                                choice.detailedType.split("_")[0] ==
+                        choice.detailedType?.split("_")[0] ==
                                 element.feelingParent)
                             .feeling;
                         return ToggleButton(
                           active: pickedOutFeeling == choice.detailedType,
-                          label: choice.detailedType.split("_")[1].capitalize(),
+                          label:
+                              choice.detailedType?.split("_")[1].capitalize() ??
+                                  "N?A",
                           description: choice.description,
                           onPressed: () {
                             setState(() {

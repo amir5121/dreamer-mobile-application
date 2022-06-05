@@ -222,9 +222,10 @@ class _EditProfileState extends State<EditProfile> {
             child: selectedGender != null
                 ? Text(
                     configurations.genderChoices
-                        .singleWhere(
-                            (Gender gender) => gender.value == selectedGender)
-                        .label,
+                            .singleWhere((Gender gender) =>
+                                gender.value == selectedGender)
+                            .label ??
+                        "N?A",
                   )
                 : (configurations.self?.genderDisplay != null)
                     ? Text(configurations.self!.genderDisplay!)
@@ -238,7 +239,7 @@ class _EditProfileState extends State<EditProfile> {
                       ...configurations.genderChoices
                           .map<Widget>(
                             (Gender gender) => TextButton(
-                              child: Text(gender.label),
+                              child: Text(gender.label ?? "N?A"),
                               onPressed: () {
                                 setState(() {
                                   this.selectedGender = gender.value;

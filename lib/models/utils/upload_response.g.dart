@@ -8,9 +8,9 @@ part of 'upload_response.dart';
 
 UploadResponse _$UploadResponseFromJson(Map<String, dynamic> json) =>
     UploadResponse(
-      json['message_code'] as String,
+      json['message_code'] as String?,
       json['message'] as String?,
-      json['code'] as int,
+      json['code'] as int?,
       UploadedFile.fromJson(json['data'] as Map<String, dynamic>),
     );
 

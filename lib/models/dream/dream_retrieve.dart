@@ -6,9 +6,9 @@ part 'dream_retrieve.g.dart';
 
 @JsonSerializable()
 class DreamRetrieve {
-  final String messageCode;
+  final String? messageCode;
   final String? message;
-  final int code;
+  final int? code;
   final Dream data;
 
   DreamRetrieve(this.messageCode, this.message, this.code, this.data);

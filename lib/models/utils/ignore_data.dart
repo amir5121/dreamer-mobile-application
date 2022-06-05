@@ -4,7 +4,7 @@ part 'ignore_data.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class IgnoreData {
-  final String messageCode;
+  final String? messageCode;
   final String? message;
 
   IgnoreData(this.messageCode, this.message);

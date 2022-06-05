@@ -11,7 +11,7 @@ Configurations _$ConfigurationsFromJson(Map<String, dynamic> json) =>
       json['self'] == null
           ? null
           : User.fromJson(json['self'] as Map<String, dynamic>),
-      json['main_background'] as String,
+      json['main_background'] as String?,
       (json['feelings'] as List<dynamic>)
           .map((e) => FeelingDetail.fromJson(e as Map<String, dynamic>))
           .toList(),

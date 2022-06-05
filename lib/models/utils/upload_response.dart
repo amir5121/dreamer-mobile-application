@@ -5,9 +5,9 @@ part 'upload_response.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class UploadResponse {
-  final String messageCode;
+  final String? messageCode;
   final String? message;
-  final int code;
+  final int? code;
   final UploadedFile data;
 
   UploadResponse(this.messageCode, this.message, this.code, this.data);

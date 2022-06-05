@@ -4,9 +4,9 @@ part 'feeling_detail.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class FeelingDetail {
-  final String description;
-  final String detailedType;
-  final String parentType;
+  final String? description;
+  final String? detailedType;
+  final String? parentType;
 
   FeelingDetail(this.description, this.detailedType, this.parentType);
 
@@ -14,5 +14,4 @@ class FeelingDetail {
       _$FeelingDetailFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeelingDetailToJson(this);
-
 }

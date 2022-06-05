@@ -9,8 +9,8 @@ part of 'notification_pagination.dart';
 NotificationPagination _$NotificationPaginationFromJson(
         Map<String, dynamic> json) =>
     NotificationPagination(
-      json['next'] as String,
-      json['previous'] as String,
+      json['next'] as String?,
+      json['previous'] as String?,
       (json['results'] as List<dynamic>)
           .map((e) => DreamerNotification.fromJson(e as Map<String, dynamic>))
           .toList(),
