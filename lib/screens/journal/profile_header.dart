@@ -69,20 +69,20 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                                 children: [
                                   ButtonTheme(
                                     minWidth: 0,
-                                    child: OutlineButton(
+                                    child: OutlinedButton(
                                       child: Icon(Icons.settings),
                                       onPressed: () {
                                         Navigator.pushNamed(
                                             context, '/settings');
                                       },
-                                      shape: CircleBorder(
-                                        side: BorderSide(),
-                                      ),
+                                      // shape: CircleBorder(
+                                      //   side: BorderSide(),
+                                      // ),
                                     ),
                                   ),
-                                  OutlineButton(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 32),
+                                  OutlinedButton(
+                                    // padding:
+                                    //     EdgeInsets.symmetric(horizontal: 32),
                                     onPressed: () {
                                       Navigator.pushNamed(
                                           context, '/edit-profile');

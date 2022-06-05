@@ -76,17 +76,17 @@ class AuthViewModel extends RequestNotifier {
   }
 
   Future<AuthViewModel> loginWithPassword(String email, String password) async {
-    _login = await makeRequest<AuthTokens>(
-      () => Singleton().client.loginWithPassword(
-            LoginCredentials(
-              email,
-              password,
-              Constants.CLIENT_ID,
-              Constants.CLIENT_SECRET,
-              "password",
-            ),
-          ),
-    );
+    _login = await makeRequest<AuthTokens>(() => {
+          Singleton().client.loginWithPassword(
+                LoginCredentials(
+                  email,
+                  password,
+                  Constants.CLIENT_ID,
+                  Constants.CLIENT_SECRET,
+                  "password",
+                ),
+              ),
+        });
     saveLoginInfo();
     return this;
   }

@@ -21,8 +21,8 @@ class DreamFakeTextField extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        OutlineButton(
-          padding: EdgeInsets.symmetric(vertical: 12),
+        OutlinedButton(
+          // padding: EdgeInsets.symmetric(vertical: 12),
           onPressed: onPressed,
           child: Text(
             value,

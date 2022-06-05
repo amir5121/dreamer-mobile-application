@@ -11,7 +11,7 @@ class Splash extends StatelessWidget {
     ConfigurationsViewModel configurationsResponse =
         context.watch<ConfigurationsViewModel>();
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (configurationsResponse.isLoading == false &&
           configurationsResponse.configurations != null) {
         if (configurationsResponse.hasError == false) {

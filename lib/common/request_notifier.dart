@@ -18,7 +18,6 @@ class RequestNotifier extends ChangeNotifier {
       _isLoading = true;
       if (notify) notifyListeners();
       T result = await Singleton().retry.retry(() => f(), retryIf: (e) {
-        debugPrint("MakeRequest Retry! $this, $e");
         return e is DioError &&
             (e.response == null ||
                 e.response?.statusCode == 401 &&
@@ -28,7 +27,6 @@ class RequestNotifier extends ChangeNotifier {
       _isLoading = false;
       _madeSuccessfulRequest = true;
       if (notify) notifyListeners();
-      debugPrint("makeRequest result $result");
       return result;
     } on DioError catch (e) {
       debugPrint("failed completely Grrrr notify: $notify error: $e");
@@ -47,7 +45,8 @@ class RequestNotifier extends ChangeNotifier {
   }
 
   void setResponseError(DioError err) {
-    debugPrint("setResponseError ${err.response?.data}");
+    debugPrint(
+        "setResponseError ${err.response?.data}, ${err.response?.statusCode}");
     if (err.response == null) {
       setError(
         errorMessage: "Connection could not be made! ${err.error}",
@@ -57,6 +56,12 @@ class RequestNotifier extends ChangeNotifier {
     } else if (err.response?.statusCode == 500) {
       setError(
         errorMessage: "Server Failure! Try again Later!",
+        errorCode: null,
+        errorStatus: err.response?.statusCode,
+      );
+    } else if (err.response?.statusCode == 401) {
+      setError(
+        errorMessage: "Unauthorized! ${err.response?.data["error"]}",
         errorCode: null,
         errorStatus: err.response?.statusCode,
       );

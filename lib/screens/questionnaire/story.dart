@@ -113,7 +113,7 @@ class _StoryState extends State<Story> {
             });
           });
         } else {
-          WidgetsBinding.instance?.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
             setState(() {
               dream = null;
             });

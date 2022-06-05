@@ -35,7 +35,7 @@ class _ElementCreatorState extends State<ElementCreator> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       focusNode.requestFocus();
     });
     return Column(
@@ -69,17 +69,17 @@ class _ElementCreatorState extends State<ElementCreator> {
               minWidth: 0,
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: OutlineButton(
+                child: OutlinedButton(
                   // padding: EdgeInsets.all(0),
                   child: Icon(Icons.add),
                   onPressed: () {
                     if (widget.controllers
-                        .where((TextEditingController controller) =>
-                    controller.text.length == 0)
-                        .length <
+                            .where((TextEditingController controller) =>
+                                controller.text.length == 0)
+                            .length <
                         1) {
                       setState(
-                            () {
+                        () {
                           widget.controllers.add(
                             TextEditingController(),
                           );
@@ -87,9 +87,9 @@ class _ElementCreatorState extends State<ElementCreator> {
                       );
                     }
                   },
-                  shape: CircleBorder(
-                    side: BorderSide(),
-                  ),
+                  // shape: CircleBorder(
+                  //   side: BorderSide(),
+                  // ),
                 ),
               ),
             )

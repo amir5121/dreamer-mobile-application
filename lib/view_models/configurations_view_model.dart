@@ -29,15 +29,19 @@ class ConfigurationsViewModel extends RequestNotifier {
       version = packageInfo.version;
       buildNumber = packageInfo.buildNumber;
     }
+    debugPrint("loadBuildData $appName $packageName $version $buildNumber");
     notifyListeners();
   }
 
   void loadConfigurations(BuildContext context) async {
     if (buildNumber == null) await loadBuildData();
-    if (buildNumber == null)
+    debugPrint(
+        "loadConfigurations $appName $packageName $version $buildNumber");
+    if (buildNumber != null)
       _configurations = await makeRequest(
         () => Singleton().client.getConfigurations(buildNumber!),
       );
+
     if (this.errorStatus == 401) {
       DreamerStorage().delete(key: Constants.ACCESS_TOKEN);
       DreamerStorage().delete(key: Constants.REFRESH_TOKEN);

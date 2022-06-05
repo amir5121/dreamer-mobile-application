@@ -23,7 +23,7 @@ class Constants {
   // adb reverse tcp:8000 tcp:8000
   static String baseUrl = isInDebugMode
       ? "http://localhost:8000/api/v1"
-      : "https://dreamer.stickergramapp.com/api/v1";
+      : "http://dreamer.wisl.in/api/v1";
 
   // static String baseUrl =  "https://serious-cat-38.loca.lt/api/v1";
   // static String baseUrl = "https://dreamer.stickergramapp.com/api/v1";
@@ -62,9 +62,9 @@ class Constants {
 
   static const String ACCESS_TOKEN = 'accessToken';
   static const String REFRESH_TOKEN = 'refreshToken';
-  static const String CLIENT_ID = 'gm57SXQ1djmgk12Rs32EnDzc2AQMpsJbGHQ8CJpT';
+  static const String CLIENT_ID = 'qmyAFgBAFmHEhw2jtQqRy7CQJeVqntayLtXIf9AF';
   static const String CLIENT_SECRET =
-      'odbNmDwkbWmbVecFsyv7XRTfykd1bXKFXgFBo6mO5X3u1idELwAd8pGpwFdNbv35sPTXNzFIWiYxOPot2u2CmbfKKrYbKABslrNV2UdFZn2Hl1DNc7r316eYJCprpuDd';
+      'mS1g7vWPnmT0D34zauCIjNRrLxFwDTrjKQkVyHylVrU6dFUpy3hVFrnRxwfMTKVMNfSO6s0a9z4LuT7lkW0WUDdbDzBpmPnbEQE9wTitPoXDgVnd0bxvM5YTfHJI9GXq';
 
   static String get platform {
     if (kIsWeb) {

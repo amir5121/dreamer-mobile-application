@@ -73,7 +73,7 @@ class _HomeHeadingState extends State<HomeHeading> {
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ),
-                              OutlineButton(
+                              OutlinedButton(
                                 onPressed: () {
                                   Navigator.pushNamed(
                                     context,
@@ -82,9 +82,9 @@ class _HomeHeadingState extends State<HomeHeading> {
                                   );
                                 },
                                 child: Text("Go deeper"),
-                                borderSide: BorderSide(
-                                  color: Colors.white,
-                                ),
+                                // borderSide: BorderSide(
+                                //   color: Colors.white,
+                                // ),
                               ),
                             ],
                           );

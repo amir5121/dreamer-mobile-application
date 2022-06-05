@@ -37,7 +37,6 @@ class Singleton {
       FirebaseMessaging.instance
           .getInitialMessage()
           .then((RemoteMessage? message) {
-        print("getInitialMessage: $message");
       });
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         print("onMessage: $message ${message.data}");

@@ -227,7 +227,7 @@ class _EditProfileState extends State<EditProfile> {
                         .label,
                   )
                 : (configurations.self?.genderDisplay != null)
-                    ? Text(configurations.self!.genderDisplay)
+                    ? Text(configurations.self!.genderDisplay!)
                     : Text("N?A"),
             onPressed: () {
               showDialog(
