@@ -6,28 +6,27 @@ import 'package:flutter/foundation.dart';
 
 class RequestNotifier extends ChangeNotifier {
   bool _hasError = false;
-  String _errorMessage;
-  int _errorStatus;
-  String _errorCode;
+  String? _errorMessage;
+  int? _errorStatus;
+  String? _errorCode;
   bool _isLoading = false;
   bool _madeSuccessfulRequest = false;
 
-  Future<T> makeRequest<T>(Function f, {bool notify = true}) async {
+  Future<T?> makeRequest<T>(Function f, {bool notify = true}) async {
     try {
       unSetError();
       _isLoading = true;
       if (notify) notifyListeners();
       T result = await Singleton().retry.retry(() => f(), retryIf: (e) {
-        debugPrint("MakeRequest Retry! $this, $e");
         return e is DioError &&
             (e.response == null ||
-                e.response.statusCode == 401 &&
-                    e.response.data['message_code'] == Constants.INVALID_TOKEN);
+                e.response?.statusCode == 401 &&
+                    e.response?.data['message_code'] ==
+                        Constants.INVALID_TOKEN);
       });
       _isLoading = false;
       _madeSuccessfulRequest = true;
       if (notify) notifyListeners();
-      debugPrint("makeRequest result $result");
       return result;
     } on DioError catch (e) {
       debugPrint("failed completely Grrrr notify: $notify error: $e");
@@ -35,9 +34,10 @@ class RequestNotifier extends ChangeNotifier {
       if (notify) notifyListeners();
     } catch (e) {
       debugPrint("Caught error $e");
+      debugPrintStack();
       if (notify) notifyListeners();
       setError(
-        errorMessage: "Something wen't wrong",
+        errorMessage: "Something went wrong",
         errorCode: null,
         errorStatus: null,
       );
@@ -46,47 +46,52 @@ class RequestNotifier extends ChangeNotifier {
   }
 
   void setResponseError(DioError err) {
-    debugPrint("setResponseError ${err.response?.data}");
     if (err.response == null) {
       setError(
         errorMessage: "Connection could not be made! ${err.error}",
         errorCode: null,
         errorStatus: null,
       );
-    } else if (err.response.statusCode == 500) {
+    } else if (err.response?.statusCode == 500) {
       setError(
         errorMessage: "Server Failure! Try again Later!",
         errorCode: null,
-        errorStatus: err.response.statusCode,
+        errorStatus: err.response?.statusCode,
       );
-    } else if (err.response.statusCode == 404) {
+    } else if (err.response?.statusCode == 401) {
+      setError(
+        errorMessage: "Unauthorized! ${err.response?.data["error"]}",
+        errorCode: null,
+        errorStatus: err.response?.statusCode,
+      );
+    } else if (err.response?.statusCode == 404) {
       setError(
         errorMessage: "Not Found",
         errorCode: Constants.NOT_FOUND,
-        errorStatus: err.response.statusCode,
+        errorStatus: err.response?.statusCode,
       );
-    } else if (err.response.statusCode == 400 &&
-        err.response.data.containsKey("error") &&
-        err.response.data["error"] == Constants.INVALID_GRANT) {
-      String errorDescription = err.response.data["error_description"];
+    } else if (err.response?.statusCode == 400 &&
+        err.response?.data.containsKey("error") &&
+        err.response?.data["error"] == Constants.INVALID_GRANT) {
+      String errorDescription = err.response?.data["error_description"];
       setError(
         errorMessage: errorDescription.capitalize(),
         errorCode: Constants.INVALID_GRANT,
-        errorStatus: err.response.statusCode,
+        errorStatus: err.response?.statusCode,
       );
     } else {
       setError(
-        errorMessage: err.response.data['message'],
-        errorCode: err.response.data['message_code'],
-        errorStatus: err.response.statusCode,
+        errorMessage: err.response?.data['message'],
+        errorCode: err.response?.data['message_code'],
+        errorStatus: err.response?.statusCode,
       );
     }
   }
 
   void setError({
-    @required String errorMessage,
-    @required String errorCode,
-    @required int errorStatus,
+    String? errorMessage,
+    String? errorCode,
+    int? errorStatus,
   }) {
     debugPrint('Settinggg errorrrr $errorMessage');
     _isLoading = false;
@@ -100,15 +105,15 @@ class RequestNotifier extends ChangeNotifier {
     return _hasError;
   }
 
-  int get errorStatus {
+  int? get errorStatus {
     return _errorStatus;
   }
 
-  String get errorMessage {
+  String? get errorMessage {
     return _errorMessage;
   }
 
-  String get errorCode {
+  String? get errorCode {
     return _errorCode;
   }
 

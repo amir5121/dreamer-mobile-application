@@ -13,9 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DreamDetail extends StatefulWidget {
-  final String identifier;
+  final Object? identifier;
 
-  const DreamDetail({Key key, @required this.identifier}) : super(key: key);
+  const DreamDetail({this.identifier}) : super();
 
   @override
   _DreamDetailState createState() => _DreamDetailState();
@@ -26,7 +26,8 @@ class _DreamDetailState extends State<DreamDetail> {
   Widget build(BuildContext context) {
     return DreamerScaffold(
       body: ChangeNotifierProvider(
-        create: (context) => DreamViewModel()..loadDream(widget.identifier),
+        create: (context) => widget.identifier == null ? null : DreamViewModel()
+          ?..loadDream(widget.identifier! as String),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: DreamConsumer<DreamViewModel>(
@@ -41,7 +42,7 @@ class _DreamDetailState extends State<DreamDetail> {
                       onDeleteCallback: () => Navigator.of(context).pop(false),
                     ),
                     SizedBox(height: 16),
-                    Text(dream.text),
+                    Text(dream.text!),
                     SizedBox(height: 16),
                     _dreamDivider(context, "Elements"),
                     SizedBox(height: 8),
@@ -53,9 +54,9 @@ class _DreamDetailState extends State<DreamDetail> {
                     _dreamDivider(context, "Dream Transparency"),
                     SizedBox(height: 8),
                     _linearProgress(
-                      dream.dreamClearance + 1,
+                      (dream.dreamClearance ?? 0) + 1,
                       5,
-                      dream.dreamClearanceDisplay,
+                      dream.dreamClearanceDisplay ?? "N?A",
                     ),
                   ],
                 ),
@@ -78,9 +79,13 @@ class _DreamDetailState extends State<DreamDetail> {
   }
 
   Column _feelings(Dream dream) {
+    if (dream.feelings == null)
+      return Column(
+        children: [],
+      );
     return Column(
       children: [
-        ...dream.feelings
+        ...dream.feelings!
             .map<Widget>(
               (Feeling feeling) => Column(
                 children: [
@@ -106,7 +111,7 @@ class _DreamDetailState extends State<DreamDetail> {
                   SizedBox(height: 8),
                 ],
               ),
-            )
+        )
             .toList()
       ],
     );
@@ -149,47 +154,53 @@ class _DreamDetailState extends State<DreamDetail> {
   }
 
   Column _elements(Dream dream, context) {
+    if (dream.elements != null)
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ...dream.elements!
+              .map<Widget>(
+                (DreamElement element) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      element.type?.capitalize() ?? "N?A",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    SizedBox(height: 8),
+                    Wrap(
+                      children: element.elements == null
+                          ? []
+                          : [
+                              ...?element.elements
+                                  ?.map<Widget>(
+                                    (String? e) => Container(
+                                      padding: EdgeInsets.all(8),
+                                      margin: EdgeInsets.only(right: 8),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 1,
+                                          color: Constants.accentColor,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                      ),
+                                      child: Text(e ?? "N?A"),
+                                    ),
+                            )
+                            .toList()
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                  ],
+                ),
+              )
+              .toList(),
+        ],
+      );
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ...dream.elements
-            .map<Widget>(
-              (DreamElement element) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    element.type.capitalize(),
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  SizedBox(height: 8),
-                  Wrap(
-                    children: [
-                      ...element.elements
-                          .map<Widget>(
-                            (String e) => Container(
-                              padding: EdgeInsets.all(8),
-                              margin: EdgeInsets.only(right: 8),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: Constants.accentColor,
-                                ),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                              child: Text(e),
-                            ),
-                          )
-                          .toList()
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                ],
-              ),
-            )
-            .toList(),
-      ],
+      children: [],
     );
   }
 }

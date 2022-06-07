@@ -6,13 +6,12 @@ part of 'feeling_summarize.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FeelingSummarize _$FeelingSummarizeFromJson(Map<String, dynamic> json) {
-  return FeelingSummarize(
-    json['label'] as String,
-    (json['value'] as num).toDouble(),
-    json['color'] as String,
-  );
-}
+FeelingSummarize _$FeelingSummarizeFromJson(Map<String, dynamic> json) =>
+    FeelingSummarize(
+      json['label'] as String,
+      (json['value'] as num).toDouble(),
+      json['color'] as String,
+    );
 
 Map<String, dynamic> _$FeelingSummarizeToJson(FeelingSummarize instance) =>
     <String, dynamic>{

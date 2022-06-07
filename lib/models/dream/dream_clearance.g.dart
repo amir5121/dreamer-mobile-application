@@ -6,12 +6,11 @@ part of 'dream_clearance.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DreamClearance _$DreamClearanceFromJson(Map<String, dynamic> json) {
-  return DreamClearance(
-    json['value'] as int,
-    json['label'] as String,
-  );
-}
+DreamClearance _$DreamClearanceFromJson(Map<String, dynamic> json) =>
+    DreamClearance(
+      json['value'] as int,
+      json['label'] as String?,
+    );
 
 Map<String, dynamic> _$DreamClearanceToJson(DreamClearance instance) =>
     <String, dynamic>{

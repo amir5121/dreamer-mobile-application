@@ -2,11 +2,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'feeling_detail.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class FeelingDetail {
-  final String description;
-  final String detailedType;
-  final String parentType;
+  final String? description;
+  final String? detailedType;
+  final String? parentType;
 
   FeelingDetail(this.description, this.detailedType, this.parentType);
 
@@ -14,5 +14,4 @@ class FeelingDetail {
       _$FeelingDetailFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeelingDetailToJson(this);
-
 }

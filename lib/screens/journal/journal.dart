@@ -25,10 +25,11 @@ class _JournalState extends State<Journal> {
               _pagingController.error = dreams.errorMessage;
             }
           } else {
-            if (dreams.dreams.data.next == null) {
-              _pagingController.appendLastPage(dreams.dreams.data.results);
+            if (dreams.dreams?.data.next == null) {
+              _pagingController.appendLastPage(dreams.dreams!.data.results);
             } else {
-              _pagingController.appendPage(dreams.dreams.data.results, pageKey + 1);
+              _pagingController.appendPage(
+                  dreams.dreams!.data.results, pageKey + 1);
             }
           }
         },

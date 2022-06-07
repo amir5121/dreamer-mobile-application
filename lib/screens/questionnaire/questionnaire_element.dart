@@ -17,28 +17,31 @@ class QuestionnaireElement extends QuestionnaireStepWidget {
 
   final List<ElementCreator> elementCreators = [];
 
-  QuestionnaireElement({Key key, Dream dream, Function goToNext, bool isGoingForward})
+  QuestionnaireElement(
+      {required Dream dream,
+      required Function goToNext,
+      required bool isGoingForward})
       : super(
-            key: key, dream: dream, goToNext: goToNext, isGoingForward: isGoingForward) {
+            dream: dream, goToNext: goToNext, isGoingForward: isGoingForward) {
     elementCreators.add(ElementCreator(
       label: "Character",
       element: dream.elements?.firstWhere(
         (DreamElement element) => element.type == Constants.ELEMENT_CHARACTER,
-        orElse: () => null,
+        // orElse: () => null,
       ),
     ));
     elementCreators.add(ElementCreator(
       label: "Place",
       element: dream.elements?.firstWhere(
         (DreamElement element) => element.type == Constants.ELEMENT_PLACE,
-        orElse: () => null,
+        // orElse: () => null,
       ),
     ));
     elementCreators.add(ElementCreator(
       label: "Object",
       element: dream.elements?.firstWhere(
         (DreamElement element) => element.type == Constants.ELEMENT_OBJECT,
-        orElse: () => null,
+        // orElse: () => null,
       ),
     ));
   }
@@ -59,7 +62,8 @@ class QuestionnaireElement extends QuestionnaireStepWidget {
   }
 }
 
-class _QuestionnaireElementState extends State<QuestionnaireElement> implements Seekable {
+class _QuestionnaireElementState extends State<QuestionnaireElement>
+    implements Seekable {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -96,7 +100,8 @@ class _QuestionnaireElementState extends State<QuestionnaireElement> implements 
           (int key, ElementCreator elementCreator) {
         String type = _getTypeByIndex(key);
         final elementTexts = elementCreator.controllers
-            .where((TextEditingController controller) => controller.text.length > 0)
+            .where((TextEditingController controller) =>
+                controller.text.length > 0)
             .map<String>(
               (TextEditingController controller) => controller.text,
             )

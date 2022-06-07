@@ -6,17 +6,16 @@ part of 'convert_token.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ConvertToken _$ConvertTokenFromJson(Map<String, dynamic> json) {
-  return ConvertToken(
-    clientId: json['client_id'] as String,
-    clientSecret: json['client_secret'] as String,
-    token: json['token'] as String,
-    backend: json['backend'] as String,
-    grantType: json['grant_type'] as String,
-  );
-}
+ConvertToken _$ConvertTokenFromJson(Map<String, dynamic> json) => ConvertToken(
+      clientId: json['client_id'] as String,
+      clientSecret: json['client_secret'] as String,
+      token: json['token'] as String,
+      backend: json['backend'] as String,
+      grantType: json['grant_type'] as String? ?? "convert_token",
+    );
 
-Map<String, dynamic> _$ConvertTokenToJson(ConvertToken instance) => <String, dynamic>{
+Map<String, dynamic> _$ConvertTokenToJson(ConvertToken instance) =>
+    <String, dynamic>{
       'client_id': instance.clientId,
       'client_secret': instance.clientSecret,
       'token': instance.token,

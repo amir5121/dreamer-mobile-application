@@ -5,8 +5,8 @@ part 'notification_pagination.g.dart';
 
 @JsonSerializable()
 class NotificationPagination {
-  final String next;
-  final String previous;
+  final String? next;
+  final String? previous;
   final List<DreamerNotification> results;
 
   NotificationPagination(this.next, this.previous, this.results);

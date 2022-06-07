@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'logout_credentials.g.dart';
 
-@JsonSerializable(nullable: false, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class LogoutCredentials {
   final String token;
   final String clientId;

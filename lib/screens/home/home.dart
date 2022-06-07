@@ -30,10 +30,12 @@ class _HomeState extends State<Home> {
               // this is for heading
               _pagingController.appendPage([Post.empty()], pageKey + 1);
             }
-            if (postsResults.posts.data.next == null) {
-              _pagingController.appendLastPage(postsResults.posts.data.results);
+            if (postsResults.posts?.data.next == null) {
+              _pagingController
+                  .appendLastPage(postsResults.posts!.data.results);
             } else {
-              _pagingController.appendPage(postsResults.posts.data.results, pageKey + 1);
+              _pagingController.appendPage(
+                  postsResults.posts!.data.results, pageKey + 1);
             }
           }
         },
@@ -57,7 +59,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       child: Text(
-        item.text[0],
+        item.text?[0] ?? "N?A",
         style: Theme.of(context).textTheme.bodyText1,
       ),
     );

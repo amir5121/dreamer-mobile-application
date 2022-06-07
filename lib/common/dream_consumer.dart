@@ -4,44 +4,48 @@ import 'package:provider/provider.dart';
 
 class DreamConsumer<T extends RequestNotifier> extends Consumer {
   final bool snackOnError;
-  final Widget Function(BuildContext context, T value, Widget child) loadingBuilder;
-  final Widget Function(BuildContext context, T value, Widget child) errorBuilder;
+  final Widget Function(BuildContext context, T value, Widget? child)?
+      loadingBuilder;
+  final Widget Function(BuildContext context, T value, Widget? child)?
+      errorBuilder;
 
   DreamConsumer({
-    Key key,
     this.snackOnError = true,
-    @required builder,
+    required builder,
     this.errorBuilder,
     this.loadingBuilder,
-    Widget child,
+    Widget? child,
   })  : assert(builder != null),
-        super(key: key, builder: builder, child: child);
+        super(builder: builder, child: child);
 
   @override
-  Widget buildWithChild(BuildContext context, Widget child) {
+  Widget buildWithChild(BuildContext context, Widget? child) {
     T requestNotifier = Provider.of<T>(context);
     if (requestNotifier.hasError && snackOnError) {
       Future<Null>.delayed(
         Duration(),
         () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              duration: Duration(seconds: 6),
-              content: Text(requestNotifier.errorMessage),
-            ),
-          );
+          String? errorMessage = requestNotifier.errorMessage;
+          if (errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                duration: Duration(seconds: 6),
+                content: Text(errorMessage),
+              ),
+            );
+          }
         },
       );
     }
     if (requestNotifier.isLoading && loadingBuilder != null) {
-      return loadingBuilder(
+      return loadingBuilder!(
         context,
         requestNotifier,
         child,
       );
     }
     if (requestNotifier.hasError && errorBuilder != null) {
-      return errorBuilder(
+      return errorBuilder!(
         context,
         requestNotifier,
         child,
@@ -58,26 +62,26 @@ class DreamConsumer<T extends RequestNotifier> extends Consumer {
 class DreamConsumer2<A extends RequestNotifier, B extends RequestNotifier>
     extends Consumer2 {
   final bool snackOnError;
-  final Widget Function(BuildContext context, A value, B value2, Widget child)
+  final Widget Function(BuildContext context, A value, B value2, Widget? child)?
       loadingBuilder;
-  final Widget Function(BuildContext context, A value, B value2, Widget child)
+  final Widget Function(BuildContext context, A value, B value2, Widget? child)?
       errorBuilder;
 
   DreamConsumer2({
-    Key key,
     this.snackOnError = true,
-    @required builder,
+    required builder,
     this.errorBuilder,
     this.loadingBuilder,
-    Widget child,
+    Widget? child,
   })  : assert(builder != null),
-        super(key: key, builder: builder, child: child);
+        super(builder: builder, child: child);
 
   @override
-  Widget buildWithChild(BuildContext context, Widget child) {
+  Widget buildWithChild(BuildContext context, Widget? child) {
     A requestNotifier = Provider.of<A>(context);
     B requestNotifier2 = Provider.of<B>(context);
-    if ((requestNotifier.hasError || requestNotifier2.hasError) && snackOnError) {
+    if ((requestNotifier.hasError || requestNotifier2.hasError) &&
+        snackOnError) {
       Future<Null>.delayed(Duration(), () {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -90,15 +94,16 @@ class DreamConsumer2<A extends RequestNotifier, B extends RequestNotifier>
     }
     if ((requestNotifier.isLoading || requestNotifier2.isLoading) &&
         loadingBuilder != null) {
-      return loadingBuilder(
+      return loadingBuilder!(
         context,
         requestNotifier,
         requestNotifier2,
         child,
       );
     }
-    if ((requestNotifier.hasError || requestNotifier2.hasError) && errorBuilder != null) {
-      return errorBuilder(
+    if ((requestNotifier.hasError || requestNotifier2.hasError) &&
+        errorBuilder != null) {
+      return errorBuilder!(
         context,
         requestNotifier,
         requestNotifier2,

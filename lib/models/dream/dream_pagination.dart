@@ -6,8 +6,8 @@ part 'dream_pagination.g.dart';
 
 @JsonSerializable()
 class DreamPagination {
-  final String next;
-  final String previous;
+  final String? next;
+  final String? previous;
   final List<Dream> results;
 
   DreamPagination(this.next, this.previous, this.results);

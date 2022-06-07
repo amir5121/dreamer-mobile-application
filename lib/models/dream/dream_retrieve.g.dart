@@ -6,16 +6,13 @@ part of 'dream_retrieve.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DreamRetrieve _$DreamRetrieveFromJson(Map<String, dynamic> json) {
-  return DreamRetrieve(
-    json['messageCode'] as String,
-    json['message'] as String,
-    json['code'] as int,
-    json['data'] == null
-        ? null
-        : Dream.fromJson(json['data'] as Map<String, dynamic>),
-  );
-}
+DreamRetrieve _$DreamRetrieveFromJson(Map<String, dynamic> json) =>
+    DreamRetrieve(
+      json['messageCode'] as String?,
+      json['message'] as String?,
+      json['code'] as int?,
+      Dream.fromJson(json['data'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$DreamRetrieveToJson(DreamRetrieve instance) =>
     <String, dynamic>{

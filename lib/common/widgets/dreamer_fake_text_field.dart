@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class DreamFakeTextField extends StatelessWidget {
   final String label;
   final String value;
-  final Function onPressed;
+  final Function() onPressed;
 
   const DreamFakeTextField(
-      {Key key, @required this.label, @required this.value, @required this.onPressed})
-      : super(key: key);
+      {required this.label, required this.value, required this.onPressed})
+      : super();
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,8 @@ class DreamFakeTextField extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
-        OutlineButton(
-          padding: EdgeInsets.symmetric(vertical: 12),
+        OutlinedButton(
+          // padding: EdgeInsets.symmetric(vertical: 12),
           onPressed: onPressed,
           child: Text(
             value,

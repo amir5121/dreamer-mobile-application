@@ -10,17 +10,16 @@ import 'package:permission_handler/permission_handler.dart';
 
 class Recorder extends StatefulWidget {
   final Function setRecordingDirectory;
-  final String previousRecording;
-  final double recordingLengthInMilliSeconds;
-  final List<double> recordingWave;
+  final String? previousRecording;
+  final double? recordingLengthInMilliSeconds;
+  final List<double>? recordingWave;
 
   const Recorder(
-      {Key key,
-      @required this.setRecordingDirectory,
-      @required this.previousRecording,
-      @required this.recordingLengthInMilliSeconds,
-      @required this.recordingWave})
-      : super(key: key);
+      {required this.setRecordingDirectory,
+      this.previousRecording,
+      this.recordingLengthInMilliSeconds,
+      this.recordingWave})
+      : super();
 
   @override
   _RecorderState createState() => _RecorderState();
@@ -38,13 +37,13 @@ class _RecorderState extends State<Recorder> {
   SoundStatus _recordingStatus = SoundStatus.none;
   SoundStatus _playbackStatus = SoundStatus.none;
   Duration _workDuration = Duration();
-  Duration _recordingLength;
-  List<double> _wave = [];
+  Duration _recordingLength = Duration();
+  List<double>? _wave = [];
 
   final FlutterSoundPlayer _soundPlayer = FlutterSoundPlayer();
   final FlutterSoundRecorder _soundRecorder = FlutterSoundRecorder();
 
-  String tempPath;
+  String tempPath = "";
 
   @override
   void dispose() {
@@ -63,8 +62,10 @@ class _RecorderState extends State<Recorder> {
     asyncSetUp();
     if (widget.previousRecording != null) {
       _recordingStatus = SoundStatus.done;
-      _recordingLength =
-          Duration(milliseconds: widget.recordingLengthInMilliSeconds.toInt());
+      _recordingLength = widget.recordingLengthInMilliSeconds != null
+          ? Duration(
+              milliseconds: widget.recordingLengthInMilliSeconds!.toInt())
+          : Duration();
       _wave = widget.recordingWave;
     }
     super.initState();
@@ -76,13 +77,15 @@ class _RecorderState extends State<Recorder> {
         setState(() {
           _recordingStatus = SoundStatus.loading;
         });
-        _soundRecorder.openAudioSession().then((FlutterSoundRecorder soundRecorder) {
+        _soundRecorder
+            .openAudioSession()
+            .then((FlutterSoundRecorder? soundRecorder) {
           setState(() {
             _workDuration = Duration();
           });
-          soundRecorder.setSubscriptionDuration(Duration(milliseconds: 100));
+          soundRecorder?.setSubscriptionDuration(Duration(milliseconds: 100));
           soundRecorder
-              .startRecorder(
+              ?.startRecorder(
             toFile: tempPath,
             codec: Codec.aacMP4,
           )
@@ -93,9 +96,9 @@ class _RecorderState extends State<Recorder> {
             _wave = [];
           });
 
-          soundRecorder.onProgress.listen((RecordingDisposition e) {
+          soundRecorder?.onProgress?.listen((RecordingDisposition e) {
             Duration maxDuration = e.duration;
-            _wave.add(e.decibels);
+            if (_wave != null && e.decibels != null) _wave!.add(e.decibels!);
             _recordingLength = maxDuration;
 
             setState(() {
@@ -111,8 +114,8 @@ class _RecorderState extends State<Recorder> {
         _soundRecorder.stopRecorder().then(
               (_) => _soundRecorder.closeAudioSession().then(
                 (_) {
-                  widget.setRecordingDirectory(
-                      tempPath, _wave, _recordingLength.inMilliseconds.toDouble());
+                  widget.setRecordingDirectory(tempPath, _wave,
+                      _recordingLength.inMilliseconds.toDouble());
                   setState(() {
                     _recordingStatus = SoundStatus.done;
                   });
@@ -176,11 +179,12 @@ class _RecorderState extends State<Recorder> {
                           wave: _wave,
                           progress: _workDuration.inMilliseconds /
                               _recordingLength.inMilliseconds,
-                          tapCallback: (double seekProgress) => _soundPlayer.seekToPlayer(
+                          tapCallback: (double seekProgress) =>
+                              _soundPlayer.seekToPlayer(
                             Duration(
-                              milliseconds:
-                                  (_recordingLength.inMilliseconds * seekProgress)
-                                      .toInt(),
+                              milliseconds: (_recordingLength.inMilliseconds *
+                                      seekProgress)
+                                  .toInt(),
                             ),
                           ),
                         ),
@@ -214,8 +218,9 @@ class _RecorderState extends State<Recorder> {
           height: 8,
         ),
         Row(
-          mainAxisAlignment:
-              _isRecording ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
+          mainAxisAlignment: _isRecording
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.end,
           children: [
             if (_isRecording)
               Row(
@@ -258,16 +263,17 @@ class _RecorderState extends State<Recorder> {
   }
 
   void _playbackAudio() {
-    if (_playbackStatus == SoundStatus.none || _playbackStatus == SoundStatus.done) {
+    if (_playbackStatus == SoundStatus.none ||
+        _playbackStatus == SoundStatus.done) {
       setState(() {
         _playbackStatus = SoundStatus.loading;
       });
-      _soundPlayer.openAudioSession().then((FlutterSoundPlayer soundPlayer) {
+      _soundPlayer.openAudioSession().then((FlutterSoundPlayer? soundPlayer) {
         setState(() {
           _workDuration = Duration();
         });
-        soundPlayer.setSubscriptionDuration(Duration(milliseconds: 100));
-        soundPlayer.onProgress.listen((PlaybackDisposition e) {
+        soundPlayer?.setSubscriptionDuration(Duration(milliseconds: 100));
+        soundPlayer?.onProgress?.listen((PlaybackDisposition e) {
           Duration maxDuration = e.position;
           // double decibels = e.decibels;
           // print("bbbbbbbbbbbb ${e.decibels} ${e.duration}");
@@ -277,7 +283,7 @@ class _RecorderState extends State<Recorder> {
           // print("AAAAAAAAAAAAAAAA ${e.position} ${e.duration}");
         });
         soundPlayer
-            .startPlayer(
+            ?.startPlayer(
               fromURI: tempPath,
               codec: Codec.aacMP4,
               whenFinished: () {

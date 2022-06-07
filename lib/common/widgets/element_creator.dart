@@ -5,9 +5,9 @@ class ElementCreator extends StatefulWidget {
   final String label;
   final List<TextEditingController> controllers = [];
 
-  ElementCreator({Key key, @required this.label, @required DreamElement element}) {
+  ElementCreator({required this.label, DreamElement? element}) {
     if (element != null) {
-      element.elements.forEach((String text) {
+      element.elements!.forEach((String? text) {
         controllers.add(TextEditingController(text: text));
       });
     }
@@ -19,7 +19,7 @@ class ElementCreator extends StatefulWidget {
 }
 
 class _ElementCreatorState extends State<ElementCreator> {
-  FocusNode focusNode;
+  late FocusNode focusNode;
 
   @override
   void initState() {
@@ -69,17 +69,17 @@ class _ElementCreatorState extends State<ElementCreator> {
               minWidth: 0,
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: OutlineButton(
+                child: OutlinedButton(
                   // padding: EdgeInsets.all(0),
                   child: Icon(Icons.add),
                   onPressed: () {
                     if (widget.controllers
-                        .where((TextEditingController controller) =>
-                    controller.text.length == 0)
-                        .length <
+                            .where((TextEditingController controller) =>
+                                controller.text.length == 0)
+                            .length <
                         1) {
                       setState(
-                            () {
+                        () {
                           widget.controllers.add(
                             TextEditingController(),
                           );
@@ -87,9 +87,9 @@ class _ElementCreatorState extends State<ElementCreator> {
                       );
                     }
                   },
-                  shape: CircleBorder(
-                    side: BorderSide(),
-                  ),
+                  // shape: CircleBorder(
+                  //   side: BorderSide(),
+                  // ),
                 ),
               ),
             )

@@ -8,14 +8,14 @@ class WaveformSlider extends StatelessWidget {
   final Function tapCallback;
 
   const WaveformSlider(
-      {Key key, @required wave, @required progress, @required this.tapCallback})
+      {required wave, required progress, required this.tapCallback})
       : _wave = wave,
         _progress = progress,
-        super(key: key);
+        super();
 
   @override
   Widget build(BuildContext context) {
-    double widgetLength;
+    double widgetLength = 1;
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
         tapCallback(details.localPosition.distance / widgetLength);

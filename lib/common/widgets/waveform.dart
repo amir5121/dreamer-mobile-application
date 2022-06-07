@@ -9,10 +9,10 @@ class Waveform extends StatelessWidget {
   final double _progress;
   static const int _MAX_HEIGHT = 50;
 
-  const Waveform({Key key, @required wave, @required progress})
+  const Waveform({required wave, required progress})
       : _wave = wave,
         _progress = progress,
-        super(key: key);
+        super();
 
   List<double> calculateCount(double maxWidth) {
     final int columnCount = maxWidth ~/ 5;

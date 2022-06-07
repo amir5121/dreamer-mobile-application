@@ -48,41 +48,42 @@ abstract class RestClient {
 
   @GET("/post/timeline/")
   Future<PostResponse> getTimeline({
-    @Query("show_multi") bool showMulti,
-    @Query("page") int page,
+    @Query("show_multi") required bool showMulti,
+    @Query("page") int? page,
   });
 
   @GET("/post/timeline/{id}/")
   Future<PostRetrieve> getPost({
-    @Path("id") int id,
+    @Path("id") required int id,
   });
 
   @GET("/post/dreams/")
   Future<DreamResponse> getDreams({
-    @Query("page") int page,
+    @Query("page") required int page,
   });
 
   @GET("/notification/notifications/")
   Future<NotificationResponse> getNotifications({
-    @Query("page") int page,
+    @Query("page") required int page,
   });
 
   @GET("/post/dreams/{identifier}/")
   Future<DreamRetrieve> getDream({
-    @Path("identifier") String identifier,
+    @Path("identifier") required String identifier,
   });
 
   @DELETE("/post/dreams/{identifier}/")
   Future<IgnoreData> deleteDream({
-    @Path("identifier") String identifier,
+    @Path("identifier") required String identifier,
   });
 
   @PATCH("/post/dreams/{identifier}/")
   Future<IgnoreData> updateDream(
-      {@Path("identifier") String identifier, @Body() Dream dream});
+      {@Path("identifier") required String identifier,
+      @Body() required Dream dream});
 
   @POST("/post/dreams/")
-  Future<IgnoreData> submitDream({@Body() Dream dream});
+  Future<IgnoreData> submitDream({@Body() required Dream dream});
 
   @POST("/devices/")
   Future<IgnoreData> registerToken(

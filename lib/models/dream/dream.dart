@@ -6,23 +6,23 @@ import 'package:timeago/timeago.dart' as timeago;
 
 part 'dream.g.dart';
 
-@JsonSerializable(nullable: true, fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Dream {
-  String text;
-  String title;
-  DateTime created;
-  DateTime modified;
-  String identifier;
-  User user;
-  String publicationStatus;
-  int dreamClearance;
-  String dreamClearanceDisplay;
-  DateTime dreamDate;
-  List<DreamElement> elements;
-  List<Feeling> feelings;
-  String voice;
-  double voiceDuration;
-  List<double> voiceWave;
+  String? text;
+  String? title;
+  DateTime? created;
+  DateTime? modified;
+  String? identifier;
+  User? user;
+  String? publicationStatus;
+  int? dreamClearance;
+  String? dreamClearanceDisplay;
+  DateTime? dreamDate;
+  List<DreamElement>? elements;
+  List<Feeling>? feelings;
+  String? voice;
+  double? voiceDuration;
+  List<double>? voiceWave;
 
   Dream(
       {this.created,
@@ -45,13 +45,13 @@ class Dream {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> jsonResult = _$DreamToJson(this);
-    if (this.voice != null && this.voice.contains('http')) {
+    if (this.voice != null && this.voice!.contains('http')) {
       jsonResult.remove('voice');
     }
     return jsonResult;
   }
 
   String get createdFormatted {
-    return timeago.format(created, locale: 'en');
+    return created == null ? "N?A" : timeago.format(created!, locale: 'en');
   }
 }

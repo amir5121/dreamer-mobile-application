@@ -5,9 +5,9 @@ part 'dream_response.g.dart';
 
 @JsonSerializable()
 class DreamResponse {
-  final String messageCode;
-  final String message;
-  final int code;
+  final String? messageCode;
+  final String? message;
+  final int? code;
   final DreamPagination data;
 
   DreamResponse(this.messageCode, this.message, this.code, this.data);

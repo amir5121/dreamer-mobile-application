@@ -7,11 +7,8 @@ class FeelingSlider extends StatefulWidget {
   final int initialValue;
 
   const FeelingSlider(
-      {Key key,
-      @required this.label,
-      @required this.setValue,
-      @required this.initialValue})
-      : super(key: key);
+      {required this.label, required this.setValue, required this.initialValue})
+      : super();
 
   @override
   _FeelingSliderState createState() => _FeelingSliderState();

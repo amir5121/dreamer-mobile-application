@@ -6,21 +6,23 @@ part of 'user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map<String, dynamic> json) {
-  return User(
-    json['username'] as String,
-    json['first_name'] as String,
-    json['last_name'] as String,
-    json['date_joined'] == null ? null : DateTime.parse(json['date_joined'] as String),
-    json['email'] as String,
-    json['identifier'] as String,
-    json['avatar'] as String,
-    json['full_name'] as String,
-    json['birth_date'] == null ? null : DateTime.parse(json['birth_date'] as String),
-    json['gender'] as String,
-    json['gender_display'] as String,
-  );
-}
+User _$UserFromJson(Map<String, dynamic> json) => User(
+      json['username'] as String,
+      json['first_name'] as String?,
+      json['last_name'] as String?,
+      json['date_joined'] == null
+          ? null
+          : DateTime.parse(json['date_joined'] as String),
+      json['email'] as String?,
+      json['identifier'] as String?,
+      json['avatar'] as String?,
+      json['full_name'] as String?,
+      json['birth_date'] == null
+          ? null
+          : DateTime.parse(json['birth_date'] as String),
+      json['gender'] as String?,
+      json['gender_display'] as String?,
+    );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'username': instance.username,

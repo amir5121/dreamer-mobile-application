@@ -4,7 +4,6 @@ import 'package:dreamer/common/widgets/dreamer_scaffold.dart';
 import 'package:dreamer/view_models/configurations_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sentry/sentry.dart';
 
 class Splash extends StatelessWidget {
   @override
@@ -19,12 +18,12 @@ class Splash extends StatelessWidget {
           if (configurationsResponse.authenticatedUser == null) {
             Navigator.pushReplacementNamed(context, '/login');
           } else {
-            Sentry.configureScope(
-              (scope) => scope.user = User(
-                username: configurationsResponse.authenticatedUser.username,
-                email: configurationsResponse.authenticatedUser.email,
-              ),
-            );
+            // Sentry.configureScope(
+            //   // (scope) => scope.user = User(
+            //   //   username: configurationsResponse.authenticatedUser.username,
+            //   //   email: configurationsResponse.authenticatedUser.email,
+            //   // ),
+            // );
             Navigator.pushReplacementNamed(context, '/home');
           }
         } else if (configurationsResponse.errorCode == Constants.INVALID_TOKEN) {

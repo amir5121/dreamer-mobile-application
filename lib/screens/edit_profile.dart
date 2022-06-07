@@ -26,10 +26,10 @@ class _EditProfileState extends State<EditProfile> {
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final genderController = TextEditingController();
-  String selectedGender;
-  String imagePath;
+  String? selectedGender;
+  String? imagePath;
 
-  DateTime selectedDate;
+  DateTime? selectedDate;
   DateTime now = DateTime.now();
 
   @override
@@ -42,9 +42,11 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
-    User user = context.read<ConfigurationsViewModel>().authenticatedUser;
-    nameController.text = user.fullName;
-    selectedDate = user.birthDate;
+    User? user = context.read<ConfigurationsViewModel>().authenticatedUser;
+    if (user != null) {
+      nameController.text = user.fullName!;
+      selectedDate = user.birthDate;
+    }
     super.initState();
   }
 
@@ -81,9 +83,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate == null ? DateTime.now() : selectedDate,
+      initialDate: selectedDate != null ? selectedDate! : DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(now.year, now.month, now.day + 1),
     );
@@ -103,7 +105,8 @@ class _EditProfileState extends State<EditProfile> {
             onPressed: auth.isLoading
                 ? null
                 : () {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState != null &&
+                        _formKey.currentState!.validate()) {
                       auth
                           .updateSelf(
                         UpdateUser(
@@ -183,7 +186,7 @@ class _EditProfileState extends State<EditProfile> {
                       label: "Birth date",
                       value: selectedDate == null
                           ? ""
-                          : DateFormat('yyyy-MM-dd').format(selectedDate),
+                          : DateFormat('yyyy-MM-dd').format(selectedDate!),
                       onPressed: () {
                         _selectDate(context);
                       },
@@ -219,12 +222,14 @@ class _EditProfileState extends State<EditProfile> {
             child: selectedGender != null
                 ? Text(
                     configurations.genderChoices
-                        .singleWhere((Gender gender) => gender.value == selectedGender)
-                        .label,
+                            .singleWhere((Gender gender) =>
+                                gender.value == selectedGender)
+                            .label ??
+                        "N?A",
                   )
-                : configurations.self.gender != null
-                    ? Text(configurations.self.genderDisplay)
-                    : null,
+                : (configurations.self?.genderDisplay != null)
+                    ? Text(configurations.self!.genderDisplay!)
+                    : Text("N?A"),
             onPressed: () {
               showDialog(
                 context: context,
@@ -234,7 +239,7 @@ class _EditProfileState extends State<EditProfile> {
                       ...configurations.genderChoices
                           .map<Widget>(
                             (Gender gender) => TextButton(
-                              child: Text(gender.label),
+                              child: Text(gender.label ?? "N?A"),
                               onPressed: () {
                                 setState(() {
                                   this.selectedGender = gender.value;

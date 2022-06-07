@@ -6,32 +6,37 @@ part of 'dream.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Dream _$DreamFromJson(Map<String, dynamic> json) {
-  return Dream(
-    created: json['created'] == null ? null : DateTime.parse(json['created'] as String),
-    modified:
-        json['modified'] == null ? null : DateTime.parse(json['modified'] as String),
-    identifier: json['identifier'] as String,
-    user:
-        json['user'] == null ? null : User.fromJson(json['user'] as Map<String, dynamic>),
-    publicationStatus: json['publication_status'] as String,
-    dreamClearance: json['dream_clearance'] as int,
-    text: json['text'] as String,
-    title: json['title'] as String,
-    dreamDate:
-        json['dream_date'] == null ? null : DateTime.parse(json['dream_date'] as String),
-    dreamClearanceDisplay: json['dream_clearance_display'] as String,
-    voice: json['voice'] as String,
-    elements: (json['elements'] as List)
-        ?.map((e) => e == null ? null : DreamElement.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    voiceWave: (json['voice_wave'] as List)?.map((e) => (e as num)?.toDouble())?.toList(),
-    voiceDuration: (json['voice_duration'] as num)?.toDouble(),
-    feelings: (json['feelings'] as List)
-        ?.map((e) => e == null ? null : Feeling.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-  );
-}
+Dream _$DreamFromJson(Map<String, dynamic> json) => Dream(
+      created: json['created'] == null
+          ? null
+          : DateTime.parse(json['created'] as String),
+      modified: json['modified'] == null
+          ? null
+          : DateTime.parse(json['modified'] as String),
+      identifier: json['identifier'] as String?,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+      publicationStatus: json['publication_status'] as String?,
+      dreamClearance: json['dream_clearance'] as int?,
+      text: json['text'] as String?,
+      title: json['title'] as String?,
+      dreamDate: json['dream_date'] == null
+          ? null
+          : DateTime.parse(json['dream_date'] as String),
+      dreamClearanceDisplay: json['dream_clearance_display'] as String?,
+      voice: json['voice'] as String?,
+      elements: (json['elements'] as List<dynamic>?)
+          ?.map((e) => DreamElement.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      voiceWave: (json['voice_wave'] as List<dynamic>?)
+          ?.map((e) => (e as num).toDouble())
+          .toList(),
+      voiceDuration: (json['voice_duration'] as num?)?.toDouble(),
+      feelings: (json['feelings'] as List<dynamic>?)
+          ?.map((e) => Feeling.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$DreamToJson(Dream instance) => <String, dynamic>{
       'text': instance.text,

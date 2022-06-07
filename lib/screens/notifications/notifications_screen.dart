@@ -24,11 +24,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               _pagingController.error = notifications.errorMessage;
             }
           } else {
-            if (notifications.notifications.data.next == null) {
-              _pagingController.appendLastPage(notifications.notifications.data.results);
+            if (notifications.notifications?.data.next == null) {
+              _pagingController
+                  .appendLastPage(notifications.notifications!.data.results);
             } else {
               _pagingController.appendPage(
-                  notifications.notifications.data.results, pageKey + 1);
+                  notifications.notifications!.data.results, pageKey + 1);
             }
           }
         },
@@ -66,10 +67,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      item.title,
-                                      style: Theme.of(context).textTheme.bodyText1,
+                                      item.title ?? "N?A",
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1,
                                     ),
-                                    Text(item.text),
+                                    Text(item.text ?? "N?A"),
                                   ],
                                 ),
                               ),

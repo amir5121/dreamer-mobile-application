@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PostDetail extends StatefulWidget {
-  final int postId;
+  final Object? postId;
 
-  const PostDetail({Key key, this.postId}) : super(key: key);
+  const PostDetail({this.postId}) : super();
 
   @override
   _PostDetailState createState() => _PostDetailState();
@@ -23,10 +23,11 @@ class _PostDetailState extends State<PostDetail> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PostViewModel>(
-      create: (context) => PostViewModel()..getPost(widget.postId),
+      create: (context) => PostViewModel()..getPost(widget.postId! as int),
       child: DreamerScaffold(
         body: DreamConsumer<PostViewModel>(
-          loadingBuilder: (context, lastRetrievedPost, child) => Text("Loading"),
+          loadingBuilder: (context, lastRetrievedPost, child) =>
+              Text("Loading"),
           builder: (context, retrievedPost, child) {
             Post post = retrievedPost.lastRetrievedPost.data;
             return Column(
@@ -46,7 +47,7 @@ class _PostDetailState extends State<PostDetail> {
                       ],
                     ),
                     Dots(
-                      count: post.text.length,
+                      count: post.text?.length ?? 0,
                       selected: _current,
                     ),
                   ],
@@ -63,8 +64,9 @@ class _PostDetailState extends State<PostDetail> {
     return CarouselSlider(
       carouselController: buttonCarouselController,
       options: CarouselOptions(
-        aspectRatio:
-            MediaQuery.of(context).orientation == Orientation.portrait ? 3 / 1 : 9 / 1,
+        aspectRatio: MediaQuery.of(context).orientation == Orientation.portrait
+            ? 3 / 1
+            : 9 / 1,
         viewportFraction: 1,
         onPageChanged: (index, reason) {
           setState(
@@ -74,7 +76,7 @@ class _PostDetailState extends State<PostDetail> {
           );
         },
       ),
-      items: post.text.map<Widget>(
+      items: post.text?.map<Widget>(
         (String text) {
           return Builder(
             builder: (BuildContext context) {
@@ -83,7 +85,8 @@ class _PostDetailState extends State<PostDetail> {
                 children: [
                   Container(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 32),
                       child: Text(
                         text,
                         style: Theme.of(context).textTheme.bodyText1,

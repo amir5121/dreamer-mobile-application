@@ -10,11 +10,11 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:package_info/package_info.dart';
 
 class ConfigurationsViewModel extends RequestNotifier {
-  ConfigurationsResponse _configurations;
-  String appName;
-  String packageName;
-  String version;
-  String buildNumber;
+  ConfigurationsResponse? _configurations;
+  String? appName;
+  String? packageName;
+  String? version;
+  String? buildNumber;
 
   Future<void> loadBuildData() async {
     if (kIsWeb) {
@@ -34,9 +34,11 @@ class ConfigurationsViewModel extends RequestNotifier {
 
   void loadConfigurations(BuildContext context) async {
     if (buildNumber == null) await loadBuildData();
-    _configurations = await makeRequest(
-      () => Singleton().client.getConfigurations(buildNumber),
-    );
+    if (buildNumber != null)
+      _configurations = await makeRequest(
+        () => Singleton().client.getConfigurations(buildNumber!),
+      );
+
     if (this.errorStatus == 401) {
       DreamerStorage().delete(key: Constants.ACCESS_TOKEN);
       DreamerStorage().delete(key: Constants.REFRESH_TOKEN);
@@ -44,11 +46,11 @@ class ConfigurationsViewModel extends RequestNotifier {
     }
   }
 
-  ConfigurationsResponse get configurations {
+  ConfigurationsResponse? get configurations {
     return _configurations;
   }
 
-  User get authenticatedUser {
-    return _configurations?.data?.self;
+  User? get authenticatedUser {
+    return _configurations?.data.self;
   }
 }

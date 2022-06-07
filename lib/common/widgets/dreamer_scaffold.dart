@@ -5,17 +5,16 @@ import '../constants.dart';
 
 class DreamerScaffold extends StatelessWidget {
   final Widget body;
-  final Widget bottomNavigationBar;
-  final Widget floatingActionButton;
-  final List<Widget> actions;
-  final AppBar appBar;
+  final Widget? bottomNavigationBar;
+  final Widget? floatingActionButton;
+  final List<Widget>? actions;
+  final AppBar? appBar;
   final bool showAppBar;
 
   final AppBar dreamAppBar;
 
   DreamerScaffold({
-    Key key,
-    this.body,
+    required this.body,
     this.bottomNavigationBar,
     this.floatingActionButton,
     this.showAppBar = true,
@@ -31,7 +30,7 @@ class DreamerScaffold extends StatelessWidget {
           centerTitle: true,
           actions: actions,
         ),
-        super(key: key);
+        super();
 
   @override
   Widget build(BuildContext context) {

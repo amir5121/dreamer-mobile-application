@@ -9,7 +9,8 @@ class DreamPostHeader extends StatelessWidget {
   final Dream dream;
   final Function onDeleteCallback;
 
-  const DreamPostHeader({Key key, this.dream, this.onDeleteCallback}) : super(key: key);
+  const DreamPostHeader({required this.dream, required this.onDeleteCallback})
+      : super();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class DreamPostHeader extends StatelessWidget {
                     // child: Text("Dreamer"),
                     radius: 24,
                     backgroundImage: NetworkImage(
-                      dream.user.avatar,
+                      dream.user!.avatar!,
                     ),
                   ),
                   Padding(
@@ -35,11 +36,11 @@ class DreamPostHeader extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          dream.user.fullName,
+                          dream.user!.fullName!,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         Text(
-                          dream.user.email,
+                          dream.user!.email!,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
@@ -72,21 +73,22 @@ class DreamPostHeader extends StatelessWidget {
                             onPressed: () {
                               DreamViewModel dreamViewModel =
                                   context.read<DreamViewModel>();
-                              dreamViewModel
-                                  .deleteDream(dream.identifier)
-                                  .then((DreamViewModel value) {
-                                if (!value.hasError) {
-                                  // Navigator.pop(context);
-                                  Navigator.pop(dialogContext);
-                                  if (onDeleteCallback != null) onDeleteCallback();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      duration: Duration(seconds: 6),
-                                      content: Text("Dream was removed."),
-                                    ),
-                                  );
-                                }
-                              });
+                              if (dream.identifier != null)
+                                dreamViewModel
+                                    .deleteDream(dream.identifier!)
+                                    .then((DreamViewModel value) {
+                                  if (!value.hasError) {
+                                    // Navigator.pop(context);
+                                    Navigator.pop(dialogContext);
+                                    onDeleteCallback();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        duration: Duration(seconds: 6),
+                                        content: Text("Dream was removed."),
+                                      ),
+                                    );
+                                  }
+                                });
                             },
                           ),
                         ],
@@ -104,7 +106,7 @@ class DreamPostHeader extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                dream.title,
+                dream.title!,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),

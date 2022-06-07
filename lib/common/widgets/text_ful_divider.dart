@@ -7,8 +7,8 @@ class TextFulDivider extends StatelessWidget {
   final int endFlex;
 
   const TextFulDivider(
-      {Key key, @required this.text, this.startFlex = 1, this.endFlex = 3})
-      : super(key: key);
+      {required this.text, this.startFlex = 1, this.endFlex = 3})
+      : super();
 
   @override
   Widget build(BuildContext context) {
