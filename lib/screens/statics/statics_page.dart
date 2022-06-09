@@ -60,6 +60,8 @@ class _StaticsPageState extends State<StaticsPage> {
                     )
                   : Column(
                       children: [
+                        _dreamDivider(context, "Clarity Average"),
+                        clearanceAnalysis(analytics),
                         _dreamDivider(context, "Word Cloud"),
                         SizedBox(height: 16),
                         Text(analytics.mainQuote),
@@ -82,8 +84,6 @@ class _StaticsPageState extends State<StaticsPage> {
                         ),
                         _dreamDivider(context, "Emotion analysis"),
                         feelingAnalysis(analytics),
-                        _dreamDivider(context, "Transparency analysis"),
-                        clearanceAnalysis(analytics),
                         // _dreamDivider(context, "Jungian Archetypes"),
                       ],
                     );
@@ -128,7 +128,7 @@ class _StaticsPageState extends State<StaticsPage> {
                   data: analytics.clearances,
                 )
               ],
-              animate: true,
+              // animate: true,
               primaryMeasureAxis: new charts.NumericAxisSpec(
                 tickProviderSpec: new charts.BasicNumericTickProviderSpec(
                   desiredTickCount: 5,

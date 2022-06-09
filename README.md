@@ -1,17 +1,28 @@
-# dreamer
+# Dreamer
 
-Dream my dreamer
+An opensource Flutter app for tracking dreams.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Install
 
-A few resources to get you started if this is your first Flutter project:
+- Install Flutter and android studio
+- Generate build files with
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+  `flutter pub run build_runner build --delete-conflicting-outputs`
+- To build apk files
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-`flutter pub run build_runner build --delete-conflicting-outputs`
+  `flutter build apk --split-per-abi`
+
+![alt text](docs/01.jpg "Title")
+![alt text](docs/02.jpg "Title")
+![alt text](docs/03.jpg "Title")
+![alt text](docs/04.jpg "Title")
+![alt text](docs/05.jpg "Title")
+![alt text](docs/06.jpg "Title")
+![alt text](docs/07.jpg "Title")
+![alt text](docs/08.jpg "Title")
+![alt text](docs/09.jpg "Title")
+![alt text](docs/10.jpg "Title")
+
+Google sign in doesn't work since i'm an iranian developer (sanctions).
