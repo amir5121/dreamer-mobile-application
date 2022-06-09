@@ -14,6 +14,8 @@ An opensource Flutter app for tracking dreams.
 
   `flutter build apk --split-per-abi`
 
+### [Download the app from github](docs/dreamer.apk "App")
+
 ![alt text](docs/01.jpg "Title")
 ![alt text](docs/02.jpg "Title")
 ![alt text](docs/03.jpg "Title")
@@ -26,3 +28,4 @@ An opensource Flutter app for tracking dreams.
 ![alt text](docs/10.jpg "Title")
 
 Google sign in doesn't work since i'm an iranian developer (sanctions).
+
